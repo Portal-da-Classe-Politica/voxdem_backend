@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  voxdem-api:
+    build: .
+    container_name: voxdem-chart-api
+    ports:
+      - "3000:3000"
+      - "5432:5432"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DB_HOST=localhost
+      - DB_PORT=5432
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=voxdem2024
+      - DB_NAME=voxdem_survey
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.voxdem.rule=Host(`voxdem-api.localhost`)"
+      - "traefik.http.services.voxdem.loadbalancer.server.port=3000"
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  default:
+    driver: bridge

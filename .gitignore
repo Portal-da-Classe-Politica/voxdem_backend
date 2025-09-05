@@ -152,6 +152,9 @@ dist/
 *.sqlite3
 *.db
 
+# Database dump (large file)
+#voxdem_survey_dump.sql
+
 # Custom - Scripts folder
 scripts/
 
@@ -160,6 +163,9 @@ database/
 
 # Custom - Temporary files
 check-schema.js
+generate-dump.js
+optimize-answer-groups.js
+fix-duplicate-names.js
 *.tmp
 *.temp
 

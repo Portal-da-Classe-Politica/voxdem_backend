@@ -38,10 +38,32 @@ API REST simplificada para geração de gráficos com dados da pesquisa VoxDem. 
 
 ### Pré-requisitos
 - Node.js 18+
-- PostgreSQL 13+
+- PostgreSQL 13+ **OU** Docker 20.10+
 - npm ou yarn
 
-### Configuração do Banco
+### Opção 1: 🐳 Docker (Recomendado)
+```bash
+# Início rápido com Docker Compose
+docker-compose up -d
+
+# Verificar funcionamento
+curl http://localhost:3000/api/health
+
+# Ver logs
+docker-compose logs -f
+```
+
+**Vantagens do Docker:**
+- ✅ PostgreSQL incluído e pré-configurado
+- ✅ Banco de dados restaurado automaticamente
+- ✅ Zero configuração necessária
+- ✅ Ambiente isolado e reproduzível
+
+📖 **Guia completo**: [DOCKER_GUIDE.md](./DOCKER_GUIDE.md)
+
+### Opção 2: Instalação Manual
+
+#### Configuração do Banco
 ```bash
 # Configurar variáveis de ambiente
 DB_HOST=localhost
@@ -51,7 +73,7 @@ DB_PASSWORD=postgres
 DB_NAME=voxdem_survey
 ```
 
-### Instalação
+#### Instalação
 ```bash
 # Instalar dependências
 npm install
@@ -344,6 +366,16 @@ src/
 ├── routes/           # chartRoutes.ts (4 endpoints)
 └── data-source.ts    # Configuração do banco
 
+voxdem_survey_dump.sql    # Dump do banco de dados (65MB, 309k respostas)
+
+docker/               # Configuração Docker
+├── Dockerfile        # Multi-stage build
+├── docker-compose.yml # Orquestração de serviços
+├── docker-entrypoint.sh # Script de inicialização
+├── deploy.sh         # Script de deploy (Linux/macOS)
+├── deploy.bat        # Script de deploy (Windows)
+└── DOCKER_GUIDE.md   # Guia completo Docker
+
 api-documentation.yaml # Swagger Chart API v2.0.0
 OPTIMIZATION_REPORT.md # Relatório de otimizações
 .gitignore            # Scripts e dados sensíveis excluídos
@@ -357,6 +389,9 @@ Foram criados scripts para manutenção e otimização:
 # Verificar schema do banco
 node check-schema.js
 
+# Gerar dump do banco (já executado)
+node generate-dump.js
+
 # Otimizar answer_groups (já executado)
 node optimize-answer-groups.js
 
@@ -369,6 +404,8 @@ node fix-duplicate-names.js
 - ✅ **0 duplicatas** remanescentes  
 - ✅ **100% categorização** semântica implementada
 - ✅ **API simplificada** para Chart.js pronta
+- ✅ **Dump completo** gerado (65MB com 309k respostas)
+- ✅ **Docker containerizado** com PostgreSQL integrado
 
 ## 🤝 Contribuição
 
