@@ -1,0 +1,410 @@
+openapi: 3.0.0
+info:
+  title: "VoxDem Chart API - Simplificada para Gráficos"
+  version: "2.0.0"
+  description: |
+    API simplificada para geração de gráficos com dados da pesquisa VoxDem.
+    Fornece dados otimizados para Chart.js com:
+    - Lista de perguntas disponíveis
+    - Lista de atributos de perfil demográfico
+    - Dados para gráficos simples (sem cruzamento)
+    - Dados para gráficos com cruzamento por perfil demográfico
+  contact:
+    name: "VoxDem API Support"
+    email: "suporte@voxdem.com"
+
+servers:
+  - url: "http://localhost:3000"
+    description: "Servidor de Desenvolvimento"
+
+tags:
+  - name: "Questions"
+    description: "Lista de perguntas disponíveis"
+  - name: "Profile Attributes"
+    description: "Atributos de perfil demográfico"
+  - name: "Charts"
+    description: "Dados otimizados para Chart.js"
+  - name: "Health"
+    description: "Status da API"
+
+paths:
+  /:
+    get:
+      summary: "Informações gerais da API"
+      tags: 
+        - "Health"
+      responses:
+        '200':
+          description: "Informações da API retornadas com sucesso"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "VoxDem API - Análise Simplificada para Gráficos"
+                  version:
+                    type: string
+                    example: "2.0.0"
+                  endpoints:
+                    type: object
+                  chartjs:
+                    type: string
+                    example: "Dados otimizados para Chart.js"
+
+  /api/health:
+    get:
+      summary: "Verificação de saúde da API"
+      tags: 
+        - "Health"
+      responses:
+        '200':
+          description: "API funcionando corretamente"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  status:
+                    type: string
+                    example: "healthy"
+                  database:
+                    type: string
+                    example: "connected"
+                  api:
+                    type: string
+                    example: "VoxDem Chart API"
+                  version:
+                    type: string
+                    example: "2.0.0"
+
+  /api/questions:
+    get:
+      summary: "Lista todas as perguntas disponíveis"
+      tags: 
+        - "Questions"
+      responses:
+        '200':
+          description: "Lista de perguntas retornada com sucesso"
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Question'
+              example:
+                success: true
+                data:
+                  - id: 1
+                    code: "P01"
+                    text: "De uma maneira geral, o(a) Sr.(a) está muito satisfeito(a)..."
+                    totalResponses: 1563
+                  - id: 2
+                    code: "P02"
+                    text: "Em sua opinião, a democracia no Brasil está..."
+                    totalResponses: 1547
+                count: 179
+                generatedAt: "2025-09-04T10:30:00.000Z"
+
+  /api/profile-attributes:
+    get:
+      summary: "Lista todos os atributos de perfil disponíveis"
+      tags: 
+        - "Profile Attributes"
+      responses:
+        '200':
+          description: "Lista de atributos retornada com sucesso"
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ProfileAttribute'
+              example:
+                success: true
+                data:
+                  - key: "gender"
+                    name: "SEXO"
+                    answerGroupId: 52
+                    description: "Gênero do respondente"
+                  - key: "age_range"
+                    name: "IDADE_FX"
+                    answerGroupId: 53
+                    description: "Faixa etária do respondente"
+                count: 5
+
+  /api/chart/{questionCode}:
+    get:
+      summary: "Dados para gráfico simples (sem cruzamento)"
+      description: "Retorna dados otimizados para Chart.js de uma pergunta específica"
+      tags: 
+        - "Charts"
+      parameters:
+        - name: questionCode
+          in: path
+          required: true
+          description: "Código da pergunta (ex: P01, P23A)"
+          schema:
+            type: string
+            pattern: "^P[0-9]+[A-Z]*$"
+          example: "P01"
+      responses:
+        '200':
+          description: "Dados do gráfico retornados com sucesso"
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/ChartData'
+              example:
+                success: true
+                data:
+                  question:
+                    code: "P01"
+                    text: "De uma maneira geral, o(a) Sr.(a) está muito satisfeito(a)..."
+                  chartData:
+                    labels: ["Muito satisfeito", "Satisfeito", "Insatisfeito", "Muito insatisfeito"]
+                    datasets:
+                      - data: [89, 567, 642, 265]
+                        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"]
+                        borderColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"]
+                        borderWidth: 1
+                  totalResponses: 1563
+                generatedAt: "2025-09-04T10:30:00.000Z"
+        '400':
+          description: "Código de pergunta inválido"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: "Pergunta não encontrada"
+
+  /api/chart/{questionCode}/{profileAttribute}:
+    get:
+      summary: "Dados para gráfico com cruzamento por perfil"
+      description: "Retorna dados para gráfico de barras agrupadas por perfil demográfico"
+      tags: 
+        - "Charts"
+      parameters:
+        - name: questionCode
+          in: path
+          required: true
+          description: "Código da pergunta (ex: P01, P23A)"
+          schema:
+            type: string
+            pattern: "^P[0-9]+[A-Z]*$"
+          example: "P01"
+        - name: profileAttribute
+          in: path
+          required: true
+          description: "Atributo de perfil para cruzamento"
+          schema:
+            type: string
+            enum: 
+              - gender
+              - age_range
+              - education
+              - race
+              - region
+              - state
+          example: "gender"
+      responses:
+        '200':
+          description: "Dados do gráfico com perfil retornados com sucesso"
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: '#/components/schemas/ProfileChartData'
+              example:
+                success: true
+                data:
+                  question:
+                    code: "P01"
+                    text: "De uma maneira geral, o(a) Sr.(a) está muito satisfeito(a)..."
+                  profileAttribute: "gender"
+                  chartData:
+                    labels: ["Muito satisfeito", "Satisfeito", "Insatisfeito", "Muito insatisfeito"]
+                    datasets:
+                      - label: "Masculino"
+                        data: [45, 280, 320, 135]
+                        backgroundColor: "#FF6384"
+                        borderColor: "#FF6384"
+                        borderWidth: 1
+                      - label: "Feminino"
+                        data: [44, 287, 322, 130]
+                        backgroundColor: "#36A2EB"
+                        borderColor: "#36A2EB"
+                        borderWidth: 1
+                  totalResponses: 1563
+                generatedAt: "2025-09-04T10:30:00.000Z"
+        '400':
+          description: "Parâmetros inválidos"
+        '404':
+          description: "Pergunta ou atributo não encontrado"
+
+components:
+  schemas:
+    Question:
+      type: object
+      description: "Pergunta da pesquisa"
+      properties:
+        id:
+          type: integer
+          description: "ID único da pergunta"
+        code:
+          type: string
+          description: "Código da pergunta"
+          example: "P01"
+        text:
+          type: string
+          description: "Texto da pergunta"
+        totalResponses:
+          type: integer
+          description: "Total de respostas"
+
+    ProfileAttribute:
+      type: object
+      description: "Atributo de perfil demográfico"
+      properties:
+        key:
+          type: string
+          description: "Chave do atributo"
+          example: "gender"
+        name:
+          type: string
+          description: "Nome do grupo"
+          example: "SEXO"
+        answerGroupId:
+          type: integer
+          description: "ID do grupo de respostas"
+        description:
+          type: string
+          description: "Descrição do atributo"
+
+    ChartData:
+      type: object
+      description: "Dados otimizados para Chart.js"
+      properties:
+        question:
+          type: object
+          properties:
+            code:
+              type: string
+            text:
+              type: string
+            category:
+              type: string
+              nullable: true
+        chartData:
+          type: object
+          properties:
+            labels:
+              type: array
+              items:
+                type: string
+            datasets:
+              type: array
+              items:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: integer
+                  backgroundColor:
+                    type: array
+                    items:
+                      type: string
+                  borderColor:
+                    type: array
+                    items:
+                      type: string
+                  borderWidth:
+                    type: integer
+        totalResponses:
+          type: integer
+
+    ProfileChartData:
+      type: object
+      description: "Dados de gráfico com perfil demográfico"
+      properties:
+        question:
+          type: object
+        profileAttribute:
+          type: string
+        chartData:
+          type: object
+          properties:
+            labels:
+              type: array
+              items:
+                type: string
+            datasets:
+              type: array
+              items:
+                type: object
+                properties:
+                  label:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: integer
+                  backgroundColor:
+                    type: string
+                  borderColor:
+                    type: string
+        totalResponses:
+          type: integer
+
+    ApiResponse:
+      type: object
+      description: "Resposta padrão da API"
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          description: "Dados retornados"
+        count:
+          type: integer
+          description: "Número de itens"
+        generatedAt:
+          type: string
+          format: date-time
+
+    ErrorResponse:
+      type: object
+      description: "Resposta de erro"
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: string
+        message:
+          type: string
