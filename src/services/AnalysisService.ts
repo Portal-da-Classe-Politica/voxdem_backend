@@ -5,38 +5,25 @@ export class AnalysisService {
   
   async getAvailableQuestions() {
     try {
-      // Buscar dados sem consultar estrutura por enquanto
+      // Buscar perguntas distintas da view response_analysis
       const questionsRaw = await AppDataSource.query(`
-        SELECT 
-          id,
-          code,
-          text,
-          answer_group_id
-        FROM questions 
-        WHERE answer_group_id IS NOT NULL 
-          AND answer_group_id > 0 
-          AND is_active = true
-        ORDER BY code
+        SELECT DISTINCT 
+          question_code as code,
+          question_text as text,
+          COUNT(*) as "totalResponses"
+        FROM response_analysis
+        WHERE question_code IS NOT NULL 
+          AND question_text IS NOT NULL
+        GROUP BY question_code, question_text
+        ORDER BY question_code
       `);
 
-      // Adicionar contagem de respostas para cada pergunta
-      const questionsWithCounts = await Promise.all(
-        questionsRaw.map(async (question: any) => {
-          const count = await AppDataSource.query(`
-            SELECT COUNT(*) as total
-            FROM survey_responses sr
-            JOIN answers a ON a.survey_response_id = sr.id
-            WHERE a.question_id = $1
-          `, [question.id]);
-          
-          return {
-            id: question.id,
-            code: question.code,
-            text: question.text,
-            totalResponses: parseInt(count[0]?.total || '0')
-          };
-        })
-      );
+      // Mapear para o formato esperado
+      const questionsWithCounts = questionsRaw.map((question: any) => ({
+        code: question.code,
+        text: question.text,
+        totalResponses: parseInt(question.totalResponses || '0')
+      }));
 
       return questionsWithCounts;
     } catch (error) {
@@ -46,36 +33,52 @@ export class AnalysisService {
   }
 
   async getProfileAttributes() {
-    // Buscar atributos de perfil disponíveis na tabela answer_groups
-    const profileAttributes = await AppDataSource.query(`
-      SELECT DISTINCT 
-        CASE 
-          WHEN ag.group_name ILIKE '%sexo%' OR ag.group_name ILIKE '%gênero%' THEN 'gender'
-          WHEN ag.group_name ILIKE '%idade%' OR ag.group_name ILIKE '%faixa%' THEN 'age_range'
-          WHEN ag.group_name ILIKE '%escolaridade%' OR ag.group_name ILIKE '%educação%' THEN 'education'
-          WHEN ag.group_name ILIKE '%raça%' OR ag.group_name ILIKE '%cor%' THEN 'race'
-          WHEN ag.group_name ILIKE '%região%' THEN 'region'
-          WHEN ag.group_name ILIKE '%estado%' OR ag.group_name ILIKE '%uf%' THEN 'state'
-          ELSE LOWER(REPLACE(ag.group_name, ' ', '_'))
-        END as key,
-        ag.group_name as name,
-        ag.id as "answerGroupId",
-        CASE 
-          WHEN ag.group_name ILIKE '%sexo%' OR ag.group_name ILIKE '%gênero%' THEN 'Gênero do respondente'
-          WHEN ag.group_name ILIKE '%idade%' OR ag.group_name ILIKE '%faixa%' THEN 'Faixa etária do respondente'
-          WHEN ag.group_name ILIKE '%escolaridade%' OR ag.group_name ILIKE '%educação%' THEN 'Nível de escolaridade'
-          WHEN ag.group_name ILIKE '%raça%' OR ag.group_name ILIKE '%cor%' THEN 'Raça/cor declarada'
-          WHEN ag.group_name ILIKE '%região%' THEN 'Região geográfica'
-          WHEN ag.group_name ILIKE '%estado%' OR ag.group_name ILIKE '%uf%' THEN 'Estado (UF)'
-          ELSE ag.group_name
-        END as description
-      FROM answer_groups ag
-      WHERE ag.id IN (0, 52, 53, 54, 55, 56)  -- IDs dos grupos de perfil demográfico
-        AND ag.id != 0
-      ORDER BY key
-    `);
+    try {
+      // Retornar atributos de perfil disponíveis na view response_analysis
+      const profileAttributes = [
+        {
+          key: 'gender',
+          name: 'Gênero',
+          description: 'Gênero do respondente',
+          column: 'gender'
+        },
+        {
+          key: 'age_range',
+          name: 'Faixa Etária',
+          description: 'Faixa etária do respondente',
+          column: 'age_range'
+        },
+        {
+          key: 'education_level',
+          name: 'Escolaridade',
+          description: 'Nível de escolaridade',
+          column: 'education_level'
+        },
+        {
+          key: 'race',
+          name: 'Raça/Cor',
+          description: 'Raça/cor declarada',
+          column: 'race'
+        },
+        {
+          key: 'region_name',
+          name: 'Região',
+          description: 'Região geográfica',
+          column: 'region_name'
+        },
+        {
+          key: 'state_name',
+          name: 'Estado',
+          description: 'Estado (UF)',
+          column: 'state_name'
+        }
+      ];
 
-    return profileAttributes;
+      return profileAttributes;
+    } catch (error) {
+      console.error('❌ Erro em getProfileAttributes:', error);
+      throw error;
+    }
   }
 
   async getChartData(questionCode: string) {

@@ -1,4 +1,4 @@
-services:
+﻿services:
   postgres:
     image: postgres:15-alpine
     container_name: survey_postgres
@@ -7,11 +7,10 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5433:5432"  # External port 5433, internal port 5432
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./init-database.sql:/docker-entrypoint-initdb.d/01-init-database.sql
-      - ./voxdem_survey_dump_clean.sql:/docker-entrypoint-initdb.d/02-voxdem_survey_dump.sql
+      - ./voxdem_survey_dump.sql:/docker-entrypoint-initdb.d/dump.sql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
@@ -31,7 +30,7 @@ services:
     environment:
       NODE_ENV: production
       DATABASE_HOST: postgres
-      DATABASE_PORT: 5432  # Internal container communication uses 5432
+      DATABASE_PORT: 5432
       DATABASE_NAME: voxdem_survey
       DATABASE_USER: postgres
       DATABASE_PASSWORD: postgres
