@@ -1,39 +1,40 @@
-version: '3.8'
-
 services:
-  voxdem-api:
-    build: .
-    container_name: voxdem-chart-api
-    ports:
-      - "3000:3000"
-      - "5432:5432"
+  postgres:
+    image: postgres:15-alpine
+    container_name: survey_postgres
     environment:
-      - NODE_ENV=production
-      - PORT=3000
-      - DB_HOST=localhost
-      - DB_PORT=5432
-      - DB_USERNAME=postgres
-      - DB_PASSWORD=voxdem2024
-      - DB_NAME=voxdem_survey
+      POSTGRES_DB: voxdem_survey
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"  # External port 5433, internal port 5432
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./logs:/app/logs
-    restart: unless-stopped
+      - ./init-database.sql:/docker-entrypoint-initdb.d/01-init-database.sql
+      - ./voxdem_survey_dump_clean.sql:/docker-entrypoint-initdb.d/02-voxdem_survey_dump.sql
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 60s
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.voxdem.rule=Host(`voxdem-api.localhost`)"
-      - "traefik.http.services.voxdem.loadbalancer.server.port=3000"
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: 
+      context: .
+      target: production
+    container_name: survey_app
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432  # Internal container communication uses 5432
+      DATABASE_NAME: voxdem_survey
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: postgres
 
 volumes:
   postgres_data:
-    driver: local
-
-networks:
-  default:
-    driver: bridge
