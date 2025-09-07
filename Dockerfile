@@ -1,68 +1,42 @@
-# VoxDem Chart API v2.0.0 - Dockerfile
-# Multi-stage build for production-ready container
-
-# Stage 1: Build TypeScript
+# Stage 1: Build Stage
 FROM node:18-alpine AS builder
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
 # Copy package files
 COPY package*.json ./
-COPY tsconfig.json ./
 
-# Install dependencies
-RUN npm ci --only=production
+# Install all dependencies (including devDependencies)
+RUN npm ci
 
 # Copy source code
-COPY src/ ./src/
+COPY . .
 
-# Build TypeScript
+# Build the application
 RUN npm run build
 
 # Stage 2: Production Runtime
-FROM node:18-alpine AS runtime
+FROM node:18-alpine AS production
 
-# Install PostgreSQL client and server
-RUN apk add --no-cache postgresql postgresql-contrib
+WORKDIR /usr/src/app
 
-# Create app directory
-WORKDIR /app
+# Copy package files
+COPY package*.json ./
 
-# Create postgres user and directories
-RUN addgroup -g 70 postgres && \
-    adduser -u 70 -G postgres -h /var/lib/postgresql -s /bin/sh -D postgres && \
-    mkdir -p /var/lib/postgresql/data && \
-    mkdir -p /var/run/postgresql && \
-    chown -R postgres:postgres /var/lib/postgresql && \
-    chown -R postgres:postgres /var/run/postgresql
+# Install only production dependencies
+RUN npm ci --only=production && npm cache clean --force
 
-# Copy built application
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/dist ./dist
-COPY package.json ./
+# Copy built application from builder stage
+COPY --from=builder /usr/src/app/dist ./dist
 
-# Copy database dump file
-COPY voxdem_survey_dump.sql ./voxdem_survey_dump.sql
+# Create non-root user
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001
 
-# Create initialization script
-COPY docker-entrypoint.sh ./docker-entrypoint.sh
-RUN chmod +x ./docker-entrypoint.sh
+# Change ownership
+RUN chown -R nodejs:nodejs /usr/src/app
+USER nodejs
 
-# Environment variables
-ENV NODE_ENV=production
-ENV PORT=3000
-ENV DB_HOST=localhost
-ENV DB_PORT=5432
-ENV DB_USERNAME=postgres
-ENV DB_PASSWORD=voxdem2024
-ENV DB_NAME=voxdem_survey
+EXPOSE 3000
 
-# Expose ports
-EXPOSE 3000 5432
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
-  CMD curl -f http://localhost:3000/api/health || exit 1
-
-# Run the application
-CMD ["./docker-entrypoint.sh"]
+CMD ["node", "dist/index.js"]
