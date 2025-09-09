@@ -5,7 +5,7 @@
 -- Dumped from database version 16.1
 -- Dumped by pg_dump version 16.0
 
--- Started on 2025-09-07 17:30:18
+-- Started on 2025-09-08 23:30:17
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -19,7 +19,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- TOC entry 262 (class 1255 OID 2766787)
+-- TOC entry 260 (class 1255 OID 2766787)
 -- Name: update_updated_at_column(); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -70,7 +70,7 @@ CREATE SEQUENCE public.activity_sectors_id_seq
 ALTER SEQUENCE public.activity_sectors_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5075 (class 0 OID 0)
+-- TOC entry 5063 (class 0 OID 0)
 -- Dependencies: 231
 -- Name: activity_sectors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -109,7 +109,7 @@ CREATE SEQUENCE public.activity_statuses_id_seq
 ALTER SEQUENCE public.activity_statuses_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5076 (class 0 OID 0)
+-- TOC entry 5064 (class 0 OID 0)
 -- Dependencies: 233
 -- Name: activity_statuses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -150,7 +150,7 @@ CREATE SEQUENCE public.age_ranges_id_seq
 ALTER SEQUENCE public.age_ranges_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5077 (class 0 OID 0)
+-- TOC entry 5065 (class 0 OID 0)
 -- Dependencies: 223
 -- Name: age_ranges_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -174,7 +174,7 @@ CREATE TABLE public.answer_groups (
 ALTER TABLE public.answer_groups OWNER TO postgres;
 
 --
--- TOC entry 5078 (class 0 OID 0)
+-- TOC entry 5066 (class 0 OID 0)
 -- Dependencies: 240
 -- Name: TABLE answer_groups; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -199,7 +199,7 @@ CREATE SEQUENCE public.answer_groups_id_seq
 ALTER SEQUENCE public.answer_groups_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5079 (class 0 OID 0)
+-- TOC entry 5067 (class 0 OID 0)
 -- Dependencies: 239
 -- Name: answer_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -224,7 +224,7 @@ CREATE TABLE public.answer_options (
 ALTER TABLE public.answer_options OWNER TO postgres;
 
 --
--- TOC entry 5080 (class 0 OID 0)
+-- TOC entry 5068 (class 0 OID 0)
 -- Dependencies: 242
 -- Name: TABLE answer_options; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -233,7 +233,7 @@ COMMENT ON TABLE public.answer_options IS 'Valores possíveis para cada grupo de
 
 
 --
--- TOC entry 5081 (class 0 OID 0)
+-- TOC entry 5069 (class 0 OID 0)
 -- Dependencies: 242
 -- Name: COLUMN answer_options.option_order; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -258,7 +258,7 @@ CREATE SEQUENCE public.answer_options_id_seq
 ALTER SEQUENCE public.answer_options_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5082 (class 0 OID 0)
+-- TOC entry 5070 (class 0 OID 0)
 -- Dependencies: 241
 -- Name: answer_options_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -297,7 +297,7 @@ CREATE SEQUENCE public.city_sizes_id_seq
 ALTER SEQUENCE public.city_sizes_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5083 (class 0 OID 0)
+-- TOC entry 5071 (class 0 OID 0)
 -- Dependencies: 219
 -- Name: city_sizes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -337,7 +337,7 @@ CREATE SEQUENCE public.education_levels_id_seq
 ALTER SEQUENCE public.education_levels_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5084 (class 0 OID 0)
+-- TOC entry 5072 (class 0 OID 0)
 -- Dependencies: 229
 -- Name: education_levels_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -376,7 +376,7 @@ CREATE SEQUENCE public.genders_id_seq
 ALTER SEQUENCE public.genders_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5085 (class 0 OID 0)
+-- TOC entry 5073 (class 0 OID 0)
 -- Dependencies: 221
 -- Name: genders_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -415,7 +415,7 @@ CREATE SEQUENCE public.literacy_levels_id_seq
 ALTER SEQUENCE public.literacy_levels_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5086 (class 0 OID 0)
+-- TOC entry 5074 (class 0 OID 0)
 -- Dependencies: 227
 -- Name: literacy_levels_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -454,7 +454,7 @@ CREATE SEQUENCE public.occupations_id_seq
 ALTER SEQUENCE public.occupations_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5087 (class 0 OID 0)
+-- TOC entry 5075 (class 0 OID 0)
 -- Dependencies: 235
 -- Name: occupations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -492,7 +492,7 @@ CREATE TABLE public.profiles (
 ALTER TABLE public.profiles OWNER TO postgres;
 
 --
--- TOC entry 5088 (class 0 OID 0)
+-- TOC entry 5076 (class 0 OID 0)
 -- Dependencies: 238
 -- Name: TABLE profiles; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -501,7 +501,7 @@ COMMENT ON TABLE public.profiles IS 'Perfil demográfico dos respondentes da pes
 
 
 --
--- TOC entry 5089 (class 0 OID 0)
+-- TOC entry 5077 (class 0 OID 0)
 -- Dependencies: 238
 -- Name: COLUMN profiles.id_ipec; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -609,51 +609,12 @@ CREATE SEQUENCE public.profiles_id_seq
 ALTER SEQUENCE public.profiles_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5090 (class 0 OID 0)
+-- TOC entry 5078 (class 0 OID 0)
 -- Dependencies: 237
 -- Name: profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.profiles_id_seq OWNED BY public.profiles.id;
-
-
---
--- TOC entry 250 (class 1259 OID 2766844)
--- Name: question_groups; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.question_groups (
-    id integer NOT NULL,
-    name character varying(100) NOT NULL,
-    description text
-);
-
-
-ALTER TABLE public.question_groups OWNER TO postgres;
-
---
--- TOC entry 249 (class 1259 OID 2766843)
--- Name: question_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.question_groups_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.question_groups_id_seq OWNER TO postgres;
-
---
--- TOC entry 5091 (class 0 OID 0)
--- Dependencies: 249
--- Name: question_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.question_groups_id_seq OWNED BY public.question_groups.id;
 
 
 --
@@ -675,7 +636,7 @@ CREATE TABLE public.questions (
 ALTER TABLE public.questions OWNER TO postgres;
 
 --
--- TOC entry 5092 (class 0 OID 0)
+-- TOC entry 5079 (class 0 OID 0)
 -- Dependencies: 244
 -- Name: TABLE questions; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -684,7 +645,7 @@ COMMENT ON TABLE public.questions IS 'Perguntas da pesquisa VoxDem';
 
 
 --
--- TOC entry 5093 (class 0 OID 0)
+-- TOC entry 5080 (class 0 OID 0)
 -- Dependencies: 244
 -- Name: COLUMN questions.question_order; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -709,7 +670,7 @@ CREATE SEQUENCE public.questions_id_seq
 ALTER SEQUENCE public.questions_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5094 (class 0 OID 0)
+-- TOC entry 5081 (class 0 OID 0)
 -- Dependencies: 243
 -- Name: questions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -734,7 +695,7 @@ CREATE SEQUENCE public.races_id_seq
 ALTER SEQUENCE public.races_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5095 (class 0 OID 0)
+-- TOC entry 5082 (class 0 OID 0)
 -- Dependencies: 225
 -- Name: races_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -759,7 +720,7 @@ CREATE SEQUENCE public.regions_id_seq
 ALTER SEQUENCE public.regions_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5096 (class 0 OID 0)
+-- TOC entry 5083 (class 0 OID 0)
 -- Dependencies: 215
 -- Name: regions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -785,7 +746,7 @@ CREATE TABLE public.survey_responses (
 ALTER TABLE public.survey_responses OWNER TO postgres;
 
 --
--- TOC entry 5097 (class 0 OID 0)
+-- TOC entry 5084 (class 0 OID 0)
 -- Dependencies: 246
 -- Name: TABLE survey_responses; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -794,7 +755,7 @@ COMMENT ON TABLE public.survey_responses IS 'Respostas dos participantes da pesq
 
 
 --
--- TOC entry 5098 (class 0 OID 0)
+-- TOC entry 5085 (class 0 OID 0)
 -- Dependencies: 246
 -- Name: COLUMN survey_responses.raw_value; Type: COMMENT; Schema: public; Owner: postgres
 --
@@ -847,7 +808,7 @@ CREATE SEQUENCE public.states_id_seq
 ALTER SEQUENCE public.states_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5099 (class 0 OID 0)
+-- TOC entry 5086 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: states_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -872,7 +833,7 @@ CREATE SEQUENCE public.survey_responses_id_seq
 ALTER SEQUENCE public.survey_responses_id_seq OWNER TO postgres;
 
 --
--- TOC entry 5100 (class 0 OID 0)
+-- TOC entry 5087 (class 0 OID 0)
 -- Dependencies: 245
 -- Name: survey_responses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -881,7 +842,7 @@ ALTER SEQUENCE public.survey_responses_id_seq OWNED BY public.survey_responses.i
 
 
 --
--- TOC entry 4785 (class 2604 OID 2766624)
+-- TOC entry 4780 (class 2604 OID 2766624)
 -- Name: activity_sectors id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -889,7 +850,7 @@ ALTER TABLE ONLY public.activity_sectors ALTER COLUMN id SET DEFAULT nextval('pu
 
 
 --
--- TOC entry 4786 (class 2604 OID 2766633)
+-- TOC entry 4781 (class 2604 OID 2766633)
 -- Name: activity_statuses id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -897,7 +858,7 @@ ALTER TABLE ONLY public.activity_statuses ALTER COLUMN id SET DEFAULT nextval('p
 
 
 --
--- TOC entry 4781 (class 2604 OID 2766588)
+-- TOC entry 4776 (class 2604 OID 2766588)
 -- Name: age_ranges id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -905,7 +866,7 @@ ALTER TABLE ONLY public.age_ranges ALTER COLUMN id SET DEFAULT nextval('public.a
 
 
 --
--- TOC entry 4791 (class 2604 OID 2766717)
+-- TOC entry 4786 (class 2604 OID 2766717)
 -- Name: answer_groups id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -913,7 +874,7 @@ ALTER TABLE ONLY public.answer_groups ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
--- TOC entry 4793 (class 2604 OID 2766727)
+-- TOC entry 4788 (class 2604 OID 2766727)
 -- Name: answer_options id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -921,7 +882,7 @@ ALTER TABLE ONLY public.answer_options ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
--- TOC entry 4779 (class 2604 OID 2766570)
+-- TOC entry 4774 (class 2604 OID 2766570)
 -- Name: city_sizes id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -929,7 +890,7 @@ ALTER TABLE ONLY public.city_sizes ALTER COLUMN id SET DEFAULT nextval('public.c
 
 
 --
--- TOC entry 4784 (class 2604 OID 2766615)
+-- TOC entry 4779 (class 2604 OID 2766615)
 -- Name: education_levels id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -937,7 +898,7 @@ ALTER TABLE ONLY public.education_levels ALTER COLUMN id SET DEFAULT nextval('pu
 
 
 --
--- TOC entry 4780 (class 2604 OID 2766579)
+-- TOC entry 4775 (class 2604 OID 2766579)
 -- Name: genders id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -945,7 +906,7 @@ ALTER TABLE ONLY public.genders ALTER COLUMN id SET DEFAULT nextval('public.gend
 
 
 --
--- TOC entry 4783 (class 2604 OID 2766606)
+-- TOC entry 4778 (class 2604 OID 2766606)
 -- Name: literacy_levels id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -953,7 +914,7 @@ ALTER TABLE ONLY public.literacy_levels ALTER COLUMN id SET DEFAULT nextval('pub
 
 
 --
--- TOC entry 4787 (class 2604 OID 2766642)
+-- TOC entry 4782 (class 2604 OID 2766642)
 -- Name: occupations id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -961,7 +922,7 @@ ALTER TABLE ONLY public.occupations ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
--- TOC entry 4788 (class 2604 OID 2766651)
+-- TOC entry 4783 (class 2604 OID 2766651)
 -- Name: profiles id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -969,15 +930,7 @@ ALTER TABLE ONLY public.profiles ALTER COLUMN id SET DEFAULT nextval('public.pro
 
 
 --
--- TOC entry 4799 (class 2604 OID 2766847)
--- Name: question_groups id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.question_groups ALTER COLUMN id SET DEFAULT nextval('public.question_groups_id_seq'::regclass);
-
-
---
--- TOC entry 4794 (class 2604 OID 2766743)
+-- TOC entry 4789 (class 2604 OID 2766743)
 -- Name: questions id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -985,7 +938,7 @@ ALTER TABLE ONLY public.questions ALTER COLUMN id SET DEFAULT nextval('public.qu
 
 
 --
--- TOC entry 4782 (class 2604 OID 2766597)
+-- TOC entry 4777 (class 2604 OID 2766597)
 -- Name: races id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -993,7 +946,7 @@ ALTER TABLE ONLY public.races ALTER COLUMN id SET DEFAULT nextval('public.races_
 
 
 --
--- TOC entry 4777 (class 2604 OID 2766547)
+-- TOC entry 4772 (class 2604 OID 2766547)
 -- Name: regions id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1001,7 +954,7 @@ ALTER TABLE ONLY public.regions ALTER COLUMN id SET DEFAULT nextval('public.regi
 
 
 --
--- TOC entry 4778 (class 2604 OID 2766556)
+-- TOC entry 4773 (class 2604 OID 2766556)
 -- Name: states id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1009,7 +962,7 @@ ALTER TABLE ONLY public.states ALTER COLUMN id SET DEFAULT nextval('public.state
 
 
 --
--- TOC entry 4797 (class 2604 OID 2766761)
+-- TOC entry 4792 (class 2604 OID 2766761)
 -- Name: survey_responses id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -1017,7 +970,7 @@ ALTER TABLE ONLY public.survey_responses ALTER COLUMN id SET DEFAULT nextval('pu
 
 
 --
--- TOC entry 5053 (class 0 OID 2766621)
+-- TOC entry 5043 (class 0 OID 2766621)
 -- Dependencies: 232
 -- Data for Name: activity_sectors; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1043,7 +996,7 @@ COPY public.activity_sectors (id, code, description) FROM stdin;
 
 
 --
--- TOC entry 5055 (class 0 OID 2766630)
+-- TOC entry 5045 (class 0 OID 2766630)
 -- Dependencies: 234
 -- Data for Name: activity_statuses; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1066,7 +1019,7 @@ COPY public.activity_statuses (id, code, description) FROM stdin;
 
 
 --
--- TOC entry 5045 (class 0 OID 2766585)
+-- TOC entry 5035 (class 0 OID 2766585)
 -- Dependencies: 224
 -- Data for Name: age_ranges; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1081,71 +1034,71 @@ COPY public.age_ranges (id, code, description, min_age, max_age) FROM stdin;
 
 
 --
--- TOC entry 5061 (class 0 OID 2766714)
+-- TOC entry 5051 (class 0 OID 2766714)
 -- Dependencies: 240
 -- Data for Name: answer_groups; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.answer_groups (id, name, description, created_at) FROM stdin;
-100	satisfacao_5_niveis	Escala de satisfação (7 níveis)	2025-09-03 23:49:31.386415
-101	grupo_p02	Escala de importância (13 níveis)	2025-09-03 23:49:31.386415
-102	grupo_p23	Escala de concordância (13 níveis)	2025-09-03 23:49:31.386415
-103	grupo_p54	Opções categóricas específicas (13 opções)	2025-09-03 23:49:31.386415
-104	escala_0_10_democracia	Escala de avaliação de 0 a 10 (13 opções)	2025-09-03 23:49:31.386415
-105	sim_nao	Opções de resposta Sim/Não com variações (4 opções)	2025-09-03 23:49:31.386415
-107	grupo_p60	Opções categóricas específicas (13 opções)	2025-09-03 23:49:31.386415
-108	grupo_p62	Opções categóricas específicas (6 opções)	2025-09-03 23:49:31.386415
-109	grupo_p63	Opções categóricas específicas (13 opções)	2025-09-03 23:49:31.386415
-110	grupo_p64	Opções categóricas específicas (4 opções)	2025-09-03 23:49:31.386415
-111	grupo_p75	Opções categóricas específicas (6 opções)	2025-09-03 23:49:31.386415
-112	grupo_p76	Opções categóricas específicas (7 opções)	2025-09-03 23:49:31.386415
-113	grupo_p77	Opções categóricas específicas (5 opções)	2025-09-03 23:49:31.386415
-114	grupo_p78	Opções categóricas específicas (4 opções)	2025-09-03 23:49:31.386415
-115	grupo_p90	Opções categóricas específicas (6 opções)	2025-09-03 23:49:31.386415
-116	grupo_p91	Opções categóricas específicas (4 opções)	2025-09-03 23:49:31.386415
-106	grupo_p59	Escala de 0 a 10 para avaliação de importância	2025-09-03 23:49:31.386415
-139	grupo_p157	Escala de 0 a 10 para avaliação de importância	2025-09-03 23:49:31.386415
-117	grupo_p92	Escala de frequência (5 níveis)	2025-09-03 23:49:31.386415
-118	grupo_p93	Opções categóricas específicas (13 opções)	2025-09-03 23:49:31.386415
-119	grupo_p106	Opções categóricas específicas (7 opções)	2025-09-03 23:49:31.386415
-120	grupo_p106a	Opções categóricas específicas (5 opções)	2025-09-03 23:49:31.386415
-121	grupo_p107	Opções categóricas específicas (5 opções)	2025-09-03 23:49:31.386415
-122	grupo_p108	Escala de importância (13 níveis)	2025-09-03 23:49:31.386415
-123	grupo_p115	Opções categóricas específicas (4 opções)	2025-09-03 23:49:31.386415
-124	grupo_p119	Opções categóricas específicas (7 opções)	2025-09-03 23:49:31.386415
-125	grupo_p120	Escala de frequência (8 níveis)	2025-09-03 23:49:31.386415
-126	grupo_p121m	Faixas etárias (5 opções)	2025-09-03 23:49:31.386415
-127	grupo_p122	Opções categóricas específicas (6 opções)	2025-09-03 23:49:31.386415
-129	grupo_p123_qtde	Opções categóricas específicas (5 opções)	2025-09-03 23:49:31.386415
-130	grupo_p125	Opções categóricas específicas (6 opções)	2025-09-03 23:49:31.386415
-131	grupo_p126	Opções categóricas específicas (7 opções)	2025-09-03 23:49:31.386415
-132	grupo_p131	Escala de concordância (13 níveis)	2025-09-03 23:49:31.386415
-134	grupo_p143	Opções categóricas específicas (6 opções)	2025-09-03 23:49:31.386415
-136	grupo_p145_1	Opções categóricas específicas (4 opções)	2025-09-03 23:49:31.386415
-137	grupo_p146	Escala de concordância (2 níveis)	2025-09-03 23:49:31.386415
-138	grupo_p156	Faixas etárias (9 opções)	2025-09-03 23:49:31.386415
-140	grupo_p159	Opções categóricas específicas (6 opções)	2025-09-03 23:49:31.386415
-141	grupo_p160	Opções categóricas específicas (3 opções)	2025-09-03 23:49:31.386415
-142	grupo_p166	Opções categóricas específicas (5 opções)	2025-09-03 23:49:31.386415
-143	grupo_p172	Opções categóricas específicas (6 opções)	2025-09-03 23:49:31.386415
-144	grupo_p174	Opções categóricas específicas (4 opções)	2025-09-03 23:49:31.386415
-145	grupo_p180	Opções categóricas específicas (12 opções)	2025-09-03 23:49:31.386415
-146	grupo_p182	Opções categóricas específicas (6 opções)	2025-09-03 23:49:31.386415
-147	grupo_p183	Opções categóricas específicas (7 opções)	2025-09-03 23:49:31.386415
-149	grupo_p184m	Faixas etárias (5 opções)	2025-09-03 23:49:31.386415
-150	grupo_p185	Opções categóricas específicas (5 opções)	2025-09-03 23:49:31.386415
-153	grupo_p186_religiao	Opções categóricas específicas (6 opções)	2025-09-03 23:49:31.386415
-154	grupo_p_orient	Opções categóricas específicas (7 opções)	2025-09-03 23:49:31.386415
-155	grupo_pconjoint_1	Opções categóricas específicas (2 opções)	2025-09-03 23:49:31.386415
-156	grupo_pea	Opções categóricas específicas (8 opções)	2025-09-03 23:49:31.386415
-157	grupo_religiao	Opções categóricas específicas (6 opções)	2025-09-03 23:49:31.386415
-133	escala_0_10_democracia_133	Escala de avaliação de 0 a 10 (13 opções)	2025-09-03 23:49:31.386415
-128	sim_nao_128	Opções de resposta Sim/Não com variações (4 opções)	2025-09-03 23:49:31.386415
+100	satisfacao_5_niveis	7 opções de escala de satisfação	2025-09-03 23:49:31.386415
+101	grupo_p02	13 opções de escala de importância	2025-09-03 23:49:31.386415
+102	grupo_p23	13 opções de escala de concordância	2025-09-03 23:49:31.386415
+103	grupo_p54	13 opções de partidos políticos	2025-09-03 23:49:31.386415
+104	escala_0_10_democracia	13 opções de partidos políticos	2025-09-03 23:49:31.386415
+105	sim_nao	4 opções de resposta (ex: Sim...)	2025-09-03 23:49:31.386415
+106	grupo_p59	12 opções de partidos políticos	2025-09-03 23:49:31.386415
+107	grupo_p60	13 opções de resposta (ex: 0 - Não gosta do político de j...)	2025-09-03 23:49:31.386415
+108	grupo_p62	6 opções de resposta (ex: Muito interessado...)	2025-09-03 23:49:31.386415
+109	grupo_p63	13 opções de resposta (ex: 0 - Esquerda...)	2025-09-03 23:49:31.386415
+110	grupo_p64	4 opções de resposta (ex: Muita confiança...)	2025-09-03 23:49:31.386415
+111	grupo_p75	6 opções de resposta (ex: Muito seguro...)	2025-09-03 23:49:31.386415
+112	grupo_p76	7 opções de resposta (ex: Confiaria muito...)	2025-09-03 23:49:31.386415
+113	grupo_p77	5 opções de resposta (ex: Aprova...)	2025-09-03 23:49:31.386415
+114	grupo_p78	4 opções de resposta (ex: Aprova...)	2025-09-03 23:49:31.386415
+115	grupo_p90	6 opções de resposta (ex: Ação humana...)	2025-09-03 23:49:31.386415
+116	grupo_p91	4 faixas etárias	2025-09-03 23:49:31.386415
+154	grupo_p_orient	7 opções de resposta (ex: Heterossexual...)	2025-09-03 23:49:31.386415
+155	grupo_pconjoint_1	2 opções de resposta (ex: Cenário 1...)	2025-09-03 23:49:31.386415
+156	grupo_pea	8 opções de escala de frequência	2025-09-03 23:49:31.386415
+157	grupo_religiao	6 opções de resposta (ex: Católica Apostólica Romana...)	2025-09-03 23:49:31.386415
+117	grupo_p92	5 opções de escala de frequência	2025-09-03 23:49:31.386415
+118	grupo_p93	13 opções de resposta (ex: 0 - Completamente despreocupad...)	2025-09-03 23:49:31.386415
+119	grupo_p106	7 opções de resposta (ex: Diminuir...)	2025-09-03 23:49:31.386415
+120	grupo_p106a	5 opções de resposta (ex: Diminuir...)	2025-09-03 23:49:31.386415
+121	grupo_p107	5 faixas etárias	2025-09-03 23:49:31.386415
+122	grupo_p108	13 opções de escala de importância	2025-09-03 23:49:31.386415
+123	grupo_p115	4 regiões geográficas	2025-09-03 23:49:31.386415
+124	grupo_p119	7 opções de resposta (ex: Muito melhor...)	2025-09-03 23:49:31.386415
+125	grupo_p120	8 opções de escala de frequência	2025-09-03 23:49:31.386415
+126	grupo_p121m	5 faixas etárias	2025-09-03 23:49:31.386415
+127	grupo_p122	6 opções de resposta (ex: Prefeito...)	2025-09-03 23:49:31.386415
+128	sim_nao_128	4 faixas etárias	2025-09-03 23:49:31.386415
+129	grupo_p123_qtde	5 faixas etárias	2025-09-03 23:49:31.386415
+130	grupo_p125	6 opções de resposta (ex: Bolsonaristas...)	2025-09-03 23:49:31.386415
+131	grupo_p126	7 estados/UF do Brasil	2025-09-03 23:49:31.386415
+132	grupo_p131	13 opções de escala de concordância	2025-09-03 23:49:31.386415
+133	escala_0_10_democracia_133	13 opções de escala de importância	2025-09-03 23:49:31.386415
+134	grupo_p143	6 faixas etárias	2025-09-03 23:49:31.386415
+136	grupo_p145_1	4 opções de resposta (ex: Deveria ser permitido...)	2025-09-03 23:49:31.386415
+137	grupo_p146	2 opções de escala de concordância	2025-09-03 23:49:31.386415
+138	grupo_p156	9 faixas etárias	2025-09-03 23:49:31.386415
+139	grupo_p157	13 opções de partidos políticos	2025-09-03 23:49:31.386415
+140	grupo_p159	6 opções de resposta (ex: Jair Bolsonaro...)	2025-09-03 23:49:31.386415
+141	grupo_p160	3 opções de escala de frequência	2025-09-03 23:49:31.386415
+142	grupo_p166	5 opções de resposta (ex: Pertence e participa...)	2025-09-03 23:49:31.386415
+143	grupo_p172	6 opções de escala de importância	2025-09-03 23:49:31.386415
+144	grupo_p174	4 opções de escala de concordância	2025-09-03 23:49:31.386415
+145	grupo_p180	12 opções de escala de frequência	2025-09-03 23:49:31.386415
+146	grupo_p182	6 opções de resposta (ex: Muito comum...)	2025-09-03 23:49:31.386415
+147	grupo_p183	7 opções de resposta (ex: Nenhum...)	2025-09-03 23:49:31.386415
+149	grupo_p184m	5 faixas etárias	2025-09-03 23:49:31.386415
+150	grupo_p185	5 opções de escala de frequência	2025-09-03 23:49:31.386415
+153	grupo_p186_religiao	6 opções de resposta (ex: Não frequentava...)	2025-09-03 23:49:31.386415
 \.
 
 
 --
--- TOC entry 5063 (class 0 OID 2766724)
+-- TOC entry 5053 (class 0 OID 2766724)
 -- Dependencies: 242
 -- Data for Name: answer_options; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1546,7 +1499,7 @@ COPY public.answer_options (id, answer_group_id, code, label, option_order) FROM
 
 
 --
--- TOC entry 5041 (class 0 OID 2766567)
+-- TOC entry 5031 (class 0 OID 2766567)
 -- Dependencies: 220
 -- Data for Name: city_sizes; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1563,7 +1516,7 @@ COPY public.city_sizes (id, code, description) FROM stdin;
 
 
 --
--- TOC entry 5051 (class 0 OID 2766612)
+-- TOC entry 5041 (class 0 OID 2766612)
 -- Dependencies: 230
 -- Data for Name: education_levels; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1590,7 +1543,7 @@ COPY public.education_levels (id, code, description, level_order) FROM stdin;
 
 
 --
--- TOC entry 5043 (class 0 OID 2766576)
+-- TOC entry 5033 (class 0 OID 2766576)
 -- Dependencies: 222
 -- Data for Name: genders; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1602,7 +1555,7 @@ COPY public.genders (id, code, description) FROM stdin;
 
 
 --
--- TOC entry 5049 (class 0 OID 2766603)
+-- TOC entry 5039 (class 0 OID 2766603)
 -- Dependencies: 228
 -- Data for Name: literacy_levels; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1614,7 +1567,7 @@ COPY public.literacy_levels (id, code, description) FROM stdin;
 
 
 --
--- TOC entry 5057 (class 0 OID 2766639)
+-- TOC entry 5047 (class 0 OID 2766639)
 -- Dependencies: 236
 -- Data for Name: occupations; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1637,7 +1590,7 @@ COPY public.occupations (id, code, description) FROM stdin;
 
 
 --
--- TOC entry 5059 (class 0 OID 2766648)
+-- TOC entry 5049 (class 0 OID 2766648)
 -- Dependencies: 238
 -- Data for Name: profiles; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3151,17 +3104,7 @@ COPY public.profiles (id, id_ipec, setor, state_id, city_size_id, region_id, gen
 
 
 --
--- TOC entry 5069 (class 0 OID 2766844)
--- Dependencies: 250
--- Data for Name: question_groups; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.question_groups (id, name, description) FROM stdin;
-\.
-
-
---
--- TOC entry 5065 (class 0 OID 2766740)
+-- TOC entry 5055 (class 0 OID 2766740)
 -- Dependencies: 244
 -- Data for Name: questions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3384,7 +3327,7 @@ COPY public.questions (id, code, text, answer_group_id, question_order, is_activ
 
 
 --
--- TOC entry 5047 (class 0 OID 2766594)
+-- TOC entry 5037 (class 0 OID 2766594)
 -- Dependencies: 226
 -- Data for Name: races; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3401,7 +3344,7 @@ COPY public.races (id, code, description) FROM stdin;
 
 
 --
--- TOC entry 5037 (class 0 OID 2766544)
+-- TOC entry 5027 (class 0 OID 2766544)
 -- Dependencies: 216
 -- Data for Name: regions; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3416,7 +3359,7 @@ COPY public.regions (id, code, name) FROM stdin;
 
 
 --
--- TOC entry 5039 (class 0 OID 2766553)
+-- TOC entry 5029 (class 0 OID 2766553)
 -- Dependencies: 218
 -- Data for Name: states; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -3453,7 +3396,7 @@ COPY public.states (id, code, name, region_id) FROM stdin;
 
 
 --
--- TOC entry 5067 (class 0 OID 2766758)
+-- TOC entry 5057 (class 0 OID 2766758)
 -- Dependencies: 246
 -- Data for Name: survey_responses; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -312527,7 +312470,7 @@ COPY public.survey_responses (id, profile_id, question_id, answer_option_id, raw
 
 
 --
--- TOC entry 5101 (class 0 OID 0)
+-- TOC entry 5088 (class 0 OID 0)
 -- Dependencies: 231
 -- Name: activity_sectors_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -312536,7 +312479,7 @@ SELECT pg_catalog.setval('public.activity_sectors_id_seq', 16, true);
 
 
 --
--- TOC entry 5102 (class 0 OID 0)
+-- TOC entry 5089 (class 0 OID 0)
 -- Dependencies: 233
 -- Name: activity_statuses_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -312545,7 +312488,7 @@ SELECT pg_catalog.setval('public.activity_statuses_id_seq', 13, true);
 
 
 --
--- TOC entry 5103 (class 0 OID 0)
+-- TOC entry 5090 (class 0 OID 0)
 -- Dependencies: 223
 -- Name: age_ranges_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -312554,7 +312497,7 @@ SELECT pg_catalog.setval('public.age_ranges_id_seq', 5, true);
 
 
 --
--- TOC entry 5104 (class 0 OID 0)
+-- TOC entry 5091 (class 0 OID 0)
 -- Dependencies: 239
 -- Name: answer_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -312563,7 +312506,7 @@ SELECT pg_catalog.setval('public.answer_groups_id_seq', 5, true);
 
 
 --
--- TOC entry 5105 (class 0 OID 0)
+-- TOC entry 5092 (class 0 OID 0)
 -- Dependencies: 241
 -- Name: answer_options_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -312572,7 +312515,7 @@ SELECT pg_catalog.setval('public.answer_options_id_seq', 1957, true);
 
 
 --
--- TOC entry 5106 (class 0 OID 0)
+-- TOC entry 5093 (class 0 OID 0)
 -- Dependencies: 219
 -- Name: city_sizes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -312581,7 +312524,7 @@ SELECT pg_catalog.setval('public.city_sizes_id_seq', 7, true);
 
 
 --
--- TOC entry 5107 (class 0 OID 0)
+-- TOC entry 5094 (class 0 OID 0)
 -- Dependencies: 229
 -- Name: education_levels_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -312590,7 +312533,7 @@ SELECT pg_catalog.setval('public.education_levels_id_seq', 17, true);
 
 
 --
--- TOC entry 5108 (class 0 OID 0)
+-- TOC entry 5095 (class 0 OID 0)
 -- Dependencies: 221
 -- Name: genders_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -312599,7 +312542,7 @@ SELECT pg_catalog.setval('public.genders_id_seq', 2, true);
 
 
 --
--- TOC entry 5109 (class 0 OID 0)
+-- TOC entry 5096 (class 0 OID 0)
 -- Dependencies: 227
 -- Name: literacy_levels_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -312608,7 +312551,7 @@ SELECT pg_catalog.setval('public.literacy_levels_id_seq', 2, true);
 
 
 --
--- TOC entry 5110 (class 0 OID 0)
+-- TOC entry 5097 (class 0 OID 0)
 -- Dependencies: 235
 -- Name: occupations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -312617,7 +312560,7 @@ SELECT pg_catalog.setval('public.occupations_id_seq', 13, true);
 
 
 --
--- TOC entry 5111 (class 0 OID 0)
+-- TOC entry 5098 (class 0 OID 0)
 -- Dependencies: 237
 -- Name: profiles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -312626,16 +312569,7 @@ SELECT pg_catalog.setval('public.profiles_id_seq', 12032, true);
 
 
 --
--- TOC entry 5112 (class 0 OID 0)
--- Dependencies: 249
--- Name: question_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.question_groups_id_seq', 1, false);
-
-
---
--- TOC entry 5113 (class 0 OID 0)
+-- TOC entry 5099 (class 0 OID 0)
 -- Dependencies: 243
 -- Name: questions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -312644,7 +312578,7 @@ SELECT pg_catalog.setval('public.questions_id_seq', 910, true);
 
 
 --
--- TOC entry 5114 (class 0 OID 0)
+-- TOC entry 5100 (class 0 OID 0)
 -- Dependencies: 225
 -- Name: races_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -312653,7 +312587,7 @@ SELECT pg_catalog.setval('public.races_id_seq', 7, true);
 
 
 --
--- TOC entry 5115 (class 0 OID 0)
+-- TOC entry 5101 (class 0 OID 0)
 -- Dependencies: 215
 -- Name: regions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -312662,7 +312596,7 @@ SELECT pg_catalog.setval('public.regions_id_seq', 5, true);
 
 
 --
--- TOC entry 5116 (class 0 OID 0)
+-- TOC entry 5102 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: states_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -312671,7 +312605,7 @@ SELECT pg_catalog.setval('public.states_id_seq', 27, true);
 
 
 --
--- TOC entry 5117 (class 0 OID 0)
+-- TOC entry 5103 (class 0 OID 0)
 -- Dependencies: 245
 -- Name: survey_responses_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -312680,7 +312614,7 @@ SELECT pg_catalog.setval('public.survey_responses_id_seq', 2164952, true);
 
 
 --
--- TOC entry 4833 (class 2606 OID 2766628)
+-- TOC entry 4827 (class 2606 OID 2766628)
 -- Name: activity_sectors activity_sectors_code_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312689,7 +312623,7 @@ ALTER TABLE ONLY public.activity_sectors
 
 
 --
--- TOC entry 4835 (class 2606 OID 2766626)
+-- TOC entry 4829 (class 2606 OID 2766626)
 -- Name: activity_sectors activity_sectors_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312698,7 +312632,7 @@ ALTER TABLE ONLY public.activity_sectors
 
 
 --
--- TOC entry 4837 (class 2606 OID 2766637)
+-- TOC entry 4831 (class 2606 OID 2766637)
 -- Name: activity_statuses activity_statuses_code_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312707,7 +312641,7 @@ ALTER TABLE ONLY public.activity_statuses
 
 
 --
--- TOC entry 4839 (class 2606 OID 2766635)
+-- TOC entry 4833 (class 2606 OID 2766635)
 -- Name: activity_statuses activity_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312716,7 +312650,7 @@ ALTER TABLE ONLY public.activity_statuses
 
 
 --
--- TOC entry 4817 (class 2606 OID 2766592)
+-- TOC entry 4811 (class 2606 OID 2766592)
 -- Name: age_ranges age_ranges_code_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312725,7 +312659,7 @@ ALTER TABLE ONLY public.age_ranges
 
 
 --
--- TOC entry 4819 (class 2606 OID 2766590)
+-- TOC entry 4813 (class 2606 OID 2766590)
 -- Name: age_ranges age_ranges_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312734,7 +312668,7 @@ ALTER TABLE ONLY public.age_ranges
 
 
 --
--- TOC entry 4850 (class 2606 OID 2766722)
+-- TOC entry 4844 (class 2606 OID 2766722)
 -- Name: answer_groups answer_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312743,7 +312677,7 @@ ALTER TABLE ONLY public.answer_groups
 
 
 --
--- TOC entry 4852 (class 2606 OID 2766733)
+-- TOC entry 4846 (class 2606 OID 2766733)
 -- Name: answer_options answer_options_answer_group_id_code_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312752,7 +312686,7 @@ ALTER TABLE ONLY public.answer_options
 
 
 --
--- TOC entry 4854 (class 2606 OID 2766731)
+-- TOC entry 4848 (class 2606 OID 2766731)
 -- Name: answer_options answer_options_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312761,7 +312695,7 @@ ALTER TABLE ONLY public.answer_options
 
 
 --
--- TOC entry 4809 (class 2606 OID 2766574)
+-- TOC entry 4803 (class 2606 OID 2766574)
 -- Name: city_sizes city_sizes_code_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312770,7 +312704,7 @@ ALTER TABLE ONLY public.city_sizes
 
 
 --
--- TOC entry 4811 (class 2606 OID 2766572)
+-- TOC entry 4805 (class 2606 OID 2766572)
 -- Name: city_sizes city_sizes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312779,7 +312713,7 @@ ALTER TABLE ONLY public.city_sizes
 
 
 --
--- TOC entry 4829 (class 2606 OID 2766619)
+-- TOC entry 4823 (class 2606 OID 2766619)
 -- Name: education_levels education_levels_code_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312788,7 +312722,7 @@ ALTER TABLE ONLY public.education_levels
 
 
 --
--- TOC entry 4831 (class 2606 OID 2766617)
+-- TOC entry 4825 (class 2606 OID 2766617)
 -- Name: education_levels education_levels_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312797,7 +312731,7 @@ ALTER TABLE ONLY public.education_levels
 
 
 --
--- TOC entry 4813 (class 2606 OID 2766583)
+-- TOC entry 4807 (class 2606 OID 2766583)
 -- Name: genders genders_code_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312806,7 +312740,7 @@ ALTER TABLE ONLY public.genders
 
 
 --
--- TOC entry 4815 (class 2606 OID 2766581)
+-- TOC entry 4809 (class 2606 OID 2766581)
 -- Name: genders genders_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312815,7 +312749,7 @@ ALTER TABLE ONLY public.genders
 
 
 --
--- TOC entry 4825 (class 2606 OID 2766610)
+-- TOC entry 4819 (class 2606 OID 2766610)
 -- Name: literacy_levels literacy_levels_code_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312824,7 +312758,7 @@ ALTER TABLE ONLY public.literacy_levels
 
 
 --
--- TOC entry 4827 (class 2606 OID 2766608)
+-- TOC entry 4821 (class 2606 OID 2766608)
 -- Name: literacy_levels literacy_levels_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312833,7 +312767,7 @@ ALTER TABLE ONLY public.literacy_levels
 
 
 --
--- TOC entry 4841 (class 2606 OID 2766646)
+-- TOC entry 4835 (class 2606 OID 2766646)
 -- Name: occupations occupations_code_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312842,7 +312776,7 @@ ALTER TABLE ONLY public.occupations
 
 
 --
--- TOC entry 4843 (class 2606 OID 2766644)
+-- TOC entry 4837 (class 2606 OID 2766644)
 -- Name: occupations occupations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312851,7 +312785,7 @@ ALTER TABLE ONLY public.occupations
 
 
 --
--- TOC entry 4846 (class 2606 OID 2766657)
+-- TOC entry 4840 (class 2606 OID 2766657)
 -- Name: profiles profiles_id_ipec_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312860,7 +312794,7 @@ ALTER TABLE ONLY public.profiles
 
 
 --
--- TOC entry 4848 (class 2606 OID 2766655)
+-- TOC entry 4842 (class 2606 OID 2766655)
 -- Name: profiles profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312869,25 +312803,7 @@ ALTER TABLE ONLY public.profiles
 
 
 --
--- TOC entry 4870 (class 2606 OID 2766853)
--- Name: question_groups question_groups_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.question_groups
-    ADD CONSTRAINT question_groups_name_key UNIQUE (name);
-
-
---
--- TOC entry 4872 (class 2606 OID 2766851)
--- Name: question_groups question_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.question_groups
-    ADD CONSTRAINT question_groups_pkey PRIMARY KEY (id);
-
-
---
--- TOC entry 4858 (class 2606 OID 2766751)
+-- TOC entry 4852 (class 2606 OID 2766751)
 -- Name: questions questions_code_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312896,7 +312812,7 @@ ALTER TABLE ONLY public.questions
 
 
 --
--- TOC entry 4860 (class 2606 OID 2766749)
+-- TOC entry 4854 (class 2606 OID 2766749)
 -- Name: questions questions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312905,7 +312821,7 @@ ALTER TABLE ONLY public.questions
 
 
 --
--- TOC entry 4821 (class 2606 OID 2766601)
+-- TOC entry 4815 (class 2606 OID 2766601)
 -- Name: races races_code_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312914,7 +312830,7 @@ ALTER TABLE ONLY public.races
 
 
 --
--- TOC entry 4823 (class 2606 OID 2766599)
+-- TOC entry 4817 (class 2606 OID 2766599)
 -- Name: races races_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312923,7 +312839,7 @@ ALTER TABLE ONLY public.races
 
 
 --
--- TOC entry 4801 (class 2606 OID 2766551)
+-- TOC entry 4795 (class 2606 OID 2766551)
 -- Name: regions regions_code_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312932,7 +312848,7 @@ ALTER TABLE ONLY public.regions
 
 
 --
--- TOC entry 4803 (class 2606 OID 2766549)
+-- TOC entry 4797 (class 2606 OID 2766549)
 -- Name: regions regions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312941,7 +312857,7 @@ ALTER TABLE ONLY public.regions
 
 
 --
--- TOC entry 4805 (class 2606 OID 2766560)
+-- TOC entry 4799 (class 2606 OID 2766560)
 -- Name: states states_code_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312950,7 +312866,7 @@ ALTER TABLE ONLY public.states
 
 
 --
--- TOC entry 4807 (class 2606 OID 2766558)
+-- TOC entry 4801 (class 2606 OID 2766558)
 -- Name: states states_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312959,7 +312875,7 @@ ALTER TABLE ONLY public.states
 
 
 --
--- TOC entry 4866 (class 2606 OID 2766764)
+-- TOC entry 4860 (class 2606 OID 2766764)
 -- Name: survey_responses survey_responses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312968,7 +312884,7 @@ ALTER TABLE ONLY public.survey_responses
 
 
 --
--- TOC entry 4868 (class 2606 OID 2766766)
+-- TOC entry 4862 (class 2606 OID 2766766)
 -- Name: survey_responses survey_responses_profile_id_question_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -312977,7 +312893,7 @@ ALTER TABLE ONLY public.survey_responses
 
 
 --
--- TOC entry 4855 (class 1259 OID 2766786)
+-- TOC entry 4849 (class 1259 OID 2766786)
 -- Name: idx_answer_options_group; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -312985,7 +312901,7 @@ CREATE INDEX idx_answer_options_group ON public.answer_options USING btree (answ
 
 
 --
--- TOC entry 4844 (class 1259 OID 2766782)
+-- TOC entry 4838 (class 1259 OID 2766782)
 -- Name: idx_profiles_demographic; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -312993,7 +312909,7 @@ CREATE INDEX idx_profiles_demographic ON public.profiles USING btree (gender_id,
 
 
 --
--- TOC entry 4856 (class 1259 OID 2766785)
+-- TOC entry 4850 (class 1259 OID 2766785)
 -- Name: idx_questions_active; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -313001,7 +312917,7 @@ CREATE INDEX idx_questions_active ON public.questions USING btree (is_active, qu
 
 
 --
--- TOC entry 4861 (class 1259 OID 2766783)
+-- TOC entry 4855 (class 1259 OID 2766783)
 -- Name: idx_responses_analysis; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -313009,7 +312925,7 @@ CREATE INDEX idx_responses_analysis ON public.survey_responses USING btree (ques
 
 
 --
--- TOC entry 4862 (class 1259 OID 2766784)
+-- TOC entry 4856 (class 1259 OID 2766784)
 -- Name: idx_responses_profile; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -313017,7 +312933,7 @@ CREATE INDEX idx_responses_profile ON public.survey_responses USING btree (profi
 
 
 --
--- TOC entry 4863 (class 1259 OID 2766854)
+-- TOC entry 4857 (class 1259 OID 2766854)
 -- Name: idx_survey_responses_profile; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -313025,7 +312941,7 @@ CREATE INDEX idx_survey_responses_profile ON public.survey_responses USING btree
 
 
 --
--- TOC entry 4864 (class 1259 OID 2766855)
+-- TOC entry 4858 (class 1259 OID 2766855)
 -- Name: idx_survey_responses_question; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -313033,7 +312949,7 @@ CREATE INDEX idx_survey_responses_question ON public.survey_responses USING btre
 
 
 --
--- TOC entry 4890 (class 2620 OID 2766788)
+-- TOC entry 4880 (class 2620 OID 2766788)
 -- Name: profiles update_profiles_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
 --
 
@@ -313041,7 +312957,7 @@ CREATE TRIGGER update_profiles_updated_at BEFORE UPDATE ON public.profiles FOR E
 
 
 --
--- TOC entry 4885 (class 2606 OID 2766734)
+-- TOC entry 4875 (class 2606 OID 2766734)
 -- Name: answer_options answer_options_answer_group_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -313050,7 +312966,7 @@ ALTER TABLE ONLY public.answer_options
 
 
 --
--- TOC entry 4874 (class 2606 OID 2766698)
+-- TOC entry 4864 (class 2606 OID 2766698)
 -- Name: profiles profiles_activity_sector_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -313059,7 +312975,7 @@ ALTER TABLE ONLY public.profiles
 
 
 --
--- TOC entry 4875 (class 2606 OID 2766703)
+-- TOC entry 4865 (class 2606 OID 2766703)
 -- Name: profiles profiles_activity_status_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -313068,7 +312984,7 @@ ALTER TABLE ONLY public.profiles
 
 
 --
--- TOC entry 4876 (class 2606 OID 2766678)
+-- TOC entry 4866 (class 2606 OID 2766678)
 -- Name: profiles profiles_age_range_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -313077,7 +312993,7 @@ ALTER TABLE ONLY public.profiles
 
 
 --
--- TOC entry 4877 (class 2606 OID 2766663)
+-- TOC entry 4867 (class 2606 OID 2766663)
 -- Name: profiles profiles_city_size_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -313086,7 +313002,7 @@ ALTER TABLE ONLY public.profiles
 
 
 --
--- TOC entry 4878 (class 2606 OID 2766693)
+-- TOC entry 4868 (class 2606 OID 2766693)
 -- Name: profiles profiles_education_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -313095,7 +313011,7 @@ ALTER TABLE ONLY public.profiles
 
 
 --
--- TOC entry 4879 (class 2606 OID 2766673)
+-- TOC entry 4869 (class 2606 OID 2766673)
 -- Name: profiles profiles_gender_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -313104,7 +313020,7 @@ ALTER TABLE ONLY public.profiles
 
 
 --
--- TOC entry 4880 (class 2606 OID 2766688)
+-- TOC entry 4870 (class 2606 OID 2766688)
 -- Name: profiles profiles_literacy_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -313113,7 +313029,7 @@ ALTER TABLE ONLY public.profiles
 
 
 --
--- TOC entry 4881 (class 2606 OID 2766708)
+-- TOC entry 4871 (class 2606 OID 2766708)
 -- Name: profiles profiles_occupation_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -313122,7 +313038,7 @@ ALTER TABLE ONLY public.profiles
 
 
 --
--- TOC entry 4882 (class 2606 OID 2766683)
+-- TOC entry 4872 (class 2606 OID 2766683)
 -- Name: profiles profiles_race_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -313131,7 +313047,7 @@ ALTER TABLE ONLY public.profiles
 
 
 --
--- TOC entry 4883 (class 2606 OID 2766668)
+-- TOC entry 4873 (class 2606 OID 2766668)
 -- Name: profiles profiles_region_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -313140,7 +313056,7 @@ ALTER TABLE ONLY public.profiles
 
 
 --
--- TOC entry 4884 (class 2606 OID 2766658)
+-- TOC entry 4874 (class 2606 OID 2766658)
 -- Name: profiles profiles_state_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -313149,7 +313065,7 @@ ALTER TABLE ONLY public.profiles
 
 
 --
--- TOC entry 4886 (class 2606 OID 2766752)
+-- TOC entry 4876 (class 2606 OID 2766752)
 -- Name: questions questions_answer_group_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -313158,7 +313074,7 @@ ALTER TABLE ONLY public.questions
 
 
 --
--- TOC entry 4873 (class 2606 OID 2766561)
+-- TOC entry 4863 (class 2606 OID 2766561)
 -- Name: states states_region_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -313167,7 +313083,7 @@ ALTER TABLE ONLY public.states
 
 
 --
--- TOC entry 4887 (class 2606 OID 2766777)
+-- TOC entry 4877 (class 2606 OID 2766777)
 -- Name: survey_responses survey_responses_answer_option_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -313176,7 +313092,7 @@ ALTER TABLE ONLY public.survey_responses
 
 
 --
--- TOC entry 4888 (class 2606 OID 2766767)
+-- TOC entry 4878 (class 2606 OID 2766767)
 -- Name: survey_responses survey_responses_profile_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -313185,7 +313101,7 @@ ALTER TABLE ONLY public.survey_responses
 
 
 --
--- TOC entry 4889 (class 2606 OID 2766772)
+-- TOC entry 4879 (class 2606 OID 2766772)
 -- Name: survey_responses survey_responses_question_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -313193,7 +313109,7 @@ ALTER TABLE ONLY public.survey_responses
     ADD CONSTRAINT survey_responses_question_id_fkey FOREIGN KEY (question_id) REFERENCES public.questions(id);
 
 
--- Completed on 2025-09-07 17:30:18
+-- Completed on 2025-09-08 23:30:17
 
 --
 -- PostgreSQL database dump complete
