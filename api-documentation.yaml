@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: "VoxDem Chart API - Simplificada para Gráficos"
-  version: "2.0.0"
+  version: "2.1.0"
   description: |
     API simplificada para geração de gráficos com dados da pesquisa VoxDem.
     Fornece dados otimizados para Chart.js com:
@@ -9,6 +9,8 @@ info:
     - Lista de atributos de perfil demográfico
     - Dados para gráficos simples (sem cruzamento)
     - Dados para gráficos com cruzamento por perfil demográfico
+    - Labels detalhadas com códigos de resposta
+    - Ordenação automática por answer_code crescente
   contact:
     name: "VoxDem API Support"
     email: "suporte@voxdem.com"
@@ -80,7 +82,7 @@ paths:
                     example: "VoxDem Chart API"
                   version:
                     type: string
-                    example: "2.0.0"
+                    example: "2.1.0"
 
   /api/questions:
     get:
@@ -113,7 +115,7 @@ paths:
                     text: "Em sua opinião, a democracia no Brasil está..."
                     totalResponses: 1547
                 count: 179
-                generatedAt: "2025-09-04T10:30:00.000Z"
+                generatedAt: "2025-09-08T10:30:00.000Z"
 
   /api/profile-attributes:
     get:
@@ -150,7 +152,13 @@ paths:
   /api/chart/{questionCode}:
     get:
       summary: "Dados para gráfico simples (sem cruzamento)"
-      description: "Retorna dados otimizados para Chart.js de uma pergunta específica"
+      description: |
+        Retorna dados otimizados para Chart.js de uma pergunta específica.
+        
+        **Novidades v2.1.0:**
+        - Labels detalhadas com códigos de resposta
+        - Ordenação automática por answer_code crescente
+        - Compatibilidade mantida com Chart.js
       tags: 
         - "Charts"
       parameters:
@@ -182,13 +190,26 @@ paths:
                     text: "De uma maneira geral, o(a) Sr.(a) está muito satisfeito(a)..."
                   chartData:
                     labels: ["Muito satisfeito", "Satisfeito", "Insatisfeito", "Muito insatisfeito"]
+                    labelsDetailed:
+                      - code: "1"
+                        label: "Muito satisfeito"
+                        display: "1 - Muito satisfeito"
+                      - code: "2"
+                        label: "Satisfeito"
+                        display: "2 - Satisfeito"
+                      - code: "3"
+                        label: "Insatisfeito"
+                        display: "3 - Insatisfeito"
+                      - code: "4"
+                        label: "Muito insatisfeito"
+                        display: "4 - Muito insatisfeito"
                     datasets:
                       - data: [89, 567, 642, 265]
                         backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"]
                         borderColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"]
                         borderWidth: 1
                   totalResponses: 1563
-                generatedAt: "2025-09-04T10:30:00.000Z"
+                generatedAt: "2025-09-08T10:30:00.000Z"
         '400':
           description: "Código de pergunta inválido"
           content:
@@ -201,7 +222,13 @@ paths:
   /api/chart/{questionCode}/{profileAttribute}:
     get:
       summary: "Dados para gráfico com cruzamento por perfil"
-      description: "Retorna dados para gráfico de barras agrupadas por perfil demográfico"
+      description: |
+        Retorna dados para gráfico de barras agrupadas por perfil demográfico.
+        
+        **Novidades v2.1.0:**
+        - Labels detalhadas com códigos de resposta
+        - Ordenação automática por answer_code crescente
+        - Mantém compatibilidade total com Chart.js
       tags: 
         - "Charts"
       parameters:
@@ -248,6 +275,19 @@ paths:
                   profileAttribute: "gender"
                   chartData:
                     labels: ["Muito satisfeito", "Satisfeito", "Insatisfeito", "Muito insatisfeito"]
+                    labelsDetailed:
+                      - code: "1"
+                        label: "Muito satisfeito"
+                        display: "1 - Muito satisfeito"
+                      - code: "2"
+                        label: "Satisfeito"
+                        display: "2 - Satisfeito"
+                      - code: "3"
+                        label: "Insatisfeito"
+                        display: "3 - Insatisfeito"
+                      - code: "4"
+                        label: "Muito insatisfeito"
+                        display: "4 - Muito insatisfeito"
                     datasets:
                       - label: "Masculino"
                         data: [45, 280, 320, 135]
@@ -260,7 +300,7 @@ paths:
                         borderColor: "#36A2EB"
                         borderWidth: 1
                   totalResponses: 1563
-                generatedAt: "2025-09-04T10:30:00.000Z"
+                generatedAt: "2025-09-08T10:30:00.000Z"
         '400':
           description: "Parâmetros inválidos"
         '404':
@@ -321,11 +361,31 @@ components:
               nullable: true
         chartData:
           type: object
+          description: "Dados otimizados para Chart.js com labels detalhadas"
           properties:
             labels:
               type: array
               items:
                 type: string
+              description: "Labels simples para compatibilidade com Chart.js"
+            labelsDetailed:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    description: "Código da resposta (answer_code)"
+                    example: "1"
+                  label:
+                    type: string
+                    description: "Texto da resposta"
+                    example: "Muito satisfeito"
+                  display:
+                    type: string
+                    description: "Formato combinado: código - texto"
+                    example: "1 - Muito satisfeito"
+              description: "Labels detalhadas com códigos ordenadas por answer_code crescente"
             datasets:
               type: array
               items:
@@ -358,11 +418,28 @@ components:
           type: string
         chartData:
           type: object
+          description: "Dados para gráfico de barras agrupadas com labels detalhadas"
           properties:
             labels:
               type: array
               items:
                 type: string
+              description: "Labels simples para compatibilidade com Chart.js"
+            labelsDetailed:
+              type: array
+              items:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    description: "Código da resposta (answer_code)"
+                  label:
+                    type: string
+                    description: "Texto da resposta"
+                  display:
+                    type: string
+                    description: "Formato combinado: código - texto"
+              description: "Labels detalhadas com códigos ordenadas por answer_code crescente"
             datasets:
               type: array
               items:

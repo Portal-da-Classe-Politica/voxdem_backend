@@ -99,16 +99,23 @@ export class AnalysisService {
       // Análise de frequência usando response_analysis
       const frequencies = await AppDataSource.query(`
         SELECT 
+          ra.answer_code as code,
           ra.answer_label as label,
           COUNT(*) as count
         FROM response_analysis ra
         WHERE ra.question_code = $1
           AND ra.answer_code NOT IN ('97', '98', '99')  -- Excluir não-respostas
-        GROUP BY ra.answer_label
-        ORDER BY ra.answer_label
+        GROUP BY ra.answer_code, ra.answer_label
+        ORDER BY ra.answer_code::INTEGER
       `, [questionCode]);
 
+      // Estruturar labels como objetos com código e texto
       const labels = frequencies.map((f: any) => f.label);
+      const labelsWithCode = frequencies.map((f: any) => ({
+        code: f.code,
+        label: f.label,
+        display: `${f.code} - ${f.label}` // Formato combinado para exibição
+      }));
       const data = frequencies.map((f: any) => parseInt(f.count));
       
       // Cores padrão para Chart.js
@@ -124,7 +131,8 @@ export class AnalysisService {
           text: question.text
         },
         chartData: {
-          labels,
+          labels, // Labels simples para compatibilidade com Chart.js
+          labelsDetailed: labelsWithCode, // Labels detalhadas com código
           datasets: [{
             data,
             backgroundColor: backgroundColors.slice(0, data.length),
@@ -173,6 +181,7 @@ export class AnalysisService {
       // Query de cruzamento usando response_analysis
       const crosstabData = await AppDataSource.query(`
         SELECT 
+          ra.answer_code as question_code,
           ra.answer_label as question_answer,
           ra.${profileField} as profile_answer,
           COUNT(*) as count
@@ -180,16 +189,31 @@ export class AnalysisService {
         WHERE ra.question_code = $1
           AND ra.answer_code NOT IN ('97', '98', '99')
           AND ra.${profileField} IS NOT NULL
-        GROUP BY ra.answer_label, ra.${profileField}
-        ORDER BY ra.answer_label, ra.${profileField}
+        GROUP BY ra.answer_code, ra.answer_label, ra.${profileField}
+        ORDER BY ra.answer_code::INTEGER, ra.${profileField}
       `, [questionCode]);
 
       // Organizar dados para Chart.js (gráfico de barras agrupadas)
-      const questionLabels = [...new Set(crosstabData.map((row: any) => row.question_answer))];
+      // Manter a ordem dos dados conforme retornado pela query (já ordenado por answer_code)
+      const questionLabelsOrdered: string[] = [];
+      const uniqueQuestionData: any[] = [];
+      
+      // Processar em ordem para manter a sequência do answer_code
+      crosstabData.forEach((row: any) => {
+        if (!questionLabelsOrdered.includes(row.question_answer)) {
+          questionLabelsOrdered.push(row.question_answer);
+          uniqueQuestionData.push({
+            code: row.question_code,
+            label: row.question_answer,
+            display: `${row.question_code} - ${row.question_answer}`
+          });
+        }
+      });
+      
       const profileLabels = [...new Set(crosstabData.map((row: any) => row.profile_answer))];
       
       const datasets = profileLabels.map((profileLabel, index) => {
-        const data = questionLabels.map(questionLabel => {
+        const data = questionLabelsOrdered.map((questionLabel: string) => {
           const match = crosstabData.find((row: any) => 
             row.question_answer === questionLabel && row.profile_answer === profileLabel
           );
@@ -218,7 +242,8 @@ export class AnalysisService {
         },
         profileAttribute,
         chartData: {
-          labels: questionLabels,
+          labels: questionLabelsOrdered, // Labels simples para compatibilidade
+          labelsDetailed: uniqueQuestionData, // Labels com código
           datasets
         },
         totalResponses: crosstabData.reduce((sum: number, row: any) => sum + parseInt(row.count), 0)
