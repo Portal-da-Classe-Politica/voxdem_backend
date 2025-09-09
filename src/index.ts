@@ -1,8 +1,12 @@
 import 'reflect-metadata';
+import { config } from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
+
+
+config();
 import { AppDataSource } from './data-source';
 import chartRoutes from './routes/chartRoutes';
 

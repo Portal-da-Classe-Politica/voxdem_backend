@@ -1,7 +1,11 @@
+import { config } from 'dotenv';
 import { DataSource } from 'typeorm';
 import { Question } from './entities/Question';
 import { AnswerGroup, AnswerOption } from './entities/Answer';
 import { SurveyResponse } from './entities/SurveyResponse';
+
+// Load environment variables from .env file
+config();
 
 export const AppDataSource = new DataSource({
   type: 'postgres',

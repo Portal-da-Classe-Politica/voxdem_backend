@@ -67,10 +67,10 @@ export class AnalysisService {
           column: 'region_name'
         },
         {
-          key: 'state_name',
+          key: 'state',
           name: 'Estado',
           description: 'Estado (UF)',
-          column: 'state_name'
+          column: 'state'
         }
       ];
 
