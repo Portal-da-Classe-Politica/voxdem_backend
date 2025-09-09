@@ -5,7 +5,7 @@
 -- Dumped from database version 16.1
 -- Dumped by pg_dump version 16.0
 
--- Started on 2025-09-08 23:46:34
+-- Started on 2025-09-09 00:33:30
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -3110,6 +3110,11 @@ COPY public.profiles (id, id_ipec, setor, state_id, city_size_id, region_id, gen
 --
 
 COPY public.questions (id, code, text, answer_group_id, question_order, is_active, created_at) FROM stdin;
+853	P143	P143. Considerando as imagens desta cartela, que apresentam a evolução ao longo do tempo, qual delas vocàusaria para representar: Jair Messias Bolsonaro	134	156	t	2025-09-03 23:49:31.386415
+882	P168	ORGANIZAÇÕES/ ASSOCIAÇÕES VOLUNTÁRIAS: P168. Organização/associação de meio ambiente	142	190	t	2025-09-03 23:49:31.386415
+883	P169	ORGANIZAÇÕES/ ASSOCIAÇÕES VOLUNTÁRIAS: P169. Associação profissional	142	191	t	2025-09-03 23:49:31.386415
+884	P170	ORGANIZAÇÕES/ ASSOCIAÇÕES VOLUNTÁRIAS: P170. Organização/associação humanitária ou de caridade	142	192	t	2025-09-03 23:49:31.386415
+885	P171	ORGANIZAÇÕES/ ASSOCIAÇÕES VOLUNTÁRIAS: P171. Outra associação/organização	142	193	t	2025-09-03 23:49:31.386415
 699	P02	Para o(a) Sr.(a), o que é democracia?	101	2	f	2025-09-03 23:49:31.386415
 698	P01	De uma maneira geral, o(a) Sr.(a) está muito satisfeito(a), satisfeito(a), insatisfeito(a) ou muito insatisfeito(a) com o funcionamento da democracia no Brasil?	100	1	t	2025-09-03 23:49:31.386415
 700	P02A	Que as eleições nacionais sejam livres e justas.	101	3	t	2025-09-03 23:49:31.386415
@@ -3265,8 +3270,6 @@ COPY public.questions (id, code, text, answer_group_id, question_order, is_activ
 850	P140	Obediência.	122	153	t	2025-09-03 23:49:31.386415
 851	P141	Criatividade.	122	154	t	2025-09-03 23:49:31.386415
 852	P142	Disciplina.	122	155	t	2025-09-03 23:49:31.386415
-853	P143	P143. Considerando as imagens desta cartela, que apresentam a evolução ao longo do tempo, qual delas vocã usaria para representar: Jair Messias Bolsonaro	134	156	t	2025-09-03 23:49:31.386415
-854	P144	P144. Considerando as imagens desta cartela, que apresentam a evolução ao longo do tempo, qual delas vocã usaria para representar: Luãs Inãcio Lula da Silva	134	157	t	2025-09-03 23:49:31.386415
 855	P145_1	P145) A seguir algumas situações e gostaria que me dissesse se cada uma delas deveria ser permitida ou não por uma pessoa que quisesse fazer um discurso em sua comunidade: 1. Que os negros são inferiores aos brancos	136	163	t	2025-09-03 23:49:31.386415
 856	P145_2	P145) A seguir algumas situações e gostaria que me dissesse se cada uma delas deveria ser permitida ou não por uma pessoa que quisesse fazer um discurso em sua comunidade: 2. Acabar com as eleições para que os militares governem o paãs	136	164	t	2025-09-03 23:49:31.386415
 857	P145_3	P145) A seguir algumas situações e gostaria que me dissesse se cada uma delas deveria ser permitida ou não por uma pessoa que quisesse fazer um discurso em sua comunidade: 3. O comunismo	136	165	t	2025-09-03 23:49:31.386415
@@ -3292,17 +3295,14 @@ COPY public.questions (id, code, text, answer_group_id, question_order, is_activ
 877	P163	Participar de greves	141	185	t	2025-09-03 23:49:31.386415
 878	P164	Doação para um grupo ou uma campanha	141	186	t	2025-09-03 23:49:31.386415
 879	P165	Contatar alguém do governo	141	187	t	2025-09-03 23:49:31.386415
-880	P166	ORGANIZAÇÃOãES/ ASSOCIAÇÃOãES VOLUNTÁRIAS: P166. Sindicato	142	188	t	2025-09-03 23:49:31.386415
-881	P167	ORGANIZAÇÃOãES/ ASSOCIAÇÃOãES VOLUNTÁRIAS: P167. Partido polãtico	142	189	t	2025-09-03 23:49:31.386415
-882	P168	ORGANIZAÇÃOãES/ ASSOCIAÇÃOãES VOLUNTÁRIAS: P168. Organizaãão/associaãão de meio ambiente	142	190	t	2025-09-03 23:49:31.386415
-883	P169	ORGANIZAÇÃOãES/ ASSOCIAÇÃOãES VOLUNTÁRIAS: P169. Associaãão profissional	142	191	t	2025-09-03 23:49:31.386415
-884	P170	ORGANIZAÇÃOãES/ ASSOCIAÇÃOãES VOLUNTÁRIAS: P170. Organizaãão/associaãão humanitária ou de caridade	142	192	t	2025-09-03 23:49:31.386415
-885	P171	ORGANIZAÇÃOãES/ ASSOCIAÇÃOãES VOLUNTÁRIAS: P171. Outra associaãão/organização	142	193	t	2025-09-03 23:49:31.386415
 886	P172	As pessoas às vezes falam sobre quais metas este país deveria ter para os próximos dez anos. Se tivesse que escolher, qual dessas metas o(a) Sr.(a) diria que é a mais importante atualmente? Em primeiro lugar?	143	194	t	2025-09-03 23:49:31.386415
 887	P173	As pessoas às vezes falam sobre quais metas este país deveria ter para os próximos dez anos. Se tivesse que escolher, qual dessas metas o(a) Sr.(a) diria que é a mais importante atualmente? Em segundo lugar?	143	195	t	2025-09-03 23:49:31.386415
 888	P174	Atualmente, dos 11 ministros do Supremo Tribunal Federal (STF), há 2 mulheres ocupando o cargo de ministra do STF	144	196	t	2025-09-03 23:49:31.386415
 889	P175	O Partido dos Trabalhadores (PT) tem a maior quantidade de deputados na Câmara Federal	144	197	t	2025-09-03 23:49:31.386415
 890	P176	A duração do mandato de presidente no Brasil é de 5 anos	144	198	t	2025-09-03 23:49:31.386415
+854	P144	P144. Considerando as imagens desta cartela, que apresentam a evolução ao longo do tempo, qual delas vocàusaria para representar: Luís Inácio Lula da Silva	134	157	t	2025-09-03 23:49:31.386415
+880	P166	ORGANIZAÇÕES/ ASSOCIAÇÕES VOLUNTÁRIAS: P166. Sindicato	142	188	t	2025-09-03 23:49:31.386415
+881	P167	ORGANIZAÇÕES/ ASSOCIAÇÕES VOLUNTÁRIAS: P167. Partido político	142	189	t	2025-09-03 23:49:31.386415
 891	P177	De acordo com a Constituição Federal do Brasil, não há limite de mandatos para Deputados Federais no país	144	199	t	2025-09-03 23:49:31.386415
 892	P178	O atual vice-presidente do Brasil é Geraldo Alckmin (PSB)	144	200	t	2025-09-03 23:49:31.386415
 893	P179	O tempo de duração de um mandato de prefeito é de 4 anos	144	201	t	2025-09-03 23:49:31.386415
@@ -3310,19 +3310,19 @@ COPY public.questions (id, code, text, answer_group_id, question_order, is_activ
 895	P181	Na sua opinião, qual é o problema mais grave que o país está enfrentando? Em segundo lugar?	145	203	t	2025-09-03 23:49:31.386415
 896	P182	Considerando sua experiencia ou o que ouviu falar dos funcionários públicos, o(a) sr(a) diria que a corrupção dos funcionários é:	146	204	t	2025-09-03 23:49:31.386415
 897	P183	Pensando nos políticos do Brasil, quantos deles o(a) sr(a) acha que estão envolvidos com corrupção?	147	205	t	2025-09-03 23:49:31.386415
-898	P184M	P184) Hã quanto tempo mora sem interrupãão neste município? (MESES)	149	208	t	2025-09-03 23:49:31.386415
-899	P184A	P184) Hã quanto tempo mora sem interrupãão neste município? (ANOS)	149	209	t	2025-09-03 23:49:31.386415
 900	P185	(A) Sr(a) morava em outro município, estado ou pais antes de morar aqui?	150	210	t	2025-09-03 23:49:31.386415
 901	P186_RELIGIAO	P186) Frequentava alguma igreja/culto antes de se mudar para o município onde mora atualmente? (QUAIS).	153	213	t	2025-09-03 23:49:31.386415
 902	P_ORIENT	PORIENT) Agora gostaria que o(a) sr(a) indicasse qual é a sua orientação sexual:	154	214	t	2025-09-03 23:49:31.386415
-903	PCONJOINT_1	PCONJOINT) Por favor, escolha qual delas vocã prefere. (Tarefa1)	155	215	t	2025-09-03 23:49:31.386415
-904	PCONJOINT_2	PCONJOINT) Por favor, escolha qual delas vocã prefere. (Tarefa2)	155	216	t	2025-09-03 23:49:31.386415
-905	PCONJOINT_3	PCONJOINT) Por favor, escolha qual delas vocã prefere. (Tarefa3)	155	217	t	2025-09-03 23:49:31.386415
-906	PCONJOINT_4	PCONJOINT) Por favor, escolha qual delas vocã prefere. (Tarefa4)	155	218	t	2025-09-03 23:49:31.386415
-907	PCONJOINT_5	PCONJOINT) Por favor, escolha qual delas vocã prefere. (Tarefa5)	155	219	t	2025-09-03 23:49:31.386415
-908	PEA	PPEA) Qual dessas opãães representa melhor a sua situaãão de trabalho atualmente?	156	220	t	2025-09-03 23:49:31.386415
-909	PEA_OUT	PPEA) Qual dessas opãães representa melhor a sua situaãão de trabalho atualmente?	156	221	t	2025-09-03 23:49:31.386415
 910	RELIGIAO	RELIGIÃO) Qual é a sua religião?	157	222	t	2025-09-03 23:49:31.386415
+908	PEA	PPEA) Qual dessas opções representa melhor a sua situação de trabalho atualmente?	156	220	t	2025-09-03 23:49:31.386415
+909	PEA_OUT	PPEA) Qual dessas opções representa melhor a sua situação de trabalho atualmente?	156	221	t	2025-09-03 23:49:31.386415
+903	PCONJOINT_1	PCONJOINT) Por favor, escolha qual delas você prefere. (Tarefa1)	155	215	t	2025-09-03 23:49:31.386415
+904	PCONJOINT_2	PCONJOINT) Por favor, escolha qual delas você prefere. (Tarefa2)	155	216	t	2025-09-03 23:49:31.386415
+905	PCONJOINT_3	PCONJOINT) Por favor, escolha qual delas você prefere. (Tarefa3)	155	217	t	2025-09-03 23:49:31.386415
+906	PCONJOINT_4	PCONJOINT) Por favor, escolha qual delas você prefere. (Tarefa4)	155	218	t	2025-09-03 23:49:31.386415
+907	PCONJOINT_5	PCONJOINT) Por favor, escolha qual delas você prefere. (Tarefa5)	155	219	t	2025-09-03 23:49:31.386415
+898	P184M	P184) Há quanto tempo mora sem interrupção neste município? (MESES)	149	208	t	2025-09-03 23:49:31.386415
+899	P184A	P184) Há quanto tempo mora sem interrupção neste município? (ANOS)	149	209	t	2025-09-03 23:49:31.386415
 \.
 
 
@@ -313109,7 +313109,7 @@ ALTER TABLE ONLY public.survey_responses
     ADD CONSTRAINT survey_responses_question_id_fkey FOREIGN KEY (question_id) REFERENCES public.questions(id);
 
 
--- Completed on 2025-09-08 23:46:34
+-- Completed on 2025-09-09 00:33:30
 
 --
 -- PostgreSQL database dump complete
