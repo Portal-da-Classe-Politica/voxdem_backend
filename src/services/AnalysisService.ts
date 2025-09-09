@@ -114,7 +114,7 @@ export class AnalysisService {
       const labelsWithCode = frequencies.map((f: any) => ({
         code: f.code,
         label: f.label,
-        display: `${f.code} - ${f.label}` // Formato combinado para exibição
+        //display: `${f.code} - ${f.label}` // Formato combinado para exibição
       }));
       const data = frequencies.map((f: any) => parseInt(f.count));
       
@@ -205,7 +205,7 @@ export class AnalysisService {
           uniqueQuestionData.push({
             code: row.question_code,
             label: row.question_answer,
-            display: `${row.question_code} - ${row.question_answer}`
+            //display: `${row.question_code} - ${row.question_answer}`
           });
         }
       });

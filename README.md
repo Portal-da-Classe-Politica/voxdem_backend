@@ -1,12 +1,41 @@
-# VoxDem Chart API v2.0.0 - Dados Otimizados para Gráficos
+# VoxDem Chart API v2.1.0 - Dados Otimizados para Gráficos
 
 API REST simplificada para geração de gráficos com dados da pesquisa VoxDem. Focada em fornecer dados prontos para Chart.js com 4 endpoints essenciais.
+
+## 🆕 Novidades v2.1.0
+
+### Labels Detalhadas com Códigos
+- **`labelsDetailed`**: Novo campo com objetos `{code, label, display}`
+- **Compatibilidade mantida**: Campo `labels` tradicional preservado
+- **Ordenação automática**: Resultados ordenados por `answer_code` crescente
+- **Frontend flexível**: Escolha entre labels simples ou detalhadas
+
+### Exemplo das Novas Labels
+```json
+{
+  "labels": ["Muito satisfeito", "Satisfeito"],           // Compatível Chart.js
+  "labelsDetailed": [                                     // Novo!
+    {
+      "code": "1",
+      "label": "Muito satisfeito", 
+      "display": "1 - Muito satisfeito"
+    },
+    {
+      "code": "2",
+      "label": "Satisfeito",
+      "display": "2 - Satisfeito"
+    }
+  ]
+}
+```
 
 ## 🚀 Funcionalidades
 
 ### API Simplificada para Gráficos
 - **4 endpoints essenciais**: Foco na geração de gráficos
 - **Chart.js Ready**: Dados formatados para uso direto no Chart.js
+- **Labels detalhadas**: Códigos + textos das respostas incluídos
+- **Ordenação automática**: Por answer_code crescente
 - **Performance otimizada**: Queries diretas na tabela response_analysis
 - **Zero configuração**: Estruturas de dados prontas para uso
 
@@ -15,6 +44,8 @@ API REST simplificada para geração de gráficos com dados da pesquisa VoxDem. 
 - **Answer_groups otimizados**: 54 grupos com descrições atualizadas (100% otimização)
 - **Sem duplicatas**: Nomes únicos e descrições categorizadas
 - **Queries diretas**: Uso da view response_analysis para máxima performance
+- **Labels com código**: Suporte a `labelsDetailed` com answer_code
+- **Ordenação garantida**: Resultados ordenados por código crescente
 
 ## 📊 Endpoints da API (4 Essenciais)
 
@@ -91,7 +122,7 @@ npm start
 ## 📊 Estrutura dos Dados para Chart.js
 
 ### Endpoint: /api/chart/{questionCode}
-Retorna dados prontos para Chart.js (gráfico de pizza ou barras):
+Retorna dados prontos para Chart.js (gráfico de pizza ou barras) com **labels detalhadas**:
 
 ```json
 {
@@ -103,6 +134,23 @@ Retorna dados prontos para Chart.js (gráfico de pizza ou barras):
     },
     "chartData": {
       "labels": ["Muito satisfeito", "Satisfeito", "Insatisfeito"],
+      "labelsDetailed": [
+        {
+          "code": "1",
+          "label": "Muito satisfeito",
+          "display": "1 - Muito satisfeito"
+        },
+        {
+          "code": "2", 
+          "label": "Satisfeito",
+          "display": "2 - Satisfeito"
+        },
+        {
+          "code": "3",
+          "label": "Insatisfeito", 
+          "display": "3 - Insatisfeito"
+        }
+      ],
       "datasets": [{
         "data": [1250, 2100, 890],
         "backgroundColor": ["#FF6384", "#36A2EB", "#FFCE56"],
@@ -129,6 +177,23 @@ Retorna dados para gráfico de barras agrupadas:
     "profileAttribute": "gender",
     "chartData": {
       "labels": ["Muito satisfeito", "Satisfeito", "Insatisfeito"],
+      "labelsDetailed": [
+        {
+          "code": "1",
+          "label": "Muito satisfeito",
+          "display": "1 - Muito satisfeito"
+        },
+        {
+          "code": "2",
+          "label": "Satisfeito", 
+          "display": "2 - Satisfeito"
+        },
+        {
+          "code": "3",
+          "label": "Insatisfeito",
+          "display": "3 - Insatisfeito"
+        }
+      ],
       "datasets": [
         {
           "label": "Masculino",
@@ -150,9 +215,9 @@ Retorna dados para gráfico de barras agrupadas:
 ## 📖 Documentação da API
 
 ### Documentação OpenAPI/Swagger
-A documentação completa da API Chart v2.0.0 está disponível em:
+A documentação completa da API Chart v2.1.0 está disponível em:
 - **Arquivo**: `api-documentation.yaml`
-- **Versão**: OpenAPI 3.0 com exemplos Chart.js
+- **Versão**: OpenAPI 3.0 com exemplos Chart.js e labels detalhadas
 - **Conteúdo**: 4 endpoints essenciais com schemas otimizados
 
 ### Visualização da Documentação
@@ -238,6 +303,43 @@ const data = await profiles.json();
 console.log('Perfis disponíveis:', data.data);
 ```
 
+### 🆕 Labels Detalhadas (v2.1.0)
+```javascript
+// Buscar dados com labels detalhadas
+const response = await fetch('/api/chart/P01');
+const apiData = await response.json();
+
+// Usar labels simples (compatível com Chart.js)
+const simpleLabels = apiData.data.chartData.labels;
+console.log(simpleLabels); // ["Muito satisfeito", "Satisfeito", ...]
+
+// Usar labels detalhadas (novo!)
+const detailedLabels = apiData.data.chartData.labelsDetailed;
+detailedLabels.forEach(item => {
+  console.log(`Código: ${item.code}`);      // "1"
+  console.log(`Label: ${item.label}`);      // "Muito satisfeito"
+  console.log(`Display: ${item.display}`);  // "1 - Muito satisfeito"
+});
+
+// Personalizar tooltips no Chart.js
+new Chart(ctx, {
+  type: 'pie',
+  data: apiData.data.chartData,
+  options: {
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: function(context) {
+            const detailLabel = detailedLabels[context.dataIndex];
+            return `${detailLabel.display}: ${context.parsed}`;
+          }
+        }
+      }
+    }
+  }
+});
+```
+
 ## 🎯 Casos de Uso Frontend
 
 ### 1. Dashboard de Satisfação
@@ -320,6 +422,8 @@ async function createDashboard() {
 - **Nomes únicos**: Eliminadas todas as duplicatas
 - **Categorização semântica**: Escalas, frequência, importância, etc.
 - **Queries diretas**: Uso da view response_analysis
+- **Labels com código**: answer_code incluído em todas as respostas
+- **Ordenação automática**: Resultados ordenados por answer_code crescente
 
 ### Perfis Demográficos Disponíveis
 - **gender**: Masculino, Feminino  
@@ -334,14 +438,17 @@ async function createDashboard() {
 ### API Simplificada
 - **4 endpoints essenciais**: Foco em gráficos
 - **Chart.js Ready**: Zero processamento no frontend
+- **Labels detalhadas**: Códigos + textos de resposta incluídos
+- **Ordenação garantida**: Por answer_code crescente
 - **Queries otimizadas**: Uso direto da view response_analysis
 - **Estruturas pré-formatadas**: Cores e labels incluídos
 
 ### Métricas de Performance
 - **Tempo de resposta**: < 200ms para gráficos simples
-- **Dados prontos**: Formato Chart.js nativo
+- **Dados prontos**: Formato Chart.js nativo com labels detalhadas
 - **Base otimizada**: 100% de utilização (0% dados órfãos)
 - **Answer_groups**: 100% otimizados e categorizados
+- **Ordenação eficiente**: ORDER BY answer_code::INTEGER nas queries
 
 ### Otimizações de Banco
 - **View response_analysis**: Elimina joins complexos
@@ -404,6 +511,8 @@ node fix-duplicate-names.js
 - ✅ **0 duplicatas** remanescentes  
 - ✅ **100% categorização** semântica implementada
 - ✅ **API simplificada** para Chart.js pronta
+- ✅ **Labels detalhadas** com answer_code implementadas (v2.1.0)
+- ✅ **Ordenação automática** por answer_code crescente (v2.1.0)
 - ✅ **Dump completo** gerado (65MB com 309k respostas)
 - ✅ **Docker containerizado** com PostgreSQL integrado
 
