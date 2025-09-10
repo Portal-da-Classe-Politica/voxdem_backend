@@ -19,7 +19,6 @@
     "execute-import": "npm run build && node dist/scripts/execute-import.js",
     "csv-to-db": "npm run build && node dist/scripts/csv-to-database.js",
     "db:check": "npm run build && node dist/scripts/check-database.js",
-    "db:fix-encoding": "ts-node src/scripts/fix-encoding-questions.ts",
     "db:create-new": "echo 'Execute os scripts SQL na ordem: 01_create_tables.sql, 02_populate_lookup_tables.sql, depois npm run process-questions e npm run import-data'"
   },
   "keywords": [

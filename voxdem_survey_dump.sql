@@ -773,6 +773,8 @@ CREATE VIEW public.response_analysis AS
     p.id_ipec,
     q.code AS question_code,
     q.text AS question_text,
+    q.question_order as question_order,
+    q.is_active as is_active,
     ao.code AS answer_code,
     ao.label AS answer_label,
     sr.raw_value,
@@ -3110,7 +3112,7 @@ COPY public.profiles (id, id_ipec, setor, state_id, city_size_id, region_id, gen
 --
 
 COPY public.questions (id, code, text, answer_group_id, question_order, is_active, created_at) FROM stdin;
-853	P143	P143. Considerando as imagens desta cartela, que apresentam a evolução ao longo do tempo, qual delas vocàusaria para representar: Jair Messias Bolsonaro	134	156	t	2025-09-03 23:49:31.386415
+853	P143	P143. Considerando as imagens desta cartela, que apresentam a evolução ao longo do tempo, qual delas você usaria para representar: Jair Messias Bolsonaro	134	156	t	2025-09-03 23:49:31.386415
 882	P168	ORGANIZAÇÕES/ ASSOCIAÇÕES VOLUNTÁRIAS: P168. Organização/associação de meio ambiente	142	190	t	2025-09-03 23:49:31.386415
 883	P169	ORGANIZAÇÕES/ ASSOCIAÇÕES VOLUNTÁRIAS: P169. Associação profissional	142	191	t	2025-09-03 23:49:31.386415
 884	P170	ORGANIZAÇÕES/ ASSOCIAÇÕES VOLUNTÁRIAS: P170. Organização/associação humanitária ou de caridade	142	192	t	2025-09-03 23:49:31.386415
@@ -3300,7 +3302,7 @@ COPY public.questions (id, code, text, answer_group_id, question_order, is_activ
 888	P174	Atualmente, dos 11 ministros do Supremo Tribunal Federal (STF), há 2 mulheres ocupando o cargo de ministra do STF	144	196	t	2025-09-03 23:49:31.386415
 889	P175	O Partido dos Trabalhadores (PT) tem a maior quantidade de deputados na Câmara Federal	144	197	t	2025-09-03 23:49:31.386415
 890	P176	A duração do mandato de presidente no Brasil é de 5 anos	144	198	t	2025-09-03 23:49:31.386415
-854	P144	P144. Considerando as imagens desta cartela, que apresentam a evolução ao longo do tempo, qual delas vocàusaria para representar: Luís Inácio Lula da Silva	134	157	t	2025-09-03 23:49:31.386415
+854	P144	P144. Considerando as imagens desta cartela, que apresentam a evolução ao longo do tempo, qual delas você usaria para representar: Luís Inácio Lula da Silva	134	157	t	2025-09-03 23:49:31.386415
 880	P166	ORGANIZAÇÕES/ ASSOCIAÇÕES VOLUNTÁRIAS: P166. Sindicato	142	188	t	2025-09-03 23:49:31.386415
 881	P167	ORGANIZAÇÕES/ ASSOCIAÇÕES VOLUNTÁRIAS: P167. Partido político	142	189	t	2025-09-03 23:49:31.386415
 891	P177	De acordo com a Constituição Federal do Brasil, não há limite de mandatos para Deputados Federais no país	144	199	t	2025-09-03 23:49:31.386415

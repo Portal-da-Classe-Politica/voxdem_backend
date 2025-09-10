@@ -10,12 +10,14 @@ export class AnalysisService {
         SELECT DISTINCT 
           question_code as code,
           question_text as text,
+          question_order as question_order,
           COUNT(*) as "totalResponses"
         FROM response_analysis
         WHERE question_code IS NOT NULL 
           AND question_text IS NOT NULL
-        GROUP BY question_code, question_text
-        ORDER BY question_code
+          AND is_active = 'true'
+        GROUP BY question_code, question_text, question_order
+        ORDER BY question_order
       `);
 
       // Mapear para o formato esperado
