@@ -72,7 +72,44 @@ export class AnalysisService {
           key: 'state',
           name: 'Estado',
           description: 'Estado (UF)',
-          column: 'state'
+          column: 'state_name'
+        },
+        // NOVOS ATRIBUTOS DE PERFIL
+        {
+          key: 'religion',
+          name: 'Religião',
+          description: 'Religião declarada',
+          column: 'religion'
+        },
+        {
+          key: 'vote_first_round',
+          name: 'Voto 1º Turno',
+          description: 'Voto no primeiro turno presidencial 2022',
+          column: 'vote_first_round'
+        },
+        {
+          key: 'vote_second_round',
+          name: 'Voto 2º Turno',
+          description: 'Voto no segundo turno presidencial 2022',
+          column: 'vote_second_round'
+        },
+        {
+          key: 'activity_status',
+          name: 'Situação de Atividade',
+          description: 'Situação de atividade econômica',
+          column: 'activity_status'
+        },
+        {
+          key: 'activity_sector',
+          name: 'Ramo de Atividade',
+          description: 'Setor/ramo de atividade econômica',
+          column: 'activity_sector'
+        },
+        {
+          key: 'income_range',
+          name: 'Faixa de Renda',
+          description: 'Faixa de renda familiar',
+          column: 'income_range'
         }
       ];
 
@@ -172,7 +209,14 @@ export class AnalysisService {
         'education': 'education_level', // ESCOLARIDADE
         'race': 'race',               // RACA
         'region': 'region_name',      // REGIAO
-        'state': 'state_name'         // UF
+        'state': 'state_name',        // UF
+        // NOVOS ATRIBUTOS DE PERFIL
+        'religion': 'religion',               // RELIGIAO
+        'vote_first_round': 'vote_first_round',   // P157
+        'vote_second_round': 'vote_second_round',  // P159
+        'activity_status': 'activity_status',     // ATIVIDADE_SITUACAO
+        'activity_sector': 'activity_sector',     // ATIVIDADE_RAMO
+        'income_range': 'income_range'            // RENDA_1
       };
 
       const profileField = profileMapping[profileAttribute];

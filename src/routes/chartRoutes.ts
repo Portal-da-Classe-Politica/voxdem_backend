@@ -97,7 +97,9 @@ router.get('/chart/:questionCode/:profileAttribute', async (req: Request, res: R
     }
 
     // Validação do atributo de perfil
-    const validAttributes = ['gender', 'age_range', 'education', 'race', 'region', 'state'];
+    const validAttributes = ['gender', 'age_range', 'education', 'race', 'region', 
+      'state', 'religion', 'vote_first_round', 'vote_second_round', 
+      'activity_status', 'activity_sector', 'income_range'];
     if (!validAttributes.includes(profileAttribute)) {
       return res.status(400).json({
         success: false,

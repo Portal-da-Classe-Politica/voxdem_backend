@@ -463,6 +463,150 @@ ALTER SEQUENCE public.occupations_id_seq OWNED BY public.occupations.id;
 
 
 --
+-- TOC entry 239 (class 1259 OID 2766700)
+-- Name: religions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.religions (
+    id integer NOT NULL,
+    code character varying(20) NOT NULL,
+    description character varying(100) NOT NULL,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE public.religions OWNER TO postgres;
+
+--
+-- TOC entry 5081 (class 0 OID 0)
+-- Dependencies: 239
+-- Name: TABLE religions; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TABLE public.religions IS 'Tipos de religião para questão RELIGIAO';
+
+
+--
+-- TOC entry 240 (class 1259 OID 2766710)
+-- Name: first_round_candidates; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.first_round_candidates (
+    id integer NOT NULL,
+    code character varying(20) NOT NULL,
+    description character varying(100) NOT NULL,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE public.first_round_candidates OWNER TO postgres;
+
+--
+-- TOC entry 5082 (class 0 OID 0)
+-- Dependencies: 240
+-- Name: TABLE first_round_candidates; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TABLE public.first_round_candidates IS 'Candidatos do primeiro turno para questão P157';
+
+
+--
+-- TOC entry 241 (class 1259 OID 2766720)
+-- Name: second_round_candidates; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.second_round_candidates (
+    id integer NOT NULL,
+    code character varying(20) NOT NULL,
+    description character varying(100) NOT NULL,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE public.second_round_candidates OWNER TO postgres;
+
+--
+-- TOC entry 5083 (class 0 OID 0)
+-- Dependencies: 241
+-- Name: TABLE second_round_candidates; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TABLE public.second_round_candidates IS 'Candidatos do segundo turno para questão P159';
+
+
+--
+-- TOC entry 242 (class 1259 OID 2766730)
+-- Name: activity_sectors_extended; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.activity_sectors_extended (
+    id integer NOT NULL,
+    code character varying(20) NOT NULL,
+    description character varying(100) NOT NULL,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE public.activity_sectors_extended OWNER TO postgres;
+
+--
+-- TOC entry 5084 (class 0 OID 0)
+-- Dependencies: 242
+-- Name: TABLE activity_sectors_extended; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TABLE public.activity_sectors_extended IS 'Ramos de atividade para ATIVIDADE_RAMO';
+
+
+--
+-- TOC entry 243 (class 1259 OID 2766740)
+-- Name: activity_statuses_extended; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.activity_statuses_extended (
+    id integer NOT NULL,
+    code character varying(20) NOT NULL,
+    description character varying(100) NOT NULL,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE public.activity_statuses_extended OWNER TO postgres;
+
+--
+-- TOC entry 5085 (class 0 OID 0)
+-- Dependencies: 243
+-- Name: TABLE activity_statuses_extended; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TABLE public.activity_statuses_extended IS 'Situações de atividade para ATIVIDADE_SITUACAO';
+
+
+--
+-- TOC entry 244 (class 1259 OID 2766750)
+-- Name: income_ranges; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.income_ranges (
+    id integer NOT NULL,
+    code character varying(20) NOT NULL,
+    description character varying(100) NOT NULL,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE public.income_ranges OWNER TO postgres;
+
+--
+-- TOC entry 5086 (class 0 OID 0)
+-- Dependencies: 244
+-- Name: TABLE income_ranges; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TABLE public.income_ranges IS 'Faixas de renda para RENDA_1';
+
+
+--
 -- TOC entry 238 (class 1259 OID 2766648)
 -- Name: profiles; Type: TABLE; Schema: public; Owner: postgres
 --
@@ -484,6 +628,10 @@ CREATE TABLE public.profiles (
     activity_status_id integer,
     occupation_id integer,
     bathrooms integer,
+    religion_id integer,
+    vote_first_round_id integer,
+    vote_second_round_id integer,
+    income_range_id integer,
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
 );
@@ -507,6 +655,54 @@ COMMENT ON TABLE public.profiles IS 'Perfil demográfico dos respondentes da pes
 --
 
 COMMENT ON COLUMN public.profiles.id_ipec IS 'ID original da pesquisa IPEC';
+
+--
+-- TOC entry 5078 (class 0 OID 0)
+-- Dependencies: 238
+-- Name: COLUMN profiles.religion_id; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.profiles.religion_id IS 'ID da religião do respondente (questão RELIGIAO)';
+
+--
+-- TOC entry 5079 (class 0 OID 0)
+-- Dependencies: 238
+-- Name: COLUMN profiles.vote_first_round_id; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.profiles.vote_first_round_id IS 'ID do voto no primeiro turno (questão P157)';
+
+--
+-- TOC entry 5080 (class 0 OID 0)
+-- Dependencies: 238
+-- Name: COLUMN profiles.vote_second_round_id; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.profiles.vote_second_round_id IS 'ID do voto no segundo turno (questão P159)';
+
+--
+-- TOC entry 5087 (class 0 OID 0)
+-- Dependencies: 238
+-- Name: COLUMN profiles.activity_sector_id; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.profiles.activity_sector_id IS 'ID do ramo de atividade (ATIVIDADE_RAMO)';
+
+--
+-- TOC entry 5088 (class 0 OID 0)
+-- Dependencies: 238
+-- Name: COLUMN profiles.activity_status_id; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.profiles.activity_status_id IS 'ID da situação de atividade (ATIVIDADE_SITUACAO)';
+
+--
+-- TOC entry 5089 (class 0 OID 0)
+-- Dependencies: 238
+-- Name: COLUMN profiles.income_range_id; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN public.profiles.income_range_id IS 'ID da faixa de renda (RENDA_1)';
 
 
 --
@@ -574,20 +770,32 @@ CREATE VIEW public.profile_analysis AS
     asec.description AS activity_sector,
     ast.description AS activity_status,
     o.description AS occupation,
+    rel.description AS religion,
+    frc.description AS vote_first_round,
+    src.description AS vote_second_round,
+    asec_ext.description AS activity_sector_extended,
+    ast_ext.description AS activity_status_extended,
+    inc.description AS income_range,
     p.bathrooms,
     p.created_at
-   FROM (((((((((((public.profiles p
-     LEFT JOIN public.states s ON ((p.state_id = s.id)))
-     LEFT JOIN public.city_sizes cs ON ((p.city_size_id = cs.id)))
-     LEFT JOIN public.regions r ON ((p.region_id = r.id)))
-     LEFT JOIN public.genders g ON ((p.gender_id = g.id)))
-     LEFT JOIN public.age_ranges ar ON ((p.age_range_id = ar.id)))
-     LEFT JOIN public.races rc ON ((p.race_id = rc.id)))
-     LEFT JOIN public.literacy_levels ll ON ((p.literacy_id = ll.id)))
-     LEFT JOIN public.education_levels el ON ((p.education_id = el.id)))
-     LEFT JOIN public.activity_sectors asec ON ((p.activity_sector_id = asec.id)))
-     LEFT JOIN public.activity_statuses ast ON ((p.activity_status_id = ast.id)))
-     LEFT JOIN public.occupations o ON ((p.occupation_id = o.id)));
+   FROM public.profiles p
+     LEFT JOIN public.states s ON p.state_id = s.id
+     LEFT JOIN public.city_sizes cs ON p.city_size_id = cs.id
+     LEFT JOIN public.regions r ON p.region_id = r.id
+     LEFT JOIN public.genders g ON p.gender_id = g.id
+     LEFT JOIN public.age_ranges ar ON p.age_range_id = ar.id
+     LEFT JOIN public.races rc ON p.race_id = rc.id
+     LEFT JOIN public.literacy_levels ll ON p.literacy_id = ll.id
+     LEFT JOIN public.education_levels el ON p.education_id = el.id
+     LEFT JOIN public.activity_sectors asec ON p.activity_sector_id = asec.id
+     LEFT JOIN public.activity_statuses ast ON p.activity_status_id = ast.id
+     LEFT JOIN public.occupations o ON p.occupation_id = o.id
+     LEFT JOIN public.religions rel ON p.religion_id = rel.id
+     LEFT JOIN public.first_round_candidates frc ON p.vote_first_round_id = frc.id
+     LEFT JOIN public.second_round_candidates src ON p.vote_second_round_id = src.id
+     LEFT JOIN public.activity_sectors_extended asec_ext ON p.activity_sector_id = asec_ext.id
+     LEFT JOIN public.activity_statuses_extended ast_ext ON p.activity_status_id = ast_ext.id
+     LEFT JOIN public.income_ranges inc ON p.income_range_id = inc.id;
 
 
 ALTER VIEW public.profile_analysis OWNER TO postgres;
@@ -773,8 +981,8 @@ CREATE VIEW public.response_analysis AS
     p.id_ipec,
     q.code AS question_code,
     q.text AS question_text,
-    q.question_order as question_order,
-    q.is_active as is_active,
+    q.question_order,
+    q.is_active,
     ao.code AS answer_code,
     ao.label AS answer_label,
     sr.raw_value,
@@ -783,12 +991,18 @@ CREATE VIEW public.response_analysis AS
     pa.education_level,
     pa.race,
     pa.region_name,
-    pa.state_name
-   FROM ((((public.survey_responses sr
-     JOIN public.profiles p ON ((sr.profile_id = p.id)))
-     JOIN public.questions q ON ((sr.question_id = q.id)))
-     LEFT JOIN public.answer_options ao ON ((sr.answer_option_id = ao.id)))
-     JOIN public.profile_analysis pa ON ((p.id = pa.id)));
+    pa.state_name,
+    pa.religion,
+    pa.vote_first_round,
+    pa.vote_second_round,
+    pa.activity_sector_extended AS activity_sector,
+    pa.activity_status_extended AS activity_status,
+    pa.income_range
+   FROM public.survey_responses sr
+     JOIN public.profiles p ON sr.profile_id = p.id
+     JOIN public.questions q ON sr.question_id = q.id
+     LEFT JOIN public.answer_options ao ON sr.answer_option_id = ao.id
+     JOIN public.profile_analysis pa ON p.id = pa.id;
 
 
 ALTER VIEW public.response_analysis OWNER TO postgres;
@@ -1503,6 +1717,81 @@ COPY public.answer_options (id, answer_group_id, code, label, option_order) FROM
 --
 -- TOC entry 5031 (class 0 OID 2766567)
 -- Dependencies: 220
+-- Data for Name: city_sizes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+--
+-- Data for Name: religions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.religions (id, code, description) FROM stdin;
+\.
+
+
+--
+-- Data for Name: first_round_candidates; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.first_round_candidates (id, code, description) FROM stdin;
+\.
+
+
+--
+-- Data for Name: second_round_candidates; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.second_round_candidates (id, code, description) FROM stdin;
+\.
+
+
+--
+-- Data for Name: activity_sectors_extended; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.activity_sectors_extended (id, code, description) FROM stdin;
+1	1	Agricultura
+2	2	Indúst. Transformação
+3	3	Construção - Outras
+4	4	Comércio
+5	5	Transporte - Comunic.
+6	6	Prestação de Serviços
+7	7	Atividade social
+8	8	Administração Pública
+9	9	Outras atividades
+10	10	Inativos
+11	11	Atividade Doméstica
+\.
+
+
+--
+-- Data for Name: activity_statuses_extended; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.activity_statuses_extended (id, code, description) FROM stdin;
+1	1	Empregado
+2	2	Patrão
+3	3	Conta própria
+4	4	Não aplicável
+\.
+
+
+--
+-- Data for Name: income_ranges; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.income_ranges (id, code, description) FROM stdin;
+1	1	Mais de R$ 30.360,01 / Mais de 20 SM
+2	2	Mais de R$ 15.180,01 até R$ 30.360,00 / Mais de 10 a 20 SM
+3	3	Mais de R$ 7.590,01 até R$ 15.180,00 / Mais de 5 a 10 SM
+4	4	Mais de R$ 3.036,01 até R$ 7.590,00 / Mais de 2 a 5 SM
+5	5	Mais de R$ 1.518,01 até R$ 3.036,00 / Mais de 1 a 2 SM
+6	6	Até R$ 1.518,00 / Até 1 salário mínimo
+98	98	Não tem rendimento pessoal
+99	99	Não respondeu
+\.
+
+
+--
 -- Data for Name: city_sizes; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -312787,6 +313076,114 @@ ALTER TABLE ONLY public.occupations
 
 
 --
+-- TOC entry 4838 (class 2606 OID 2766707)
+-- Name: religions religions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.religions
+    ADD CONSTRAINT religions_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 4839 (class 2606 OID 2766709)
+-- Name: religions religions_code_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.religions
+    ADD CONSTRAINT religions_code_unique UNIQUE (code);
+
+
+--
+-- TOC entry 4841 (class 2606 OID 2766717)
+-- Name: first_round_candidates first_round_candidates_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.first_round_candidates
+    ADD CONSTRAINT first_round_candidates_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 4843 (class 2606 OID 2766719)
+-- Name: first_round_candidates first_round_candidates_code_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.first_round_candidates
+    ADD CONSTRAINT first_round_candidates_code_unique UNIQUE (code);
+
+
+--
+-- TOC entry 4845 (class 2606 OID 2766727)
+-- Name: second_round_candidates second_round_candidates_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.second_round_candidates
+    ADD CONSTRAINT second_round_candidates_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 4847 (class 2606 OID 2766729)
+-- Name: second_round_candidates second_round_candidates_code_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.second_round_candidates
+    ADD CONSTRAINT second_round_candidates_code_unique UNIQUE (code);
+
+
+--
+-- TOC entry 4849 (class 2606 OID 2766737)
+-- Name: activity_sectors_extended activity_sectors_extended_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.activity_sectors_extended
+    ADD CONSTRAINT activity_sectors_extended_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 4851 (class 2606 OID 2766739)
+-- Name: activity_sectors_extended activity_sectors_extended_code_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.activity_sectors_extended
+    ADD CONSTRAINT activity_sectors_extended_code_unique UNIQUE (code);
+
+
+--
+-- TOC entry 4853 (class 2606 OID 2766747)
+-- Name: activity_statuses_extended activity_statuses_extended_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.activity_statuses_extended
+    ADD CONSTRAINT activity_statuses_extended_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 4855 (class 2606 OID 2766749)
+-- Name: activity_statuses_extended activity_statuses_extended_code_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.activity_statuses_extended
+    ADD CONSTRAINT activity_statuses_extended_code_unique UNIQUE (code);
+
+
+--
+-- TOC entry 4857 (class 2606 OID 2766757)
+-- Name: income_ranges income_ranges_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.income_ranges
+    ADD CONSTRAINT income_ranges_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 4859 (class 2606 OID 2766759)
+-- Name: income_ranges income_ranges_code_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.income_ranges
+    ADD CONSTRAINT income_ranges_code_unique UNIQUE (code);
+
+
+--
 -- TOC entry 4840 (class 2606 OID 2766657)
 -- Name: profiles profiles_id_ipec_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
@@ -313067,6 +313464,60 @@ ALTER TABLE ONLY public.profiles
 
 
 --
+-- TOC entry 4876 (class 2606 OID 2766730)
+-- Name: profiles profiles_religion_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.profiles
+    ADD CONSTRAINT profiles_religion_fkey FOREIGN KEY (religion_id) REFERENCES public.religions(id);
+
+
+--
+-- TOC entry 4877 (class 2606 OID 2766735)
+-- Name: profiles profiles_vote_first_round_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.profiles
+    ADD CONSTRAINT profiles_vote_first_round_fkey FOREIGN KEY (vote_first_round_id) REFERENCES public.first_round_candidates(id);
+
+
+--
+-- TOC entry 4878 (class 2606 OID 2766740)
+-- Name: profiles profiles_vote_second_round_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.profiles
+    ADD CONSTRAINT profiles_vote_second_round_fkey FOREIGN KEY (vote_second_round_id) REFERENCES public.second_round_candidates(id);
+
+
+--
+-- TOC entry 4882 (class 2606 OID 2766760)
+-- Name: profiles profiles_activity_sector_extended_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.profiles
+    ADD CONSTRAINT profiles_activity_sector_extended_fkey FOREIGN KEY (activity_sector_id) REFERENCES public.activity_sectors_extended(id);
+
+
+--
+-- TOC entry 4883 (class 2606 OID 2766765)
+-- Name: profiles profiles_activity_status_extended_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.profiles
+    ADD CONSTRAINT profiles_activity_status_extended_fkey FOREIGN KEY (activity_status_id) REFERENCES public.activity_statuses_extended(id);
+
+
+--
+-- TOC entry 4884 (class 2606 OID 2766770)
+-- Name: profiles profiles_income_range_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.profiles
+    ADD CONSTRAINT profiles_income_range_fkey FOREIGN KEY (income_range_id) REFERENCES public.income_ranges(id);
+
+
+--
 -- TOC entry 4876 (class 2606 OID 2766752)
 -- Name: questions questions_answer_group_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
@@ -313111,9 +313562,7740 @@ ALTER TABLE ONLY public.survey_responses
     ADD CONSTRAINT survey_responses_question_id_fkey FOREIGN KEY (question_id) REFERENCES public.questions(id);
 
 
+--
+-- Populate new profile attribute tables and update profiles
+--
+
+-- Inserir religiões baseado no grupo_religiao (id 157)
+INSERT INTO public.religions (id, code, description)
+SELECT 
+    ao.id,
+    ao.code,
+    ao.label
+FROM public.answer_options ao
+WHERE ao.answer_group_id = 157  -- grupo_religiao
+ON CONFLICT (id) DO NOTHING;
+
+-- Inserir candidatos primeiro turno baseado no grupo_p157 (id 139)
+INSERT INTO public.first_round_candidates (id, code, description)
+SELECT 
+    ao.id,
+    ao.code,
+    ao.label
+FROM public.answer_options ao
+WHERE ao.answer_group_id = 139  -- grupo_p157
+ON CONFLICT (id) DO NOTHING;
+
+-- Inserir candidatos segundo turno baseado no grupo_p159 (id 140)
+INSERT INTO public.second_round_candidates (id, code, description)
+SELECT 
+    ao.id,
+    ao.code,
+    ao.label
+FROM public.answer_options ao
+WHERE ao.answer_group_id = 140  -- grupo_p159
+ON CONFLICT (id) DO NOTHING;
+
+-- Atualizar religião nos profiles
+UPDATE public.profiles p
+SET religion_id = sr.answer_option_id
+FROM public.survey_responses sr
+JOIN public.questions q ON sr.question_id = q.id
+WHERE q.code = 'RELIGIAO' 
+AND sr.profile_id = p.id;
+
+-- Atualizar voto primeiro turno nos profiles
+UPDATE public.profiles p
+SET vote_first_round_id = sr.answer_option_id
+FROM public.survey_responses sr
+JOIN public.questions q ON sr.question_id = q.id
+WHERE q.code = 'P157' 
+AND sr.profile_id = p.id;
+
+-- Atualizar voto segundo turno nos profiles
+UPDATE public.profiles p
+SET vote_second_round_id = sr.answer_option_id
+FROM public.survey_responses sr
+JOIN public.questions q ON sr.question_id = q.id
+WHERE q.code = 'P159' 
+AND sr.profile_id = p.id;
+
+-- Atualizar situação de atividade nos profiles
+UPDATE public.profiles p
+SET activity_status_id = sr.answer_option_id
+FROM public.survey_responses sr
+JOIN public.questions q ON sr.question_id = q.id
+WHERE q.code = 'ATIVIDADE_SITUACAO' 
+AND sr.profile_id = p.id;
+
+-- Atualizar ramo de atividade nos profiles
+UPDATE public.profiles p
+SET activity_sector_id = sr.answer_option_id
+FROM public.survey_responses sr
+JOIN public.questions q ON sr.question_id = q.id
+WHERE q.code = 'ATIVIDADE_RAMO' 
+AND sr.profile_id = p.id;
+
+-- Atualizar renda nos profiles
+UPDATE public.profiles p
+SET income_range_id = sr.answer_option_id
+FROM public.survey_responses sr
+JOIN public.questions q ON sr.question_id = q.id
+WHERE q.code = 'RENDA_1' 
+AND sr.profile_id = p.id;
+
+
 -- Completed on 2025-09-09 00:33:30
 
 --
 -- PostgreSQL database dump complete
 --
+-- Inserção de dados de RENDA_1 com IDs corretos
 
+-- Criar a pergunta RENDA_1 se não existir
+INSERT INTO public.questions (code, text, question_order, is_active, answer_group_id) VALUES
+('RENDA_1', 'Faixa de renda familiar', 999, true, (SELECT id FROM public.answer_groups WHERE description = 'Faixas de Renda'))
+ON CONFLICT (code) DO NOTHING;
+
+-- Criar grupo de respostas para RENDA_1 se não existir
+INSERT INTO public.answer_groups (description) VALUES ('Faixas de Renda')
+ON CONFLICT (description) DO NOTHING;
+
+-- Criar opções de resposta para RENDA_1
+INSERT INTO public.answer_options (answer_group_id, code, label, order_index) VALUES
+((SELECT id FROM public.answer_groups WHERE description = 'Faixas de Renda'), '1', 'Mais de R$ 30.360,01 / Mais de 20 SM', 1),
+((SELECT id FROM public.answer_groups WHERE description = 'Faixas de Renda'), '2', 'Mais de R$ 15.180,01 até R$ 30.360,00 / Mais de 10 a 20 SM', 2),
+((SELECT id FROM public.answer_groups WHERE description = 'Faixas de Renda'), '3', 'Mais de R$ 7.590,01 até R$ 15.180,00 / Mais de 5 a 10 SM', 3),
+((SELECT id FROM public.answer_groups WHERE description = 'Faixas de Renda'), '4', 'Mais de R$ 3.036,01 até R$ 7.590,00 / Mais de 2 a 5 SM', 4),
+((SELECT id FROM public.answer_groups WHERE description = 'Faixas de Renda'), '5', 'Mais de R$ 1.518,01 até R$ 3.036,00 / Mais de 1 a 2 SM', 5),
+((SELECT id FROM public.answer_groups WHERE description = 'Faixas de Renda'), '6', 'Até R$ 1.518,00 / Até 1 salário mínimo', 6),
+((SELECT id FROM public.answer_groups WHERE description = 'Faixas de Renda'), '98', 'Não tem rendimento pessoal', 98),
+((SELECT id FROM public.answer_groups WHERE description = 'Faixas de Renda'), '99', 'Não respondeu', 99)
+ON CONFLICT (answer_group_id, code) DO NOTHING;
+
+-- Atualizar a pergunta RENDA_1 para usar o grupo correto
+UPDATE public.questions SET answer_group_id = (SELECT id FROM public.answer_groups WHERE description = 'Faixas de Renda')
+WHERE code = 'RENDA_1';
+
+-- Inserções de survey_responses para RENDA_1 usando IDs sequenciais
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200000, 10529, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200001, 10530, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200002, 10531, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200003, 10532, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200004, 10533, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200005, 10534, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '2'), '2')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200006, 10535, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200007, 10536, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200008, 10537, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200009, 10538, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200010, 10539, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200011, 10540, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200012, 10541, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200013, 10542, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200014, 10543, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200015, 10544, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200016, 10545, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200017, 10546, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200018, 10547, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200019, 10548, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200020, 10549, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200021, 10550, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200022, 10551, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200023, 10552, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200024, 10553, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200025, 10554, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200026, 10555, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200027, 10556, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200028, 10557, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200029, 10558, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200030, 10559, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200031, 10560, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200032, 10561, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200033, 10562, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200034, 10563, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200035, 10564, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200036, 10565, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200037, 10566, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200038, 10567, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200039, 10568, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200040, 10569, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200041, 10570, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200042, 10571, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200043, 10572, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200044, 10573, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200045, 10574, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200046, 10575, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200047, 10576, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200048, 10577, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200049, 10578, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200050, 10579, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200051, 10580, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200052, 10581, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200053, 10582, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200054, 10583, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200055, 10584, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200056, 10585, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200057, 10586, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200058, 10587, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200059, 10588, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200060, 10589, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200061, 10590, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200062, 10591, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200063, 10592, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200064, 10593, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200065, 10594, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200066, 10595, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200067, 10596, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200068, 10597, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200069, 10598, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200070, 10599, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200071, 10600, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200072, 10601, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200073, 10602, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200074, 10603, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200075, 10604, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200076, 10605, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200077, 10606, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200078, 10607, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200079, 10608, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200080, 10609, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200081, 10610, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200082, 10611, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200083, 10612, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200084, 10613, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200085, 10614, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200086, 10615, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200087, 10616, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200088, 10617, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200089, 10618, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200090, 10619, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200091, 10620, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200092, 10621, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200093, 10622, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200094, 10623, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200095, 10624, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200096, 10625, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200097, 10626, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200098, 10627, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200099, 10628, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200100, 10629, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200101, 10630, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200102, 10631, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200103, 10632, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200104, 10633, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200105, 10634, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200106, 10635, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200107, 10636, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200108, 10637, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200109, 10638, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200110, 10639, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200111, 10640, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200112, 10641, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200113, 10642, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200114, 10643, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200115, 10644, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200116, 10645, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200117, 10646, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200118, 10647, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200119, 10648, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200120, 10649, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200121, 10650, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200122, 10651, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200123, 10652, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200124, 10653, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200125, 10654, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200126, 10655, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200127, 10656, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200128, 10657, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200129, 10658, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200130, 10659, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200131, 10660, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200132, 10661, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200133, 10662, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200134, 10663, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200135, 10664, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200136, 10665, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200137, 10666, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200138, 10667, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200139, 10668, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200140, 10669, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200141, 10670, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200142, 10671, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200143, 10672, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200144, 10673, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200145, 10674, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '1'), '1')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200146, 10675, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200147, 10676, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200148, 10677, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '2'), '2')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200149, 10678, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200150, 10679, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200151, 10680, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200152, 10681, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200153, 10682, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200154, 10683, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200155, 10684, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200156, 10685, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200157, 10686, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200158, 10687, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200159, 10688, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200160, 10689, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200161, 10690, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200162, 10691, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200163, 10692, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200164, 10693, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200165, 10694, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '2'), '2')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200166, 10695, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200167, 10696, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200168, 10697, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200169, 10698, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200170, 10699, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200171, 10700, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200172, 10701, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200173, 10702, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200174, 10703, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200175, 10704, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200176, 10705, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200177, 10706, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200178, 10707, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200179, 10708, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200180, 10709, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200181, 10710, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200182, 10711, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200183, 10712, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200184, 10713, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200185, 10714, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200186, 10715, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200187, 10716, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200188, 10717, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200189, 10718, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200190, 10719, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200191, 10720, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200192, 10721, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200193, 10722, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200194, 10723, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200195, 10724, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200196, 10725, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200197, 10726, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200198, 10727, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200199, 10728, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200200, 10729, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200201, 10730, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200202, 10731, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200203, 10732, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200204, 10733, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200205, 10734, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200206, 10735, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200207, 10736, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200208, 10737, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200209, 10738, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200210, 10739, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200211, 10740, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200212, 10741, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200213, 10742, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200214, 10743, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200215, 10744, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200216, 10745, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200217, 10746, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200218, 10747, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200219, 10748, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200220, 10749, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200221, 10750, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200222, 10751, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200223, 10752, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200224, 10753, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200225, 10754, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200226, 10755, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200227, 10756, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200228, 10757, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200229, 10758, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200230, 10759, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200231, 10760, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '2'), '2')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200232, 10761, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200233, 10762, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200234, 10763, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200235, 10764, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200236, 10765, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200237, 10766, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200238, 10767, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200239, 10768, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200240, 10769, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200241, 10770, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200242, 10771, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200243, 10772, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200244, 10773, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200245, 10774, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200246, 10775, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200247, 10776, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200248, 10777, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200249, 10778, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200250, 10779, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200251, 10780, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200252, 10781, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200253, 10782, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200254, 10783, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200255, 10784, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200256, 10785, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200257, 10786, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200258, 10787, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200259, 10788, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200260, 10789, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200261, 10790, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200262, 10791, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200263, 10792, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200264, 10793, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200265, 10794, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200266, 10795, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200267, 10796, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200268, 10797, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200269, 10798, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200270, 10799, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200271, 10800, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200272, 10801, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200273, 10802, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200274, 10803, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200275, 10804, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200276, 10805, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200277, 10806, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200278, 10807, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200279, 10808, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200280, 10809, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200281, 10810, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200282, 10811, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200283, 10812, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200284, 10813, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200285, 10814, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200286, 10815, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200287, 10816, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200288, 10817, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200289, 10818, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200290, 10819, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200291, 10820, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200292, 10821, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200293, 10822, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200294, 10823, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200295, 10824, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200296, 10825, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200297, 10826, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200298, 10827, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200299, 10828, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200300, 10829, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200301, 10830, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200302, 10831, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200303, 10832, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200304, 10833, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200305, 10834, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200306, 10835, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200307, 10836, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200308, 10837, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200309, 10838, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200310, 10839, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200311, 10840, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200312, 10841, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200313, 10842, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200314, 10843, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '2'), '2')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200315, 10844, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200316, 10845, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200317, 10846, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200318, 10847, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200319, 10848, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '2'), '2')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200320, 10849, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200321, 10850, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200322, 10851, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200323, 10852, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200324, 10853, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200325, 10854, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200326, 10855, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200327, 10856, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200328, 10857, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200329, 10858, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200330, 10859, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200331, 10860, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200332, 10861, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200333, 10862, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200334, 10863, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200335, 10864, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200336, 10865, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200337, 10866, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200338, 10867, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200339, 10868, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200340, 10869, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200341, 10870, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200342, 10871, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200343, 10872, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200344, 10873, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200345, 10874, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200346, 10875, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200347, 10876, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200348, 10877, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200349, 10878, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200350, 10879, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200351, 10880, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200352, 10881, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200353, 10882, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200354, 10883, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200355, 10884, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200356, 10885, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200357, 10886, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200358, 10887, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200359, 10888, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200360, 10889, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200361, 10890, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200362, 10891, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200363, 10892, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200364, 10893, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200365, 10894, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200366, 10895, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200367, 10896, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200368, 10897, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200369, 10898, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200370, 10899, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200371, 10900, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200372, 10901, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200373, 10902, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200374, 10903, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200375, 10904, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200376, 10905, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200377, 10906, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200378, 10907, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200379, 10908, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200380, 10909, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200381, 10910, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200382, 10911, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200383, 10912, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200384, 10913, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200385, 10914, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200386, 10915, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200387, 10916, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200388, 10917, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200389, 10918, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200390, 10919, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200391, 10920, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200392, 10921, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200393, 10922, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200394, 10923, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200395, 10924, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200396, 10925, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200397, 10926, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200398, 10927, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200399, 10928, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200400, 10929, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200401, 10930, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200402, 10931, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200403, 10932, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200404, 10933, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200405, 10934, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200406, 10935, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200407, 10936, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200408, 10937, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200409, 10938, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200410, 10939, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200411, 10940, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200412, 10941, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200413, 10942, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200414, 10943, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200415, 10944, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200416, 10945, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200417, 10946, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200418, 10947, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200419, 10948, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200420, 10949, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200421, 10950, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200422, 10951, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200423, 10952, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200424, 10953, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200425, 10954, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200426, 10955, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200427, 10956, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200428, 10957, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200429, 10958, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200430, 10959, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200431, 10960, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200432, 10961, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200433, 10962, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200434, 10963, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200435, 10964, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200436, 10965, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200437, 10966, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200438, 10967, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200439, 10968, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200440, 10969, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200441, 10970, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200442, 10971, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200443, 10972, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200444, 10973, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200445, 10974, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200446, 10975, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200447, 10976, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200448, 10977, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200449, 10978, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200450, 10979, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200451, 10980, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200452, 10981, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200453, 10982, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200454, 10983, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200455, 10984, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200456, 10985, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200457, 10986, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200458, 10987, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200459, 10988, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200460, 10989, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200461, 10990, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200462, 10991, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200463, 10992, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200464, 10993, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200465, 10994, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200466, 10995, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200467, 10996, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200468, 10997, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200469, 10998, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200470, 10999, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200471, 11000, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200472, 11001, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200473, 11002, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200474, 11003, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200475, 11004, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200476, 11005, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200477, 11006, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200478, 11007, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200479, 11008, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200480, 11009, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200481, 11010, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200482, 11011, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200483, 11012, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200484, 11013, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200485, 11014, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200486, 11015, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200487, 11016, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200488, 11017, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200489, 11018, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200490, 11019, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200491, 11020, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200492, 11021, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200493, 11022, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200494, 11023, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200495, 11024, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200496, 11025, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200497, 11026, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200498, 11027, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200499, 11028, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200500, 11029, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200501, 11030, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200502, 11031, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200503, 11032, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200504, 11033, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200505, 11034, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200506, 11035, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200507, 11036, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200508, 11037, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200509, 11038, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200510, 11039, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200511, 11040, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200512, 11041, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200513, 11042, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200514, 11043, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200515, 11044, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200516, 11045, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200517, 11046, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200518, 11047, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200519, 11048, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200520, 11049, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200521, 11050, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200522, 11051, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200523, 11052, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200524, 11053, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200525, 11054, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200526, 11055, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200527, 11056, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200528, 11057, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200529, 11058, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200530, 11059, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200531, 11060, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200532, 11061, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200533, 11062, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200534, 11063, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200535, 11064, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200536, 11065, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200537, 11066, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200538, 11067, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200539, 11068, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200540, 11069, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200541, 11070, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200542, 11071, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200543, 11072, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200544, 11073, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200545, 11074, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200546, 11075, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200547, 11076, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200548, 11077, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200549, 11078, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200550, 11079, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200551, 11080, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200552, 11081, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200553, 11082, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200554, 11083, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200555, 11084, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200556, 11085, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200557, 11086, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200558, 11087, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200559, 11088, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200560, 11089, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200561, 11090, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200562, 11091, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200563, 11092, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200564, 11093, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200565, 11094, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200566, 11095, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200567, 11096, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200568, 11097, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200569, 11098, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200570, 11099, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200571, 11100, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200572, 11101, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200573, 11102, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200574, 11103, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200575, 11104, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200576, 11105, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200577, 11106, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200578, 11107, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200579, 11108, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200580, 11109, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200581, 11110, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200582, 11111, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200583, 11112, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200584, 11113, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200585, 11114, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200586, 11115, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200587, 11116, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200588, 11117, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200589, 11118, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200590, 11119, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200591, 11120, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200592, 11121, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200593, 11122, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200594, 11123, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200595, 11124, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200596, 11125, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200597, 11126, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200598, 11127, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200599, 11128, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200600, 11129, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200601, 11130, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200602, 11131, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200603, 11132, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200604, 11133, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200605, 11134, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200606, 11135, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200607, 11136, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200608, 11137, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200609, 11138, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200610, 11139, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200611, 11140, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200612, 11141, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200613, 11142, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200614, 11143, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200615, 11144, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200616, 11145, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200617, 11146, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '2'), '2')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200618, 11147, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200619, 11148, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200620, 11149, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200621, 11150, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200622, 11151, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200623, 11152, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200624, 11153, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200625, 11154, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200626, 11155, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200627, 11156, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200628, 11157, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200629, 11158, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200630, 11159, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200631, 11160, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200632, 11161, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200633, 11162, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200634, 11163, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200635, 11164, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200636, 11165, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200637, 11166, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200638, 11167, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200639, 11168, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200640, 11169, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200641, 11170, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200642, 11171, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200643, 11172, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200644, 11173, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200645, 11174, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200646, 11175, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200647, 11176, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200648, 11177, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200649, 11178, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200650, 11179, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200651, 11180, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200652, 11181, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200653, 11182, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200654, 11183, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200655, 11184, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200656, 11185, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200657, 11186, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200658, 11187, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200659, 11188, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200660, 11189, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200661, 11190, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200662, 11191, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200663, 11192, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200664, 11193, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200665, 11194, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200666, 11195, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200667, 11196, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200668, 11197, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200669, 11198, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200670, 11199, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200671, 11200, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200672, 11201, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200673, 11202, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200674, 11203, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200675, 11204, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200676, 11205, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200677, 11206, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200678, 11207, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200679, 11208, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200680, 11209, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200681, 11210, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200682, 11211, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200683, 11212, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200684, 11213, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200685, 11214, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200686, 11215, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200687, 11216, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200688, 11217, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200689, 11218, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '1'), '1')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200690, 11219, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200691, 11220, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200692, 11221, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200693, 11222, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200694, 11223, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200695, 11224, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200696, 11225, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200697, 11226, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200698, 11227, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200699, 11228, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200700, 11229, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200701, 11230, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200702, 11231, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200703, 11232, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200704, 11233, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200705, 11234, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200706, 11235, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200707, 11236, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200708, 11237, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200709, 11238, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200710, 11239, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200711, 11240, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200712, 11241, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200713, 11242, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200714, 11243, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200715, 11244, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200716, 11245, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200717, 11246, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200718, 11247, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200719, 11248, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200720, 11249, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200721, 11250, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200722, 11251, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200723, 11252, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200724, 11253, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200725, 11254, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200726, 11255, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200727, 11256, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200728, 11257, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200729, 11258, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200730, 11259, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200731, 11260, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200732, 11261, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200733, 11262, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200734, 11263, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200735, 11264, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200736, 11265, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200737, 11266, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200738, 11267, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200739, 11268, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200740, 11269, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200741, 11270, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200742, 11271, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200743, 11272, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200744, 11273, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200745, 11274, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200746, 11275, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200747, 11276, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200748, 11277, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200749, 11278, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200750, 11279, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200751, 11280, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200752, 11281, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200753, 11282, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200754, 11283, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200755, 11284, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200756, 11285, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200757, 11286, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200758, 11287, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200759, 11288, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200760, 11289, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200761, 11290, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200762, 11291, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200763, 11292, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200764, 11293, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200765, 11294, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200766, 11295, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200767, 11296, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200768, 11297, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200769, 11298, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200770, 11299, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200771, 11300, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200772, 11301, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200773, 11302, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200774, 11303, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200775, 11304, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200776, 11305, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200777, 11306, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200778, 11307, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200779, 11308, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200780, 11309, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200781, 11310, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200782, 11311, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200783, 11312, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200784, 11313, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200785, 11314, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200786, 11315, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '2'), '2')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200787, 11316, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200788, 11317, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200789, 11318, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200790, 11319, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200791, 11320, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200792, 11321, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200793, 11322, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200794, 11323, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200795, 11324, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200796, 11325, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200797, 11326, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200798, 11327, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200799, 11328, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200800, 11329, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200801, 11330, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200802, 11331, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200803, 11332, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200804, 11333, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200805, 11334, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200806, 11335, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200807, 11336, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200808, 11337, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200809, 11338, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200810, 11339, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200811, 11340, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200812, 11341, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200813, 11342, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200814, 11343, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200815, 11344, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200816, 11345, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200817, 11346, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200818, 11347, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200819, 11348, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200820, 11349, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200821, 11350, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200822, 11351, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200823, 11352, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200824, 11353, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200825, 11354, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200826, 11355, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200827, 11356, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200828, 11357, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200829, 11358, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200830, 11359, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200831, 11360, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200832, 11361, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200833, 11362, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200834, 11363, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200835, 11364, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '1'), '1')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200836, 11365, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200837, 11366, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200838, 11367, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200839, 11368, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200840, 11369, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200841, 11370, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200842, 11371, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200843, 11372, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200844, 11373, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200845, 11374, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200846, 11375, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200847, 11376, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200848, 11377, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200849, 11378, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200850, 11379, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200851, 11380, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200852, 11381, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200853, 11382, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200854, 11383, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200855, 11384, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200856, 11385, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200857, 11386, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200858, 11387, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200859, 11388, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200860, 11389, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200861, 11390, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200862, 11391, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200863, 11392, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200864, 11393, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200865, 11394, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200866, 11395, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200867, 11396, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200868, 11397, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200869, 11398, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200870, 11399, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200871, 11400, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200872, 11401, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200873, 11402, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200874, 11403, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200875, 11404, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200876, 11405, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200877, 11406, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200878, 11407, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200879, 11408, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200880, 11409, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200881, 11410, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200882, 11411, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200883, 11412, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200884, 11413, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200885, 11414, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200886, 11415, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200887, 11416, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200888, 11417, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200889, 11418, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200890, 11419, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200891, 11420, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200892, 11421, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200893, 11422, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200894, 11423, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '2'), '2')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200895, 11424, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200896, 11425, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200897, 11426, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200898, 11427, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200899, 11428, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200900, 11429, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200901, 11430, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200902, 11431, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200903, 11432, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200904, 11433, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200905, 11434, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200906, 11435, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200907, 11436, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200908, 11437, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200909, 11438, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200910, 11439, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200911, 11440, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200912, 11441, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200913, 11442, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200914, 11443, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200915, 11444, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200916, 11445, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200917, 11446, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200918, 11447, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200919, 11448, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200920, 11449, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200921, 11450, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200922, 11451, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200923, 11452, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200924, 11453, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200925, 11454, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200926, 11455, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200927, 11456, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200928, 11457, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200929, 11458, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200930, 11459, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200931, 11460, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200932, 11461, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200933, 11462, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200934, 11463, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200935, 11464, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200936, 11465, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200937, 11466, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200938, 11467, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200939, 11468, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '2'), '2')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200940, 11469, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200941, 11470, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200942, 11471, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200943, 11472, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200944, 11473, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200945, 11474, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200946, 11475, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200947, 11476, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200948, 11477, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200949, 11478, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200950, 11479, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200951, 11480, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200952, 11481, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200953, 11482, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200954, 11483, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200955, 11484, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200956, 11485, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200957, 11486, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200958, 11487, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200959, 11488, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200960, 11489, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200961, 11490, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200962, 11491, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200963, 11492, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200964, 11493, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200965, 11494, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200966, 11495, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200967, 11496, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200968, 11497, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200969, 11498, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200970, 11499, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200971, 11500, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200972, 11501, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200973, 11502, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200974, 11503, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200975, 11504, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200976, 11505, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200977, 11506, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200978, 11507, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200979, 11508, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200980, 11509, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200981, 11510, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200982, 11511, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200983, 11512, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200984, 11513, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200985, 11514, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200986, 11515, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200987, 11516, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200988, 11517, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200989, 11518, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200990, 11519, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200991, 11520, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200992, 11521, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200993, 11522, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200994, 11523, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200995, 11524, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200996, 11525, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200997, 11526, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200998, 11527, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(200999, 11528, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201000, 11529, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201001, 11530, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201002, 11531, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201003, 11532, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201004, 11533, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201005, 11534, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201006, 11535, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201007, 11536, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201008, 11537, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201009, 11538, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201010, 11539, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201011, 11540, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201012, 11541, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201013, 11542, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201014, 11543, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201015, 11544, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201016, 11545, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201017, 11546, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201018, 11547, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201019, 11548, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201020, 11549, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201021, 11550, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201022, 11551, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201023, 11552, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201024, 11553, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201025, 11554, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201026, 11555, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201027, 11556, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201028, 11557, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201029, 11558, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201030, 11559, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201031, 11560, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201032, 11561, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201033, 11562, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201034, 11563, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201035, 11564, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201036, 11565, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201037, 11566, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201038, 11567, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201039, 11568, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201040, 11569, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201041, 11570, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201042, 11571, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201043, 11572, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201044, 11573, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201045, 11574, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201046, 11575, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201047, 11576, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201048, 11577, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201049, 11578, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201050, 11579, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201051, 11580, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201052, 11581, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201053, 11582, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201054, 11583, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201055, 11584, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201056, 11585, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201057, 11586, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201058, 11587, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201059, 11588, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201060, 11589, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201061, 11590, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201062, 11591, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201063, 11592, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201064, 11593, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201065, 11594, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201066, 11595, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201067, 11596, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201068, 11597, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201069, 11598, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201070, 11599, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201071, 11600, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201072, 11601, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201073, 11602, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201074, 11603, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201075, 11604, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201076, 11605, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201077, 11606, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201078, 11607, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201079, 11608, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201080, 11609, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201081, 11610, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201082, 11611, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201083, 11612, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201084, 11613, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201085, 11614, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201086, 11615, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201087, 11616, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201088, 11617, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201089, 11618, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201090, 11619, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201091, 11620, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201092, 11621, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201093, 11622, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201094, 11623, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201095, 11624, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201096, 11625, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201097, 11626, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201098, 11627, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201099, 11628, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201100, 11629, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201101, 11630, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201102, 11631, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201103, 11632, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201104, 11633, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201105, 11634, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201106, 11635, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201107, 11636, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201108, 11637, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201109, 11638, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201110, 11639, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201111, 11640, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201112, 11641, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201113, 11642, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201114, 11643, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201115, 11644, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201116, 11645, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201117, 11646, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201118, 11647, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201119, 11648, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201120, 11649, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201121, 11650, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201122, 11651, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201123, 11652, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201124, 11653, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201125, 11654, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201126, 11655, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201127, 11656, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201128, 11657, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201129, 11658, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201130, 11659, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201131, 11660, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201132, 11661, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201133, 11662, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201134, 11663, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201135, 11664, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201136, 11665, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201137, 11666, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201138, 11667, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201139, 11668, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201140, 11669, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201141, 11670, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '2'), '2')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201142, 11671, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201143, 11672, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201144, 11673, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201145, 11674, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201146, 11675, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201147, 11676, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201148, 11677, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201149, 11678, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201150, 11679, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201151, 11680, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201152, 11681, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201153, 11682, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201154, 11683, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201155, 11684, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201156, 11685, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201157, 11686, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201158, 11687, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201159, 11688, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201160, 11689, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201161, 11690, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201162, 11691, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201163, 11692, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201164, 11693, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201165, 11694, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201166, 11695, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201167, 11696, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201168, 11697, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201169, 11698, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201170, 11699, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201171, 11700, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201172, 11701, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201173, 11702, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201174, 11703, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201175, 11704, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201176, 11705, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201177, 11706, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201178, 11707, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201179, 11708, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201180, 11709, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201181, 11710, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201182, 11711, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201183, 11712, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201184, 11713, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201185, 11714, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201186, 11715, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201187, 11716, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201188, 11717, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201189, 11718, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201190, 11719, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201191, 11720, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201192, 11721, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201193, 11722, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201194, 11723, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201195, 11724, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201196, 11725, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201197, 11726, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201198, 11727, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201199, 11728, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201200, 11729, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201201, 11730, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201202, 11731, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201203, 11732, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201204, 11733, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201205, 11734, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201206, 11735, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201207, 11736, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201208, 11737, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201209, 11738, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201210, 11739, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201211, 11740, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201212, 11741, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201213, 11742, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201214, 11743, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201215, 11744, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201216, 11745, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201217, 11746, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201218, 11747, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201219, 11748, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201220, 11749, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201221, 11750, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201222, 11751, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201223, 11752, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201224, 11753, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201225, 11754, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201226, 11755, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201227, 11756, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201228, 11757, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201229, 11758, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201230, 11759, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201231, 11760, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201232, 11761, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201233, 11762, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201234, 11763, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201235, 11764, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201236, 11765, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201237, 11766, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201238, 11767, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201239, 11768, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201240, 11769, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201241, 11770, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201242, 11771, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201243, 11772, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201244, 11773, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201245, 11774, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201246, 11775, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201247, 11776, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201248, 11777, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201249, 11778, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201250, 11779, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201251, 11780, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201252, 11781, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201253, 11782, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201254, 11783, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201255, 11784, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201256, 11785, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201257, 11786, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201258, 11787, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201259, 11788, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201260, 11789, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201261, 11790, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201262, 11791, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201263, 11792, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201264, 11793, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201265, 11794, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201266, 11795, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201267, 11796, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201268, 11797, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201269, 11798, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201270, 11799, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201271, 11800, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201272, 11801, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201273, 11802, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201274, 11803, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201275, 11804, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201276, 11805, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201277, 11806, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201278, 11807, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201279, 11808, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201280, 11809, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201281, 11810, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201282, 11811, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201283, 11812, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201284, 11813, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201285, 11814, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201286, 11815, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201287, 11816, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201288, 11817, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201289, 11818, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201290, 11819, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201291, 11820, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201292, 11821, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201293, 11822, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201294, 11823, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201295, 11824, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201296, 11825, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201297, 11826, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201298, 11827, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201299, 11828, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201300, 11829, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201301, 11830, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201302, 11831, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201303, 11832, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201304, 11833, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201305, 11834, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201306, 11835, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201307, 11836, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201308, 11837, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201309, 11838, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201310, 11839, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201311, 11840, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201312, 11841, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201313, 11842, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201314, 11843, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201315, 11844, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201316, 11845, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201317, 11846, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201318, 11847, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201319, 11848, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201320, 11849, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201321, 11850, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201322, 11851, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201323, 11852, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201324, 11853, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201325, 11854, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201326, 11855, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201327, 11856, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201328, 11857, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201329, 11858, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201330, 11859, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201331, 11860, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201332, 11861, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201333, 11862, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201334, 11863, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201335, 11864, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201336, 11865, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201337, 11866, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201338, 11867, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201339, 11868, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201340, 11869, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201341, 11870, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201342, 11871, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201343, 11872, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201344, 11873, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201345, 11874, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201346, 11875, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201347, 11876, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201348, 11877, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201349, 11878, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201350, 11879, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201351, 11880, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201352, 11881, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201353, 11882, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201354, 11883, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201355, 11884, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201356, 11885, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201357, 11886, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201358, 11887, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201359, 11888, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201360, 11889, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201361, 11890, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201362, 11891, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201363, 11892, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201364, 11893, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201365, 11894, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201366, 11895, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201367, 11896, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201368, 11897, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201369, 11898, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201370, 11899, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201371, 11900, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201372, 11901, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201373, 11902, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201374, 11903, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201375, 11904, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201376, 11905, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201377, 11906, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201378, 11907, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201379, 11908, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201380, 11909, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201381, 11910, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201382, 11911, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201383, 11912, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201384, 11913, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201385, 11914, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201386, 11915, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201387, 11916, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201388, 11917, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201389, 11918, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201390, 11919, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201391, 11920, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201392, 11921, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201393, 11922, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201394, 11923, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201395, 11924, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201396, 11925, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201397, 11926, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201398, 11927, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201399, 11928, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201400, 11929, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201401, 11930, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201402, 11931, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201403, 11932, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201404, 11933, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201405, 11934, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201406, 11935, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201407, 11936, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201408, 11937, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201409, 11938, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201410, 11939, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201411, 11940, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201412, 11941, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201413, 11942, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201414, 11943, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201415, 11944, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201416, 11945, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201417, 11946, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201418, 11947, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201419, 11948, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201420, 11949, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201421, 11950, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201422, 11951, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201423, 11952, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201424, 11953, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201425, 11954, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201426, 11955, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201427, 11956, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201428, 11957, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201429, 11958, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201430, 11959, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201431, 11960, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201432, 11961, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201433, 11962, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '2'), '2')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201434, 11963, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '3'), '3')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201435, 11964, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201436, 11965, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201437, 11966, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201438, 11967, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201439, 11968, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201440, 11969, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201441, 11970, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201442, 11971, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201443, 11972, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201444, 11973, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201445, 11974, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201446, 11975, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201447, 11976, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201448, 11977, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201449, 11978, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201450, 11979, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201451, 11980, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201452, 11981, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201453, 11982, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201454, 11983, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '4'), '4')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201455, 11984, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201456, 11985, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201457, 11986, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201458, 11987, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201459, 11988, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201460, 11989, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201461, 11990, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201462, 11991, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201463, 11992, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201464, 11993, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201465, 11994, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201466, 11995, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201467, 11996, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201468, 11997, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201469, 11998, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201470, 11999, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201471, 12000, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201472, 12001, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201473, 12002, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201474, 12003, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201475, 12004, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201476, 12005, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201477, 12006, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201478, 12007, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201479, 12008, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201480, 12009, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201481, 12010, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201482, 12011, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201483, 12012, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201484, 12013, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201485, 12014, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201486, 12015, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201487, 12016, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201488, 12017, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201489, 12018, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201490, 12019, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '98'), '98')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201491, 12020, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201492, 12021, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201493, 12022, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201494, 12023, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201495, 12024, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201496, 12025, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201497, 12026, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201498, 12027, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201499, 12028, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201500, 12029, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201501, 12030, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '99'), '99')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201502, 12031, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '6'), '6')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+INSERT INTO public.survey_responses (id, profile_id, question_id, answer_option_id, raw_value) VALUES
+(201503, 12032, (SELECT id FROM public.questions WHERE code = 'RENDA_1'), (SELECT ao.id FROM public.answer_options ao JOIN public.questions q ON ao.answer_group_id = q.answer_group_id WHERE q.code = 'RENDA_1' AND ao.code = '5'), '5')
+ON CONFLICT (profile_id, question_id) DO UPDATE SET answer_option_id = EXCLUDED.answer_option_id, raw_value = EXCLUDED.raw_value;
+-- Atualizar profiles com income_range_id baseado nas respostas de RENDA_1
+
+-- Primeiro, garantir que as faixas de renda existem
+INSERT INTO public.income_ranges (id, label, order_index) VALUES
+(1, 'Mais de R$ 30.360,01 / Mais de 20 SM', 1),
+(2, 'Mais de R$ 15.180,01 até R$ 30.360,00 / Mais de 10 a 20 SM', 2),
+(3, 'Mais de R$ 7.590,01 até R$ 15.180,00 / Mais de 5 a 10 SM', 3),
+(4, 'Mais de R$ 3.036,01 até R$ 7.590,00 / Mais de 2 a 5 SM', 4),
+(5, 'Mais de R$ 1.518,01 até R$ 3.036,00 / Mais de 1 a 2 SM', 5),
+(6, 'Até R$ 1.518,00 / Até 1 salário mínimo', 6)
+ON CONFLICT (id) DO UPDATE SET 
+    label = EXCLUDED.label,
+---- Primeiro, garantir que as faixas de renda exi-- Verificar distribui��o por faixa de renda
+SELECT 
+    ir.description as faixa_renda,
+    COUNT(p.id) as total_profiles
+FROM public.income_ranges ir
+LEFT JOIN public.profiles p ON p.income_range_id = ir.id
+GROUP BY ir.id, ir.description
+ORDER BY ir.id;SERT INTO public.income_ranges (id, code, description) VALUES
+(1, '1', 'Mais de R$ 30.360,01 / Mais de 20 SM'),
+(2, '2', 'Mais de R$ 15.180,01 at� R$ 30.360,00 / Mais de 10 a 20 SM'),
+(3, '3', 'Mais de R$ 7.590,01 at� R$ 15.180,00 / Mais de 5 a 10 SM'),
+(4, '4', 'Mais de R$ 3.036,01 at� R$ 7.590,00 / Mais de 2 a 5 SM'),
+(5, '5', 'Mais de R$ 1.518,01 at� R$ 3.036,00 / Mais de 1 a 2 SM'),
+(6, '6', 'At� R$ 1.518,00 / At� 1 sal�rio m�nimo')
+ON CONFLICT (id) DO UPDATE SET 
+    code = EXCLUDED.code,
+    description = EXCLUDED.description;profiles com income_range_id baseado nas respostas de RENDA_1
+
+-- Primeiro, garantir que as faixas de renda existem
+INSERT INTO public.income_ranges (id, label, order_index) VALUES
+(1, 'Mais de R$ 30.360,01 / Mais de 20 SM', 1),
+(2, 'Mais de R$ 15.180,01 até R$ 30.360,00 / Mais de 10 a 20 SM', 2),
+(3, 'Mais de R$ 7.590,01 até R$ 15.180,00 / Mais de 5 a 10 SM', 3),
+(4, 'Mais de R$ 3.036,01 até R$ 7.590,00 / Mais de 2 a 5 SM', 4),
+(5, 'Mais de R$ 1.518,01 até R$ 3.036,00 / Mais de 1 a 2 SM', 5),
+(6, 'Até R$ 1.518,00 / Até 1 salário mínimo', 6)
+-- Atualizar profiles com income_range_id baseado nas respostas de RENDA_1
+
+-- Primeiro, garantir que as faixas de renda existem
+INSERT INTO public.income_ranges (id, code, description) VALUES
+(1, '1', 'Mais de R$ 30.360,01 / Mais de 20 SM'),
+(2, '2', 'Mais de R$ 15.180,01 ate R$ 30.360,00 / Mais de 10 a 20 SM'),
+-- Atualizar income_range_id diretamente nos profiles com base no CSV
+
+-- Primeiro, garantir que as faixas de renda existem
+INSERT INTO public.income_ranges (id, code, description) VALUES
+(1, '1', 'Mais de R$ 30.360,01'),
+(2, '2', 'Mais de R$ 15.180,01 a R$ 30.360,00'),
+(3, '3', 'Mais de R$ 7.590,01 a R$ 15.180,00'),
+(4, '4', 'Mais de R$ 3.036,01 a R$ 7.590,00'),
+(5, '5', 'Mais de R$ 1.518,01 a R$ 3.036,00'),
+(6, '6', 'Ate R$ 1.518,00'),
+(98, '98', 'Nao tem rendimento pessoal'),
+(99, '99', 'Nao respondeu')
+ON CONFLICT (id) DO NOTHING;
+
+-- Updates diretos nos profiles
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10529;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10530;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 10531;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10532;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10533;
+UPDATE public.profiles SET income_range_id = 2 WHERE id = 10534;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 10535;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 10536;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10537;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10538;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10539;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10540;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10541;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10542;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10543;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10544;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10545;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10546;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10547;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10548;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10549;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10550;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10551;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10552;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10553;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10554;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10555;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10556;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 10557;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10558;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10559;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10560;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 10561;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10562;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10563;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10564;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10565;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10566;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10567;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10568;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10569;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10570;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 10571;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 10572;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10573;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10574;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10575;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10576;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10577;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10578;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10579;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10580;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10581;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10582;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10583;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10584;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10585;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10586;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 10587;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10588;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10589;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10590;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10591;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10592;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10593;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10594;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10595;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10596;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10597;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10598;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 10599;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10600;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10601;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10602;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10603;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10604;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10605;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10606;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10607;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10608;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10609;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10610;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10611;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10612;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10613;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10614;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10615;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10616;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10617;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 10618;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10619;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10620;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10621;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10622;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10623;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10624;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10625;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10626;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10627;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10628;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10629;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10630;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10631;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10632;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10633;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10634;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10635;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 10636;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10637;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10638;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10639;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10640;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10641;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10642;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10643;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10644;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10645;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10646;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10647;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 10648;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10649;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10650;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10651;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10652;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10653;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10654;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10655;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10656;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10657;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10658;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10659;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10660;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10661;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10662;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10663;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10664;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 10665;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10666;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 10667;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10668;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10669;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10670;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10671;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10672;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10673;
+UPDATE public.profiles SET income_range_id = 1 WHERE id = 10674;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10675;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10676;
+UPDATE public.profiles SET income_range_id = 2 WHERE id = 10677;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10678;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10679;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10680;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10681;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10682;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10683;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10684;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10685;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 10686;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10687;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10688;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10689;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10690;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10691;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 10692;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 10693;
+UPDATE public.profiles SET income_range_id = 2 WHERE id = 10694;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10695;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10696;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10697;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10698;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10699;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10700;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10701;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10702;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10703;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10704;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10705;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10706;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10707;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10708;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10709;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10710;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10711;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10712;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10713;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 10714;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10715;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10716;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10717;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10718;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10719;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10720;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10721;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10722;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10723;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10724;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10725;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10726;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10727;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10728;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10729;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10730;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10731;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10732;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10733;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10734;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10735;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10736;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10737;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10738;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10739;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10740;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10741;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 10742;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10743;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10744;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 10745;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10746;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10747;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10748;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10749;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10750;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10751;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10752;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10753;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10754;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10755;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10756;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10757;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10758;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10759;
+UPDATE public.profiles SET income_range_id = 2 WHERE id = 10760;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10761;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10762;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10763;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10764;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10765;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10766;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10767;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10768;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10769;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10770;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10771;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10772;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10773;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10774;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10775;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10776;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10777;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10778;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10779;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10780;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10781;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10782;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10783;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10784;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10785;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10786;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 10787;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10788;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10789;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10790;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10791;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10792;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10793;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10794;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10795;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10796;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10797;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10798;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10799;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 10800;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10801;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10802;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10803;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10804;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10805;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 10806;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10807;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10808;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10809;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10810;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10811;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 10812;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10813;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10814;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10815;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10816;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10817;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10818;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10819;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10820;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10821;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10822;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10823;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10824;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10825;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10826;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10827;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10828;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10829;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 10830;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10831;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10832;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10833;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10834;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10835;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10836;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10837;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10838;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10839;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10840;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10841;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10842;
+UPDATE public.profiles SET income_range_id = 2 WHERE id = 10843;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10844;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10845;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10846;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10847;
+UPDATE public.profiles SET income_range_id = 2 WHERE id = 10848;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10849;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10850;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10851;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10852;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10853;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10854;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 10855;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10856;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10857;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 10858;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10859;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10860;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 10861;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 10862;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 10863;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 10864;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10865;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 10866;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10867;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10868;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10869;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10870;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10871;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10872;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10873;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10874;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10875;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10876;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10877;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10878;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10879;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10880;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10881;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10882;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10883;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10884;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10885;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10886;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10887;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10888;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10889;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10890;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10891;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 10892;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10893;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10894;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10895;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10896;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10897;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10898;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10899;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10900;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10901;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10902;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10903;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10904;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 10905;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10906;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10907;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10908;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10909;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10910;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10911;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 10912;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10913;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10914;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10915;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10916;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10917;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10918;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10919;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10920;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10921;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10922;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10923;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10924;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10925;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10926;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10927;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10928;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10929;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10930;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10931;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10932;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10933;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10934;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10935;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10936;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10937;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10938;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10939;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 10940;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 10941;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 10942;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10943;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 10944;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10945;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10946;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10947;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10948;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10949;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10950;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10951;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10952;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10953;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10954;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10955;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10956;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10957;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10958;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10959;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10960;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10961;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10962;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10963;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10964;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10965;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10966;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10967;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 10968;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10969;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10970;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10971;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10972;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10973;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10974;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10975;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10976;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10977;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10978;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10979;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10980;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10981;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10982;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 10983;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10984;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10985;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10986;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10987;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10988;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10989;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10990;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10991;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10992;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 10993;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10994;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10995;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 10996;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 10997;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 10998;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 10999;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11000;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11001;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11002;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11003;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11004;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11005;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11006;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11007;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11008;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11009;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11010;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11011;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11012;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11013;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11014;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11015;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11016;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11017;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11018;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11019;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11020;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11021;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11022;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11023;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11024;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11025;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11026;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11027;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11028;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11029;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11030;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11031;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11032;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11033;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11034;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11035;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11036;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11037;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11038;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11039;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11040;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11041;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11042;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11043;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11044;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11045;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11046;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11047;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11048;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11049;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11050;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11051;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11052;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11053;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11054;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11055;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11056;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11057;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11058;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11059;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11060;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11061;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11062;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11063;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11064;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11065;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11066;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11067;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11068;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11069;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11070;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11071;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11072;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11073;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11074;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11075;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11076;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11077;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11078;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11079;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11080;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11081;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11082;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11083;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11084;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11085;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11086;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11087;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11088;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11089;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11090;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11091;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11092;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11093;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11094;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11095;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11096;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11097;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11098;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11099;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11100;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11101;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11102;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11103;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11104;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11105;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11106;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11107;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11108;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11109;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11110;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11111;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11112;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11113;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11114;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11115;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11116;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11117;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11118;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11119;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11120;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11121;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11122;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11123;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11124;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11125;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11126;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11127;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11128;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11129;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11130;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11131;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11132;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11133;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11134;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11135;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11136;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11137;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11138;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11139;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11140;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11141;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11142;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11143;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11144;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11145;
+UPDATE public.profiles SET income_range_id = 2 WHERE id = 11146;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11147;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11148;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11149;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11150;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11151;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11152;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11153;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11154;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11155;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11156;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11157;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11158;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11159;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11160;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11161;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11162;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11163;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11164;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11165;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11166;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11167;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11168;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11169;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11170;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11171;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11172;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11173;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11174;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11175;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11176;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11177;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11178;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11179;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11180;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11181;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11182;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11183;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11184;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11185;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11186;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11187;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11188;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11189;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11190;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11191;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11192;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11193;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11194;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11195;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11196;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11197;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11198;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11199;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11200;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11201;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11202;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11203;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11204;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11205;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11206;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11207;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11208;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11209;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11210;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11211;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11212;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11213;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11214;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11215;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11216;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11217;
+UPDATE public.profiles SET income_range_id = 1 WHERE id = 11218;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11219;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11220;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11221;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11222;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11223;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11224;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11225;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11226;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11227;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11228;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11229;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11230;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11231;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11232;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11233;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11234;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11235;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11236;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11237;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11238;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11239;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11240;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11241;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11242;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11243;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11244;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11245;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11246;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11247;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11248;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11249;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11250;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11251;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11252;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11253;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11254;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11255;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11256;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11257;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11258;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11259;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11260;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11261;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11262;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11263;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11264;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11265;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11266;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11267;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11268;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11269;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11270;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11271;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11272;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11273;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11274;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11275;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11276;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11277;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11278;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11279;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11280;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11281;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11282;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11283;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11284;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11285;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11286;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11287;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11288;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11289;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11290;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11291;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11292;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11293;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11294;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11295;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11296;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11297;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11298;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11299;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11300;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11301;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11302;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11303;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11304;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11305;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11306;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11307;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11308;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11309;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11310;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11311;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11312;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11313;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11314;
+UPDATE public.profiles SET income_range_id = 2 WHERE id = 11315;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11316;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11317;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11318;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11319;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11320;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11321;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11322;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11323;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11324;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11325;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11326;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11327;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11328;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11329;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11330;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11331;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11332;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11333;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11334;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11335;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11336;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11337;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11338;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11339;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11340;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11341;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11342;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11343;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11344;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11345;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11346;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11347;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11348;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11349;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11350;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11351;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11352;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11353;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11354;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11355;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11356;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11357;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11358;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11359;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11360;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11361;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11362;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11363;
+UPDATE public.profiles SET income_range_id = 1 WHERE id = 11364;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11365;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11366;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11367;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11368;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11369;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11370;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11371;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11372;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11373;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11374;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11375;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11376;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11377;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11378;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11379;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11380;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11381;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11382;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11383;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11384;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11385;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11386;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11387;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11388;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11389;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11390;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11391;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11392;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11393;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11394;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11395;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11396;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11397;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11398;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11399;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11400;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11401;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11402;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11403;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11404;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11405;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11406;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11407;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11408;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11409;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11410;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11411;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11412;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11413;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11414;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11415;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11416;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11417;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11418;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11419;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11420;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11421;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11422;
+UPDATE public.profiles SET income_range_id = 2 WHERE id = 11423;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11424;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11425;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11426;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11427;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11428;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11429;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11430;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11431;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11432;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11433;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11434;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11435;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11436;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11437;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11438;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11439;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11440;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11441;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11442;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11443;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11444;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11445;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11446;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11447;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11448;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11449;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11450;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11451;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11452;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11453;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11454;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11455;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11456;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11457;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11458;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11459;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11460;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11461;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11462;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11463;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11464;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11465;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11466;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11467;
+UPDATE public.profiles SET income_range_id = 2 WHERE id = 11468;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11469;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11470;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11471;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11472;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11473;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11474;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11475;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11476;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11477;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11478;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11479;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11480;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11481;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11482;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11483;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11484;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11485;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11486;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11487;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11488;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11489;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11490;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11491;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11492;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11493;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11494;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11495;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11496;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11497;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11498;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11499;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11500;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11501;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11502;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11503;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11504;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11505;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11506;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11507;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11508;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11509;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11510;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11511;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11512;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11513;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11514;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11515;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11516;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11517;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11518;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11519;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11520;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11521;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11522;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11523;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11524;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11525;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11526;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11527;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11528;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11529;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11530;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11531;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11532;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11533;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11534;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11535;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11536;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11537;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11538;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11539;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11540;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11541;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11542;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11543;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11544;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11545;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11546;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11547;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11548;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11549;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11550;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11551;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11552;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11553;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11554;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11555;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11556;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11557;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11558;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11559;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11560;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11561;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11562;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11563;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11564;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11565;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11566;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11567;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11568;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11569;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11570;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11571;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11572;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11573;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11574;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11575;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11576;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11577;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11578;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11579;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11580;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11581;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11582;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11583;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11584;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11585;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11586;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11587;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11588;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11589;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11590;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11591;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11592;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11593;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11594;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11595;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11596;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11597;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11598;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11599;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11600;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11601;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11602;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11603;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11604;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11605;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11606;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11607;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11608;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11609;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11610;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11611;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11612;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11613;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11614;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11615;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11616;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11617;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11618;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11619;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11620;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11621;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11622;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11623;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11624;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11625;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11626;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11627;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11628;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11629;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11630;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11631;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11632;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11633;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11634;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11635;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11636;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11637;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11638;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11639;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11640;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11641;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11642;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11643;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11644;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11645;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11646;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11647;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11648;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11649;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11650;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11651;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11652;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11653;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11654;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11655;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11656;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11657;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11658;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11659;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11660;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11661;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11662;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11663;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11664;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11665;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11666;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11667;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11668;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11669;
+UPDATE public.profiles SET income_range_id = 2 WHERE id = 11670;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11671;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11672;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11673;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11674;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11675;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11676;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11677;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11678;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11679;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11680;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11681;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11682;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11683;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11684;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11685;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11686;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11687;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11688;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11689;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11690;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11691;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11692;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11693;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11694;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11695;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11696;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11697;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11698;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11699;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11700;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11701;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11702;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11703;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11704;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11705;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11706;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11707;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11708;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11709;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11710;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11711;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11712;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11713;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11714;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11715;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11716;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11717;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11718;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11719;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11720;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11721;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11722;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11723;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11724;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11725;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11726;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11727;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11728;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11729;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11730;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11731;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11732;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11733;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11734;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11735;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11736;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11737;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11738;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11739;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11740;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11741;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11742;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11743;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11744;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11745;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11746;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11747;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11748;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11749;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11750;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11751;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11752;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11753;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11754;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11755;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11756;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11757;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11758;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11759;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11760;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11761;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11762;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11763;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11764;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11765;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11766;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11767;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11768;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11769;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11770;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11771;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11772;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11773;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11774;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11775;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11776;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11777;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11778;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11779;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11780;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11781;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11782;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11783;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11784;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11785;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11786;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11787;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11788;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11789;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11790;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11791;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11792;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11793;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11794;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11795;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11796;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11797;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11798;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11799;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11800;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11801;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11802;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11803;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11804;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11805;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11806;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11807;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11808;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11809;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11810;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11811;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11812;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11813;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11814;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11815;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11816;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11817;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11818;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11819;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11820;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11821;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11822;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11823;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11824;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11825;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11826;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11827;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11828;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11829;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11830;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11831;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11832;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11833;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11834;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11835;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11836;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11837;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11838;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11839;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11840;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11841;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11842;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11843;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11844;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11845;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11846;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11847;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11848;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11849;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11850;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11851;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11852;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11853;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11854;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11855;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11856;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11857;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11858;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11859;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11860;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11861;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11862;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11863;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11864;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11865;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11866;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11867;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11868;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11869;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11870;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11871;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11872;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11873;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11874;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11875;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11876;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11877;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11878;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11879;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11880;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11881;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11882;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11883;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11884;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11885;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11886;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11887;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11888;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11889;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11890;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11891;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11892;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11893;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11894;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11895;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11896;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11897;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11898;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11899;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11900;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11901;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11902;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11903;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11904;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11905;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11906;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11907;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11908;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11909;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11910;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11911;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11912;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11913;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11914;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11915;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11916;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11917;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11918;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11919;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11920;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11921;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11922;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11923;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11924;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11925;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11926;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11927;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11928;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11929;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11930;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11931;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11932;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11933;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11934;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11935;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11936;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11937;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11938;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11939;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11940;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11941;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11942;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11943;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11944;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11945;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11946;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11947;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11948;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11949;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11950;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11951;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11952;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11953;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11954;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11955;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11956;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11957;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11958;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11959;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11960;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11961;
+UPDATE public.profiles SET income_range_id = 2 WHERE id = 11962;
+UPDATE public.profiles SET income_range_id = 3 WHERE id = 11963;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11964;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11965;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11966;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11967;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11968;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11969;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11970;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11971;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11972;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11973;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11974;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11975;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11976;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11977;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11978;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11979;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11980;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11981;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11982;
+UPDATE public.profiles SET income_range_id = 4 WHERE id = 11983;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11984;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11985;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11986;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11987;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11988;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11989;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 11990;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11991;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11992;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 11993;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11994;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11995;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11996;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11997;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 11998;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 11999;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 12000;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 12001;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 12002;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 12003;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 12004;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 12005;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 12006;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 12007;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 12008;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 12009;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 12010;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 12011;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 12012;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 12013;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 12014;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 12015;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 12016;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 12017;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 12018;
+UPDATE public.profiles SET income_range_id = 98 WHERE id = 12019;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 12020;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 12021;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 12022;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 12023;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 12024;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 12025;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 12026;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 12027;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 12028;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 12029;
+UPDATE public.profiles SET income_range_id = 99 WHERE id = 12030;
+UPDATE public.profiles SET income_range_id = 6 WHERE id = 12031;
+UPDATE public.profiles SET income_range_id = 5 WHERE id = 12032;
+
+-- Verificar resultado
+SELECT COUNT(*) as profiles_with_income FROM public.profiles WHERE income_range_id IS NOT NULL;
+-- Corrigir id_ipec nos profiles com valores reais do CSV
+UPDATE public.profiles SET id_ipec = 214888033 WHERE id = 10529;
+UPDATE public.profiles SET id_ipec = 214889225 WHERE id = 10530;
+UPDATE public.profiles SET id_ipec = 214889775 WHERE id = 10531;
+UPDATE public.profiles SET id_ipec = 214890365 WHERE id = 10532;
+UPDATE public.profiles SET id_ipec = 214890490 WHERE id = 10533;
+UPDATE public.profiles SET id_ipec = 214890601 WHERE id = 10534;
+UPDATE public.profiles SET id_ipec = 214890846 WHERE id = 10535;
+UPDATE public.profiles SET id_ipec = 214891042 WHERE id = 10536;
+UPDATE public.profiles SET id_ipec = 214891358 WHERE id = 10537;
+UPDATE public.profiles SET id_ipec = 214891920 WHERE id = 10538;
+UPDATE public.profiles SET id_ipec = 214892256 WHERE id = 10539;
+UPDATE public.profiles SET id_ipec = 214892343 WHERE id = 10540;
+UPDATE public.profiles SET id_ipec = 214892391 WHERE id = 10541;
+UPDATE public.profiles SET id_ipec = 214892392 WHERE id = 10542;
+UPDATE public.profiles SET id_ipec = 214892472 WHERE id = 10543;
+UPDATE public.profiles SET id_ipec = 214893088 WHERE id = 10544;
+UPDATE public.profiles SET id_ipec = 214893184 WHERE id = 10545;
+UPDATE public.profiles SET id_ipec = 214893261 WHERE id = 10546;
+UPDATE public.profiles SET id_ipec = 214893373 WHERE id = 10547;
+UPDATE public.profiles SET id_ipec = 214893430 WHERE id = 10548;
+UPDATE public.profiles SET id_ipec = 214893431 WHERE id = 10549;
+UPDATE public.profiles SET id_ipec = 214895012 WHERE id = 10550;
+UPDATE public.profiles SET id_ipec = 214895203 WHERE id = 10551;
+UPDATE public.profiles SET id_ipec = 214895240 WHERE id = 10552;
+UPDATE public.profiles SET id_ipec = 214895279 WHERE id = 10553;
+UPDATE public.profiles SET id_ipec = 214895280 WHERE id = 10554;
+UPDATE public.profiles SET id_ipec = 214895281 WHERE id = 10555;
+UPDATE public.profiles SET id_ipec = 214895527 WHERE id = 10556;
+UPDATE public.profiles SET id_ipec = 214895778 WHERE id = 10557;
+UPDATE public.profiles SET id_ipec = 214895798 WHERE id = 10558;
+UPDATE public.profiles SET id_ipec = 214896121 WHERE id = 10559;
+UPDATE public.profiles SET id_ipec = 214896744 WHERE id = 10560;
+UPDATE public.profiles SET id_ipec = 214896965 WHERE id = 10561;
+UPDATE public.profiles SET id_ipec = 214897124 WHERE id = 10562;
+UPDATE public.profiles SET id_ipec = 214897160 WHERE id = 10563;
+UPDATE public.profiles SET id_ipec = 214897495 WHERE id = 10564;
+UPDATE public.profiles SET id_ipec = 214897496 WHERE id = 10565;
+UPDATE public.profiles SET id_ipec = 214897497 WHERE id = 10566;
+UPDATE public.profiles SET id_ipec = 214897628 WHERE id = 10567;
+UPDATE public.profiles SET id_ipec = 214897698 WHERE id = 10568;
+UPDATE public.profiles SET id_ipec = 214897927 WHERE id = 10569;
+UPDATE public.profiles SET id_ipec = 214898118 WHERE id = 10570;
+UPDATE public.profiles SET id_ipec = 214898366 WHERE id = 10571;
+UPDATE public.profiles SET id_ipec = 214898470 WHERE id = 10572;
+UPDATE public.profiles SET id_ipec = 214898662 WHERE id = 10573;
+UPDATE public.profiles SET id_ipec = 214898717 WHERE id = 10574;
+UPDATE public.profiles SET id_ipec = 214898772 WHERE id = 10575;
+UPDATE public.profiles SET id_ipec = 214898839 WHERE id = 10576;
+UPDATE public.profiles SET id_ipec = 214898840 WHERE id = 10577;
+UPDATE public.profiles SET id_ipec = 214899016 WHERE id = 10578;
+UPDATE public.profiles SET id_ipec = 214899017 WHERE id = 10579;
+UPDATE public.profiles SET id_ipec = 214899018 WHERE id = 10580;
+UPDATE public.profiles SET id_ipec = 214899019 WHERE id = 10581;
+UPDATE public.profiles SET id_ipec = 214899020 WHERE id = 10582;
+UPDATE public.profiles SET id_ipec = 214899421 WHERE id = 10583;
+UPDATE public.profiles SET id_ipec = 214899422 WHERE id = 10584;
+UPDATE public.profiles SET id_ipec = 214899423 WHERE id = 10585;
+UPDATE public.profiles SET id_ipec = 214899428 WHERE id = 10586;
+UPDATE public.profiles SET id_ipec = 214899630 WHERE id = 10587;
+UPDATE public.profiles SET id_ipec = 214899693 WHERE id = 10588;
+UPDATE public.profiles SET id_ipec = 214899840 WHERE id = 10589;
+UPDATE public.profiles SET id_ipec = 214900029 WHERE id = 10590;
+UPDATE public.profiles SET id_ipec = 214900255 WHERE id = 10591;
+UPDATE public.profiles SET id_ipec = 214900307 WHERE id = 10592;
+UPDATE public.profiles SET id_ipec = 214900802 WHERE id = 10593;
+UPDATE public.profiles SET id_ipec = 214901150 WHERE id = 10594;
+UPDATE public.profiles SET id_ipec = 214901151 WHERE id = 10595;
+UPDATE public.profiles SET id_ipec = 214901590 WHERE id = 10596;
+UPDATE public.profiles SET id_ipec = 214901659 WHERE id = 10597;
+UPDATE public.profiles SET id_ipec = 214901708 WHERE id = 10598;
+UPDATE public.profiles SET id_ipec = 214902463 WHERE id = 10599;
+UPDATE public.profiles SET id_ipec = 214902464 WHERE id = 10600;
+UPDATE public.profiles SET id_ipec = 214902465 WHERE id = 10601;
+UPDATE public.profiles SET id_ipec = 214902466 WHERE id = 10602;
+UPDATE public.profiles SET id_ipec = 214902467 WHERE id = 10603;
+UPDATE public.profiles SET id_ipec = 214902468 WHERE id = 10604;
+UPDATE public.profiles SET id_ipec = 214902469 WHERE id = 10605;
+UPDATE public.profiles SET id_ipec = 214902470 WHERE id = 10606;
+UPDATE public.profiles SET id_ipec = 214902541 WHERE id = 10607;
+UPDATE public.profiles SET id_ipec = 214902650 WHERE id = 10608;
+UPDATE public.profiles SET id_ipec = 214902743 WHERE id = 10609;
+UPDATE public.profiles SET id_ipec = 214902836 WHERE id = 10610;
+UPDATE public.profiles SET id_ipec = 214902837 WHERE id = 10611;
+UPDATE public.profiles SET id_ipec = 214902838 WHERE id = 10612;
+UPDATE public.profiles SET id_ipec = 214902839 WHERE id = 10613;
+UPDATE public.profiles SET id_ipec = 214902840 WHERE id = 10614;
+UPDATE public.profiles SET id_ipec = 214902973 WHERE id = 10615;
+UPDATE public.profiles SET id_ipec = 214902974 WHERE id = 10616;
+UPDATE public.profiles SET id_ipec = 214902975 WHERE id = 10617;
+UPDATE public.profiles SET id_ipec = 214903038 WHERE id = 10618;
+UPDATE public.profiles SET id_ipec = 214903253 WHERE id = 10619;
+UPDATE public.profiles SET id_ipec = 214903254 WHERE id = 10620;
+UPDATE public.profiles SET id_ipec = 214903381 WHERE id = 10621;
+UPDATE public.profiles SET id_ipec = 214903382 WHERE id = 10622;
+UPDATE public.profiles SET id_ipec = 214903383 WHERE id = 10623;
+UPDATE public.profiles SET id_ipec = 214903384 WHERE id = 10624;
+UPDATE public.profiles SET id_ipec = 214903385 WHERE id = 10625;
+UPDATE public.profiles SET id_ipec = 214903586 WHERE id = 10626;
+UPDATE public.profiles SET id_ipec = 214903589 WHERE id = 10627;
+UPDATE public.profiles SET id_ipec = 214903615 WHERE id = 10628;
+UPDATE public.profiles SET id_ipec = 214903717 WHERE id = 10629;
+UPDATE public.profiles SET id_ipec = 214903718 WHERE id = 10630;
+UPDATE public.profiles SET id_ipec = 214903816 WHERE id = 10631;
+UPDATE public.profiles SET id_ipec = 214903821 WHERE id = 10632;
+UPDATE public.profiles SET id_ipec = 214903822 WHERE id = 10633;
+UPDATE public.profiles SET id_ipec = 214903823 WHERE id = 10634;
+UPDATE public.profiles SET id_ipec = 214904197 WHERE id = 10635;
+UPDATE public.profiles SET id_ipec = 214904198 WHERE id = 10636;
+UPDATE public.profiles SET id_ipec = 214904339 WHERE id = 10637;
+UPDATE public.profiles SET id_ipec = 214904348 WHERE id = 10638;
+UPDATE public.profiles SET id_ipec = 214904349 WHERE id = 10639;
+UPDATE public.profiles SET id_ipec = 214904405 WHERE id = 10640;
+UPDATE public.profiles SET id_ipec = 214904406 WHERE id = 10641;
+UPDATE public.profiles SET id_ipec = 214904407 WHERE id = 10642;
+UPDATE public.profiles SET id_ipec = 214904408 WHERE id = 10643;
+UPDATE public.profiles SET id_ipec = 214904409 WHERE id = 10644;
+UPDATE public.profiles SET id_ipec = 214904606 WHERE id = 10645;
+UPDATE public.profiles SET id_ipec = 214904878 WHERE id = 10646;
+UPDATE public.profiles SET id_ipec = 214905081 WHERE id = 10647;
+UPDATE public.profiles SET id_ipec = 214905127 WHERE id = 10648;
+UPDATE public.profiles SET id_ipec = 214905173 WHERE id = 10649;
+UPDATE public.profiles SET id_ipec = 214905529 WHERE id = 10650;
+UPDATE public.profiles SET id_ipec = 214905530 WHERE id = 10651;
+UPDATE public.profiles SET id_ipec = 214905531 WHERE id = 10652;
+UPDATE public.profiles SET id_ipec = 214905532 WHERE id = 10653;
+UPDATE public.profiles SET id_ipec = 214905533 WHERE id = 10654;
+UPDATE public.profiles SET id_ipec = 214906367 WHERE id = 10655;
+UPDATE public.profiles SET id_ipec = 214906972 WHERE id = 10656;
+UPDATE public.profiles SET id_ipec = 214906973 WHERE id = 10657;
+UPDATE public.profiles SET id_ipec = 214907651 WHERE id = 10658;
+UPDATE public.profiles SET id_ipec = 214907652 WHERE id = 10659;
+UPDATE public.profiles SET id_ipec = 214907653 WHERE id = 10660;
+UPDATE public.profiles SET id_ipec = 214907654 WHERE id = 10661;
+UPDATE public.profiles SET id_ipec = 214907669 WHERE id = 10662;
+UPDATE public.profiles SET id_ipec = 214911552 WHERE id = 10663;
+UPDATE public.profiles SET id_ipec = 214911553 WHERE id = 10664;
+UPDATE public.profiles SET id_ipec = 214911554 WHERE id = 10665;
+UPDATE public.profiles SET id_ipec = 214911555 WHERE id = 10666;
+UPDATE public.profiles SET id_ipec = 214911556 WHERE id = 10667;
+UPDATE public.profiles SET id_ipec = 214912472 WHERE id = 10668;
+UPDATE public.profiles SET id_ipec = 214912473 WHERE id = 10669;
+UPDATE public.profiles SET id_ipec = 214915667 WHERE id = 10670;
+UPDATE public.profiles SET id_ipec = 214915710 WHERE id = 10671;
+UPDATE public.profiles SET id_ipec = 214916366 WHERE id = 10672;
+UPDATE public.profiles SET id_ipec = 214916597 WHERE id = 10673;
+UPDATE public.profiles SET id_ipec = 214916760 WHERE id = 10674;
+UPDATE public.profiles SET id_ipec = 214917292 WHERE id = 10675;
+UPDATE public.profiles SET id_ipec = 214917342 WHERE id = 10676;
+UPDATE public.profiles SET id_ipec = 214917478 WHERE id = 10677;
+UPDATE public.profiles SET id_ipec = 214917761 WHERE id = 10678;
+UPDATE public.profiles SET id_ipec = 214917842 WHERE id = 10679;
+UPDATE public.profiles SET id_ipec = 214918073 WHERE id = 10680;
+UPDATE public.profiles SET id_ipec = 214918074 WHERE id = 10681;
+UPDATE public.profiles SET id_ipec = 214918075 WHERE id = 10682;
+UPDATE public.profiles SET id_ipec = 214918155 WHERE id = 10683;
+UPDATE public.profiles SET id_ipec = 214918411 WHERE id = 10684;
+UPDATE public.profiles SET id_ipec = 214918507 WHERE id = 10685;
+UPDATE public.profiles SET id_ipec = 214918801 WHERE id = 10686;
+UPDATE public.profiles SET id_ipec = 214919039 WHERE id = 10687;
+UPDATE public.profiles SET id_ipec = 214919040 WHERE id = 10688;
+UPDATE public.profiles SET id_ipec = 214919214 WHERE id = 10689;
+UPDATE public.profiles SET id_ipec = 214919255 WHERE id = 10690;
+UPDATE public.profiles SET id_ipec = 214919293 WHERE id = 10691;
+UPDATE public.profiles SET id_ipec = 214919422 WHERE id = 10692;
+UPDATE public.profiles SET id_ipec = 214919423 WHERE id = 10693;
+UPDATE public.profiles SET id_ipec = 214919425 WHERE id = 10694;
+UPDATE public.profiles SET id_ipec = 214919588 WHERE id = 10695;
+UPDATE public.profiles SET id_ipec = 214919859 WHERE id = 10696;
+UPDATE public.profiles SET id_ipec = 214919982 WHERE id = 10697;
+UPDATE public.profiles SET id_ipec = 214919983 WHERE id = 10698;
+UPDATE public.profiles SET id_ipec = 214920032 WHERE id = 10699;
+UPDATE public.profiles SET id_ipec = 214920033 WHERE id = 10700;
+UPDATE public.profiles SET id_ipec = 214920034 WHERE id = 10701;
+UPDATE public.profiles SET id_ipec = 214920258 WHERE id = 10702;
+UPDATE public.profiles SET id_ipec = 214920782 WHERE id = 10703;
+UPDATE public.profiles SET id_ipec = 214920873 WHERE id = 10704;
+UPDATE public.profiles SET id_ipec = 214920874 WHERE id = 10705;
+UPDATE public.profiles SET id_ipec = 214920980 WHERE id = 10706;
+UPDATE public.profiles SET id_ipec = 214920981 WHERE id = 10707;
+UPDATE public.profiles SET id_ipec = 214920982 WHERE id = 10708;
+UPDATE public.profiles SET id_ipec = 214921452 WHERE id = 10709;
+UPDATE public.profiles SET id_ipec = 214921590 WHERE id = 10710;
+UPDATE public.profiles SET id_ipec = 214921707 WHERE id = 10711;
+UPDATE public.profiles SET id_ipec = 214921708 WHERE id = 10712;
+UPDATE public.profiles SET id_ipec = 214921895 WHERE id = 10713;
+UPDATE public.profiles SET id_ipec = 214921896 WHERE id = 10714;
+UPDATE public.profiles SET id_ipec = 214922494 WHERE id = 10715;
+UPDATE public.profiles SET id_ipec = 214922575 WHERE id = 10716;
+UPDATE public.profiles SET id_ipec = 214922679 WHERE id = 10717;
+UPDATE public.profiles SET id_ipec = 214922735 WHERE id = 10718;
+UPDATE public.profiles SET id_ipec = 214922736 WHERE id = 10719;
+UPDATE public.profiles SET id_ipec = 214922762 WHERE id = 10720;
+UPDATE public.profiles SET id_ipec = 214922763 WHERE id = 10721;
+UPDATE public.profiles SET id_ipec = 214922764 WHERE id = 10722;
+UPDATE public.profiles SET id_ipec = 214922771 WHERE id = 10723;
+UPDATE public.profiles SET id_ipec = 214922873 WHERE id = 10724;
+UPDATE public.profiles SET id_ipec = 214922874 WHERE id = 10725;
+UPDATE public.profiles SET id_ipec = 214923054 WHERE id = 10726;
+UPDATE public.profiles SET id_ipec = 214923183 WHERE id = 10727;
+UPDATE public.profiles SET id_ipec = 214923184 WHERE id = 10728;
+UPDATE public.profiles SET id_ipec = 214923185 WHERE id = 10729;
+UPDATE public.profiles SET id_ipec = 214923186 WHERE id = 10730;
+UPDATE public.profiles SET id_ipec = 214923187 WHERE id = 10731;
+UPDATE public.profiles SET id_ipec = 214923188 WHERE id = 10732;
+UPDATE public.profiles SET id_ipec = 214923189 WHERE id = 10733;
+UPDATE public.profiles SET id_ipec = 214923190 WHERE id = 10734;
+UPDATE public.profiles SET id_ipec = 214923298 WHERE id = 10735;
+UPDATE public.profiles SET id_ipec = 214923346 WHERE id = 10736;
+UPDATE public.profiles SET id_ipec = 214923417 WHERE id = 10737;
+UPDATE public.profiles SET id_ipec = 214923418 WHERE id = 10738;
+UPDATE public.profiles SET id_ipec = 214923419 WHERE id = 10739;
+UPDATE public.profiles SET id_ipec = 214923420 WHERE id = 10740;
+UPDATE public.profiles SET id_ipec = 214923421 WHERE id = 10741;
+UPDATE public.profiles SET id_ipec = 214923422 WHERE id = 10742;
+UPDATE public.profiles SET id_ipec = 214923423 WHERE id = 10743;
+UPDATE public.profiles SET id_ipec = 214923424 WHERE id = 10744;
+UPDATE public.profiles SET id_ipec = 214923451 WHERE id = 10745;
+UPDATE public.profiles SET id_ipec = 214923548 WHERE id = 10746;
+UPDATE public.profiles SET id_ipec = 214924303 WHERE id = 10747;
+UPDATE public.profiles SET id_ipec = 214924304 WHERE id = 10748;
+UPDATE public.profiles SET id_ipec = 214924346 WHERE id = 10749;
+UPDATE public.profiles SET id_ipec = 214924347 WHERE id = 10750;
+UPDATE public.profiles SET id_ipec = 214924403 WHERE id = 10751;
+UPDATE public.profiles SET id_ipec = 214924404 WHERE id = 10752;
+UPDATE public.profiles SET id_ipec = 214924853 WHERE id = 10753;
+UPDATE public.profiles SET id_ipec = 214924854 WHERE id = 10754;
+UPDATE public.profiles SET id_ipec = 214924855 WHERE id = 10755;
+UPDATE public.profiles SET id_ipec = 214924858 WHERE id = 10756;
+UPDATE public.profiles SET id_ipec = 214924859 WHERE id = 10757;
+UPDATE public.profiles SET id_ipec = 214924940 WHERE id = 10758;
+UPDATE public.profiles SET id_ipec = 214925009 WHERE id = 10759;
+UPDATE public.profiles SET id_ipec = 214925066 WHERE id = 10760;
+UPDATE public.profiles SET id_ipec = 214925123 WHERE id = 10761;
+UPDATE public.profiles SET id_ipec = 214925124 WHERE id = 10762;
+UPDATE public.profiles SET id_ipec = 214925507 WHERE id = 10763;
+UPDATE public.profiles SET id_ipec = 214925508 WHERE id = 10764;
+UPDATE public.profiles SET id_ipec = 214925509 WHERE id = 10765;
+UPDATE public.profiles SET id_ipec = 214925510 WHERE id = 10766;
+UPDATE public.profiles SET id_ipec = 214925511 WHERE id = 10767;
+UPDATE public.profiles SET id_ipec = 214925512 WHERE id = 10768;
+UPDATE public.profiles SET id_ipec = 214925513 WHERE id = 10769;
+UPDATE public.profiles SET id_ipec = 214925514 WHERE id = 10770;
+UPDATE public.profiles SET id_ipec = 214925636 WHERE id = 10771;
+UPDATE public.profiles SET id_ipec = 214925637 WHERE id = 10772;
+UPDATE public.profiles SET id_ipec = 214925683 WHERE id = 10773;
+UPDATE public.profiles SET id_ipec = 214925684 WHERE id = 10774;
+UPDATE public.profiles SET id_ipec = 214925685 WHERE id = 10775;
+UPDATE public.profiles SET id_ipec = 214925686 WHERE id = 10776;
+UPDATE public.profiles SET id_ipec = 214925687 WHERE id = 10777;
+UPDATE public.profiles SET id_ipec = 214925688 WHERE id = 10778;
+UPDATE public.profiles SET id_ipec = 214925689 WHERE id = 10779;
+UPDATE public.profiles SET id_ipec = 214925690 WHERE id = 10780;
+UPDATE public.profiles SET id_ipec = 214925794 WHERE id = 10781;
+UPDATE public.profiles SET id_ipec = 214925795 WHERE id = 10782;
+UPDATE public.profiles SET id_ipec = 214925796 WHERE id = 10783;
+UPDATE public.profiles SET id_ipec = 214926017 WHERE id = 10784;
+UPDATE public.profiles SET id_ipec = 214926018 WHERE id = 10785;
+UPDATE public.profiles SET id_ipec = 214926019 WHERE id = 10786;
+UPDATE public.profiles SET id_ipec = 214926020 WHERE id = 10787;
+UPDATE public.profiles SET id_ipec = 214926021 WHERE id = 10788;
+UPDATE public.profiles SET id_ipec = 214926022 WHERE id = 10789;
+UPDATE public.profiles SET id_ipec = 214926023 WHERE id = 10790;
+UPDATE public.profiles SET id_ipec = 214926024 WHERE id = 10791;
+UPDATE public.profiles SET id_ipec = 214926173 WHERE id = 10792;
+UPDATE public.profiles SET id_ipec = 214926174 WHERE id = 10793;
+UPDATE public.profiles SET id_ipec = 214926175 WHERE id = 10794;
+UPDATE public.profiles SET id_ipec = 214926176 WHERE id = 10795;
+UPDATE public.profiles SET id_ipec = 214926177 WHERE id = 10796;
+UPDATE public.profiles SET id_ipec = 214926178 WHERE id = 10797;
+UPDATE public.profiles SET id_ipec = 214926179 WHERE id = 10798;
+UPDATE public.profiles SET id_ipec = 214926180 WHERE id = 10799;
+UPDATE public.profiles SET id_ipec = 214926309 WHERE id = 10800;
+UPDATE public.profiles SET id_ipec = 214926310 WHERE id = 10801;
+UPDATE public.profiles SET id_ipec = 214926311 WHERE id = 10802;
+UPDATE public.profiles SET id_ipec = 214926312 WHERE id = 10803;
+UPDATE public.profiles SET id_ipec = 214926313 WHERE id = 10804;
+UPDATE public.profiles SET id_ipec = 214926475 WHERE id = 10805;
+UPDATE public.profiles SET id_ipec = 214926476 WHERE id = 10806;
+UPDATE public.profiles SET id_ipec = 214926477 WHERE id = 10807;
+UPDATE public.profiles SET id_ipec = 214926478 WHERE id = 10808;
+UPDATE public.profiles SET id_ipec = 214926479 WHERE id = 10809;
+UPDATE public.profiles SET id_ipec = 214926480 WHERE id = 10810;
+UPDATE public.profiles SET id_ipec = 214926481 WHERE id = 10811;
+UPDATE public.profiles SET id_ipec = 214926482 WHERE id = 10812;
+UPDATE public.profiles SET id_ipec = 214926483 WHERE id = 10813;
+UPDATE public.profiles SET id_ipec = 214926484 WHERE id = 10814;
+UPDATE public.profiles SET id_ipec = 214926485 WHERE id = 10815;
+UPDATE public.profiles SET id_ipec = 214926534 WHERE id = 10816;
+UPDATE public.profiles SET id_ipec = 214926599 WHERE id = 10817;
+UPDATE public.profiles SET id_ipec = 214926600 WHERE id = 10818;
+UPDATE public.profiles SET id_ipec = 214926601 WHERE id = 10819;
+UPDATE public.profiles SET id_ipec = 214926602 WHERE id = 10820;
+UPDATE public.profiles SET id_ipec = 214926603 WHERE id = 10821;
+UPDATE public.profiles SET id_ipec = 214926604 WHERE id = 10822;
+UPDATE public.profiles SET id_ipec = 214926605 WHERE id = 10823;
+UPDATE public.profiles SET id_ipec = 214926750 WHERE id = 10824;
+UPDATE public.profiles SET id_ipec = 214926751 WHERE id = 10825;
+UPDATE public.profiles SET id_ipec = 214926752 WHERE id = 10826;
+UPDATE public.profiles SET id_ipec = 214926753 WHERE id = 10827;
+UPDATE public.profiles SET id_ipec = 214926754 WHERE id = 10828;
+UPDATE public.profiles SET id_ipec = 214926755 WHERE id = 10829;
+UPDATE public.profiles SET id_ipec = 214926756 WHERE id = 10830;
+UPDATE public.profiles SET id_ipec = 214926757 WHERE id = 10831;
+UPDATE public.profiles SET id_ipec = 214926764 WHERE id = 10832;
+UPDATE public.profiles SET id_ipec = 214926839 WHERE id = 10833;
+UPDATE public.profiles SET id_ipec = 214926840 WHERE id = 10834;
+UPDATE public.profiles SET id_ipec = 214926841 WHERE id = 10835;
+UPDATE public.profiles SET id_ipec = 214926842 WHERE id = 10836;
+UPDATE public.profiles SET id_ipec = 214926936 WHERE id = 10837;
+UPDATE public.profiles SET id_ipec = 214926937 WHERE id = 10838;
+UPDATE public.profiles SET id_ipec = 214926938 WHERE id = 10839;
+UPDATE public.profiles SET id_ipec = 214926939 WHERE id = 10840;
+UPDATE public.profiles SET id_ipec = 214926940 WHERE id = 10841;
+UPDATE public.profiles SET id_ipec = 214927160 WHERE id = 10842;
+UPDATE public.profiles SET id_ipec = 214927179 WHERE id = 10843;
+UPDATE public.profiles SET id_ipec = 214927181 WHERE id = 10844;
+UPDATE public.profiles SET id_ipec = 214927182 WHERE id = 10845;
+UPDATE public.profiles SET id_ipec = 214927183 WHERE id = 10846;
+UPDATE public.profiles SET id_ipec = 214927191 WHERE id = 10847;
+UPDATE public.profiles SET id_ipec = 214927203 WHERE id = 10848;
+UPDATE public.profiles SET id_ipec = 214927351 WHERE id = 10849;
+UPDATE public.profiles SET id_ipec = 214927520 WHERE id = 10850;
+UPDATE public.profiles SET id_ipec = 214927635 WHERE id = 10851;
+UPDATE public.profiles SET id_ipec = 214928366 WHERE id = 10852;
+UPDATE public.profiles SET id_ipec = 214928970 WHERE id = 10853;
+UPDATE public.profiles SET id_ipec = 214928971 WHERE id = 10854;
+UPDATE public.profiles SET id_ipec = 214928972 WHERE id = 10855;
+UPDATE public.profiles SET id_ipec = 214929129 WHERE id = 10856;
+UPDATE public.profiles SET id_ipec = 214929735 WHERE id = 10857;
+UPDATE public.profiles SET id_ipec = 214929736 WHERE id = 10858;
+UPDATE public.profiles SET id_ipec = 214929786 WHERE id = 10859;
+UPDATE public.profiles SET id_ipec = 214929960 WHERE id = 10860;
+UPDATE public.profiles SET id_ipec = 214929961 WHERE id = 10861;
+UPDATE public.profiles SET id_ipec = 214930234 WHERE id = 10862;
+UPDATE public.profiles SET id_ipec = 214930235 WHERE id = 10863;
+UPDATE public.profiles SET id_ipec = 214933018 WHERE id = 10864;
+UPDATE public.profiles SET id_ipec = 214933019 WHERE id = 10865;
+UPDATE public.profiles SET id_ipec = 214933020 WHERE id = 10866;
+UPDATE public.profiles SET id_ipec = 214933021 WHERE id = 10867;
+UPDATE public.profiles SET id_ipec = 214937121 WHERE id = 10868;
+UPDATE public.profiles SET id_ipec = 214937673 WHERE id = 10869;
+UPDATE public.profiles SET id_ipec = 214937674 WHERE id = 10870;
+UPDATE public.profiles SET id_ipec = 214937675 WHERE id = 10871;
+UPDATE public.profiles SET id_ipec = 214938296 WHERE id = 10872;
+UPDATE public.profiles SET id_ipec = 214939564 WHERE id = 10873;
+UPDATE public.profiles SET id_ipec = 214939791 WHERE id = 10874;
+UPDATE public.profiles SET id_ipec = 214940016 WHERE id = 10875;
+UPDATE public.profiles SET id_ipec = 214941385 WHERE id = 10876;
+UPDATE public.profiles SET id_ipec = 214941407 WHERE id = 10877;
+UPDATE public.profiles SET id_ipec = 214942221 WHERE id = 10878;
+UPDATE public.profiles SET id_ipec = 214942446 WHERE id = 10879;
+UPDATE public.profiles SET id_ipec = 214943043 WHERE id = 10880;
+UPDATE public.profiles SET id_ipec = 214943247 WHERE id = 10881;
+UPDATE public.profiles SET id_ipec = 214943289 WHERE id = 10882;
+UPDATE public.profiles SET id_ipec = 214943299 WHERE id = 10883;
+UPDATE public.profiles SET id_ipec = 214943519 WHERE id = 10884;
+UPDATE public.profiles SET id_ipec = 214943520 WHERE id = 10885;
+UPDATE public.profiles SET id_ipec = 214943672 WHERE id = 10886;
+UPDATE public.profiles SET id_ipec = 214943855 WHERE id = 10887;
+UPDATE public.profiles SET id_ipec = 214943860 WHERE id = 10888;
+UPDATE public.profiles SET id_ipec = 214943861 WHERE id = 10889;
+UPDATE public.profiles SET id_ipec = 214944055 WHERE id = 10890;
+UPDATE public.profiles SET id_ipec = 214944056 WHERE id = 10891;
+UPDATE public.profiles SET id_ipec = 214944057 WHERE id = 10892;
+UPDATE public.profiles SET id_ipec = 214944592 WHERE id = 10893;
+UPDATE public.profiles SET id_ipec = 214944593 WHERE id = 10894;
+UPDATE public.profiles SET id_ipec = 214944827 WHERE id = 10895;
+UPDATE public.profiles SET id_ipec = 214944862 WHERE id = 10896;
+UPDATE public.profiles SET id_ipec = 214945130 WHERE id = 10897;
+UPDATE public.profiles SET id_ipec = 214945459 WHERE id = 10898;
+UPDATE public.profiles SET id_ipec = 214945460 WHERE id = 10899;
+UPDATE public.profiles SET id_ipec = 214945461 WHERE id = 10900;
+UPDATE public.profiles SET id_ipec = 214945918 WHERE id = 10901;
+UPDATE public.profiles SET id_ipec = 214945919 WHERE id = 10902;
+UPDATE public.profiles SET id_ipec = 214945920 WHERE id = 10903;
+UPDATE public.profiles SET id_ipec = 214946172 WHERE id = 10904;
+UPDATE public.profiles SET id_ipec = 214946173 WHERE id = 10905;
+UPDATE public.profiles SET id_ipec = 214946258 WHERE id = 10906;
+UPDATE public.profiles SET id_ipec = 214946302 WHERE id = 10907;
+UPDATE public.profiles SET id_ipec = 214946533 WHERE id = 10908;
+UPDATE public.profiles SET id_ipec = 214946588 WHERE id = 10909;
+UPDATE public.profiles SET id_ipec = 214947015 WHERE id = 10910;
+UPDATE public.profiles SET id_ipec = 214947016 WHERE id = 10911;
+UPDATE public.profiles SET id_ipec = 214947263 WHERE id = 10912;
+UPDATE public.profiles SET id_ipec = 214947264 WHERE id = 10913;
+UPDATE public.profiles SET id_ipec = 214947773 WHERE id = 10914;
+UPDATE public.profiles SET id_ipec = 214947792 WHERE id = 10915;
+UPDATE public.profiles SET id_ipec = 214947793 WHERE id = 10916;
+UPDATE public.profiles SET id_ipec = 214948001 WHERE id = 10917;
+UPDATE public.profiles SET id_ipec = 214948185 WHERE id = 10918;
+UPDATE public.profiles SET id_ipec = 214948196 WHERE id = 10919;
+UPDATE public.profiles SET id_ipec = 214948273 WHERE id = 10920;
+UPDATE public.profiles SET id_ipec = 214948274 WHERE id = 10921;
+UPDATE public.profiles SET id_ipec = 214948275 WHERE id = 10922;
+UPDATE public.profiles SET id_ipec = 214948276 WHERE id = 10923;
+UPDATE public.profiles SET id_ipec = 214948297 WHERE id = 10924;
+UPDATE public.profiles SET id_ipec = 214948298 WHERE id = 10925;
+UPDATE public.profiles SET id_ipec = 214948299 WHERE id = 10926;
+UPDATE public.profiles SET id_ipec = 214948345 WHERE id = 10927;
+UPDATE public.profiles SET id_ipec = 214948346 WHERE id = 10928;
+UPDATE public.profiles SET id_ipec = 214948348 WHERE id = 10929;
+UPDATE public.profiles SET id_ipec = 214948349 WHERE id = 10930;
+UPDATE public.profiles SET id_ipec = 214948443 WHERE id = 10931;
+UPDATE public.profiles SET id_ipec = 214948444 WHERE id = 10932;
+UPDATE public.profiles SET id_ipec = 214949105 WHERE id = 10933;
+UPDATE public.profiles SET id_ipec = 214949274 WHERE id = 10934;
+UPDATE public.profiles SET id_ipec = 214949430 WHERE id = 10935;
+UPDATE public.profiles SET id_ipec = 214950048 WHERE id = 10936;
+UPDATE public.profiles SET id_ipec = 214950108 WHERE id = 10937;
+UPDATE public.profiles SET id_ipec = 214950109 WHERE id = 10938;
+UPDATE public.profiles SET id_ipec = 214950110 WHERE id = 10939;
+UPDATE public.profiles SET id_ipec = 214950111 WHERE id = 10940;
+UPDATE public.profiles SET id_ipec = 214950112 WHERE id = 10941;
+UPDATE public.profiles SET id_ipec = 214950113 WHERE id = 10942;
+UPDATE public.profiles SET id_ipec = 214950114 WHERE id = 10943;
+UPDATE public.profiles SET id_ipec = 214950115 WHERE id = 10944;
+UPDATE public.profiles SET id_ipec = 214951013 WHERE id = 10945;
+UPDATE public.profiles SET id_ipec = 214951025 WHERE id = 10946;
+UPDATE public.profiles SET id_ipec = 214951495 WHERE id = 10947;
+UPDATE public.profiles SET id_ipec = 214951536 WHERE id = 10948;
+UPDATE public.profiles SET id_ipec = 214951651 WHERE id = 10949;
+UPDATE public.profiles SET id_ipec = 214951652 WHERE id = 10950;
+UPDATE public.profiles SET id_ipec = 214951701 WHERE id = 10951;
+UPDATE public.profiles SET id_ipec = 214952053 WHERE id = 10952;
+UPDATE public.profiles SET id_ipec = 214952054 WHERE id = 10953;
+UPDATE public.profiles SET id_ipec = 214952055 WHERE id = 10954;
+UPDATE public.profiles SET id_ipec = 214952197 WHERE id = 10955;
+UPDATE public.profiles SET id_ipec = 214952345 WHERE id = 10956;
+UPDATE public.profiles SET id_ipec = 214952396 WHERE id = 10957;
+UPDATE public.profiles SET id_ipec = 214952426 WHERE id = 10958;
+UPDATE public.profiles SET id_ipec = 214953233 WHERE id = 10959;
+UPDATE public.profiles SET id_ipec = 214953457 WHERE id = 10960;
+UPDATE public.profiles SET id_ipec = 214953458 WHERE id = 10961;
+UPDATE public.profiles SET id_ipec = 214953813 WHERE id = 10962;
+UPDATE public.profiles SET id_ipec = 214953814 WHERE id = 10963;
+UPDATE public.profiles SET id_ipec = 214953815 WHERE id = 10964;
+UPDATE public.profiles SET id_ipec = 214953953 WHERE id = 10965;
+UPDATE public.profiles SET id_ipec = 214954080 WHERE id = 10966;
+UPDATE public.profiles SET id_ipec = 214954097 WHERE id = 10967;
+UPDATE public.profiles SET id_ipec = 214954098 WHERE id = 10968;
+UPDATE public.profiles SET id_ipec = 214954207 WHERE id = 10969;
+UPDATE public.profiles SET id_ipec = 214954649 WHERE id = 10970;
+UPDATE public.profiles SET id_ipec = 214954871 WHERE id = 10971;
+UPDATE public.profiles SET id_ipec = 214955105 WHERE id = 10972;
+UPDATE public.profiles SET id_ipec = 214955136 WHERE id = 10973;
+UPDATE public.profiles SET id_ipec = 214955153 WHERE id = 10974;
+UPDATE public.profiles SET id_ipec = 214955154 WHERE id = 10975;
+UPDATE public.profiles SET id_ipec = 214955155 WHERE id = 10976;
+UPDATE public.profiles SET id_ipec = 214955156 WHERE id = 10977;
+UPDATE public.profiles SET id_ipec = 214955284 WHERE id = 10978;
+UPDATE public.profiles SET id_ipec = 214955405 WHERE id = 10979;
+UPDATE public.profiles SET id_ipec = 214955504 WHERE id = 10980;
+UPDATE public.profiles SET id_ipec = 214955505 WHERE id = 10981;
+UPDATE public.profiles SET id_ipec = 214955530 WHERE id = 10982;
+UPDATE public.profiles SET id_ipec = 214955588 WHERE id = 10983;
+UPDATE public.profiles SET id_ipec = 214955723 WHERE id = 10984;
+UPDATE public.profiles SET id_ipec = 214955943 WHERE id = 10985;
+UPDATE public.profiles SET id_ipec = 214956317 WHERE id = 10986;
+UPDATE public.profiles SET id_ipec = 214956437 WHERE id = 10987;
+UPDATE public.profiles SET id_ipec = 214956438 WHERE id = 10988;
+UPDATE public.profiles SET id_ipec = 214956439 WHERE id = 10989;
+UPDATE public.profiles SET id_ipec = 214956440 WHERE id = 10990;
+UPDATE public.profiles SET id_ipec = 214956441 WHERE id = 10991;
+UPDATE public.profiles SET id_ipec = 214956556 WHERE id = 10992;
+UPDATE public.profiles SET id_ipec = 214956567 WHERE id = 10993;
+UPDATE public.profiles SET id_ipec = 214956635 WHERE id = 10994;
+UPDATE public.profiles SET id_ipec = 214956934 WHERE id = 10995;
+UPDATE public.profiles SET id_ipec = 214957184 WHERE id = 10996;
+UPDATE public.profiles SET id_ipec = 214957185 WHERE id = 10997;
+UPDATE public.profiles SET id_ipec = 214957186 WHERE id = 10998;
+UPDATE public.profiles SET id_ipec = 214957259 WHERE id = 10999;
+UPDATE public.profiles SET id_ipec = 214957367 WHERE id = 11000;
+UPDATE public.profiles SET id_ipec = 214957651 WHERE id = 11001;
+UPDATE public.profiles SET id_ipec = 214957652 WHERE id = 11002;
+UPDATE public.profiles SET id_ipec = 214957653 WHERE id = 11003;
+UPDATE public.profiles SET id_ipec = 214957654 WHERE id = 11004;
+UPDATE public.profiles SET id_ipec = 214957655 WHERE id = 11005;
+UPDATE public.profiles SET id_ipec = 214957682 WHERE id = 11006;
+UPDATE public.profiles SET id_ipec = 214957783 WHERE id = 11007;
+UPDATE public.profiles SET id_ipec = 214957812 WHERE id = 11008;
+UPDATE public.profiles SET id_ipec = 214957841 WHERE id = 11009;
+UPDATE public.profiles SET id_ipec = 214957918 WHERE id = 11010;
+UPDATE public.profiles SET id_ipec = 214957942 WHERE id = 11011;
+UPDATE public.profiles SET id_ipec = 214957954 WHERE id = 11012;
+UPDATE public.profiles SET id_ipec = 214957955 WHERE id = 11013;
+UPDATE public.profiles SET id_ipec = 214957956 WHERE id = 11014;
+UPDATE public.profiles SET id_ipec = 214957957 WHERE id = 11015;
+UPDATE public.profiles SET id_ipec = 214958068 WHERE id = 11016;
+UPDATE public.profiles SET id_ipec = 214958098 WHERE id = 11017;
+UPDATE public.profiles SET id_ipec = 214958099 WHERE id = 11018;
+UPDATE public.profiles SET id_ipec = 214958100 WHERE id = 11019;
+UPDATE public.profiles SET id_ipec = 214958127 WHERE id = 11020;
+UPDATE public.profiles SET id_ipec = 214958182 WHERE id = 11021;
+UPDATE public.profiles SET id_ipec = 214958401 WHERE id = 11022;
+UPDATE public.profiles SET id_ipec = 214958402 WHERE id = 11023;
+UPDATE public.profiles SET id_ipec = 214958403 WHERE id = 11024;
+UPDATE public.profiles SET id_ipec = 214958404 WHERE id = 11025;
+UPDATE public.profiles SET id_ipec = 214958405 WHERE id = 11026;
+UPDATE public.profiles SET id_ipec = 214958406 WHERE id = 11027;
+UPDATE public.profiles SET id_ipec = 214958640 WHERE id = 11028;
+UPDATE public.profiles SET id_ipec = 214958714 WHERE id = 11029;
+UPDATE public.profiles SET id_ipec = 214958757 WHERE id = 11030;
+UPDATE public.profiles SET id_ipec = 214959075 WHERE id = 11031;
+UPDATE public.profiles SET id_ipec = 214959408 WHERE id = 11032;
+UPDATE public.profiles SET id_ipec = 214959464 WHERE id = 11033;
+UPDATE public.profiles SET id_ipec = 214959465 WHERE id = 11034;
+UPDATE public.profiles SET id_ipec = 214959466 WHERE id = 11035;
+UPDATE public.profiles SET id_ipec = 214959467 WHERE id = 11036;
+UPDATE public.profiles SET id_ipec = 214959536 WHERE id = 11037;
+UPDATE public.profiles SET id_ipec = 214959537 WHERE id = 11038;
+UPDATE public.profiles SET id_ipec = 214959538 WHERE id = 11039;
+UPDATE public.profiles SET id_ipec = 214959539 WHERE id = 11040;
+UPDATE public.profiles SET id_ipec = 214959540 WHERE id = 11041;
+UPDATE public.profiles SET id_ipec = 214959541 WHERE id = 11042;
+UPDATE public.profiles SET id_ipec = 214959542 WHERE id = 11043;
+UPDATE public.profiles SET id_ipec = 214959670 WHERE id = 11044;
+UPDATE public.profiles SET id_ipec = 214959718 WHERE id = 11045;
+UPDATE public.profiles SET id_ipec = 214959719 WHERE id = 11046;
+UPDATE public.profiles SET id_ipec = 214959720 WHERE id = 11047;
+UPDATE public.profiles SET id_ipec = 214959729 WHERE id = 11048;
+UPDATE public.profiles SET id_ipec = 214959730 WHERE id = 11049;
+UPDATE public.profiles SET id_ipec = 214959731 WHERE id = 11050;
+UPDATE public.profiles SET id_ipec = 214959732 WHERE id = 11051;
+UPDATE public.profiles SET id_ipec = 214959733 WHERE id = 11052;
+UPDATE public.profiles SET id_ipec = 214960482 WHERE id = 11053;
+UPDATE public.profiles SET id_ipec = 214960483 WHERE id = 11054;
+UPDATE public.profiles SET id_ipec = 214960658 WHERE id = 11055;
+UPDATE public.profiles SET id_ipec = 214960659 WHERE id = 11056;
+UPDATE public.profiles SET id_ipec = 214960660 WHERE id = 11057;
+UPDATE public.profiles SET id_ipec = 214960661 WHERE id = 11058;
+UPDATE public.profiles SET id_ipec = 214960662 WHERE id = 11059;
+UPDATE public.profiles SET id_ipec = 214960663 WHERE id = 11060;
+UPDATE public.profiles SET id_ipec = 214960664 WHERE id = 11061;
+UPDATE public.profiles SET id_ipec = 214960730 WHERE id = 11062;
+UPDATE public.profiles SET id_ipec = 214960907 WHERE id = 11063;
+UPDATE public.profiles SET id_ipec = 214960921 WHERE id = 11064;
+UPDATE public.profiles SET id_ipec = 214960922 WHERE id = 11065;
+UPDATE public.profiles SET id_ipec = 214960923 WHERE id = 11066;
+UPDATE public.profiles SET id_ipec = 214960948 WHERE id = 11067;
+UPDATE public.profiles SET id_ipec = 214960949 WHERE id = 11068;
+UPDATE public.profiles SET id_ipec = 214960950 WHERE id = 11069;
+UPDATE public.profiles SET id_ipec = 214960951 WHERE id = 11070;
+UPDATE public.profiles SET id_ipec = 214960952 WHERE id = 11071;
+UPDATE public.profiles SET id_ipec = 214961018 WHERE id = 11072;
+UPDATE public.profiles SET id_ipec = 214961019 WHERE id = 11073;
+UPDATE public.profiles SET id_ipec = 214961020 WHERE id = 11074;
+UPDATE public.profiles SET id_ipec = 214961021 WHERE id = 11075;
+UPDATE public.profiles SET id_ipec = 214961022 WHERE id = 11076;
+UPDATE public.profiles SET id_ipec = 214961023 WHERE id = 11077;
+UPDATE public.profiles SET id_ipec = 214961405 WHERE id = 11078;
+UPDATE public.profiles SET id_ipec = 214961406 WHERE id = 11079;
+UPDATE public.profiles SET id_ipec = 214961407 WHERE id = 11080;
+UPDATE public.profiles SET id_ipec = 214961408 WHERE id = 11081;
+UPDATE public.profiles SET id_ipec = 214961520 WHERE id = 11082;
+UPDATE public.profiles SET id_ipec = 214961521 WHERE id = 11083;
+UPDATE public.profiles SET id_ipec = 214961535 WHERE id = 11084;
+UPDATE public.profiles SET id_ipec = 214961536 WHERE id = 11085;
+UPDATE public.profiles SET id_ipec = 214961563 WHERE id = 11086;
+UPDATE public.profiles SET id_ipec = 214961615 WHERE id = 11087;
+UPDATE public.profiles SET id_ipec = 214961616 WHERE id = 11088;
+UPDATE public.profiles SET id_ipec = 214961617 WHERE id = 11089;
+UPDATE public.profiles SET id_ipec = 214961800 WHERE id = 11090;
+UPDATE public.profiles SET id_ipec = 214961801 WHERE id = 11091;
+UPDATE public.profiles SET id_ipec = 214961802 WHERE id = 11092;
+UPDATE public.profiles SET id_ipec = 214961803 WHERE id = 11093;
+UPDATE public.profiles SET id_ipec = 214961804 WHERE id = 11094;
+UPDATE public.profiles SET id_ipec = 214961863 WHERE id = 11095;
+UPDATE public.profiles SET id_ipec = 214961933 WHERE id = 11096;
+UPDATE public.profiles SET id_ipec = 214961996 WHERE id = 11097;
+UPDATE public.profiles SET id_ipec = 214962009 WHERE id = 11098;
+UPDATE public.profiles SET id_ipec = 214962010 WHERE id = 11099;
+UPDATE public.profiles SET id_ipec = 214962011 WHERE id = 11100;
+UPDATE public.profiles SET id_ipec = 214962602 WHERE id = 11101;
+UPDATE public.profiles SET id_ipec = 214962698 WHERE id = 11102;
+UPDATE public.profiles SET id_ipec = 214962946 WHERE id = 11103;
+UPDATE public.profiles SET id_ipec = 214962964 WHERE id = 11104;
+UPDATE public.profiles SET id_ipec = 214962965 WHERE id = 11105;
+UPDATE public.profiles SET id_ipec = 214963083 WHERE id = 11106;
+UPDATE public.profiles SET id_ipec = 214963121 WHERE id = 11107;
+UPDATE public.profiles SET id_ipec = 214963122 WHERE id = 11108;
+UPDATE public.profiles SET id_ipec = 214963149 WHERE id = 11109;
+UPDATE public.profiles SET id_ipec = 214963175 WHERE id = 11110;
+UPDATE public.profiles SET id_ipec = 214963255 WHERE id = 11111;
+UPDATE public.profiles SET id_ipec = 214963507 WHERE id = 11112;
+UPDATE public.profiles SET id_ipec = 214963508 WHERE id = 11113;
+UPDATE public.profiles SET id_ipec = 214963509 WHERE id = 11114;
+UPDATE public.profiles SET id_ipec = 214963510 WHERE id = 11115;
+UPDATE public.profiles SET id_ipec = 214963511 WHERE id = 11116;
+UPDATE public.profiles SET id_ipec = 214963512 WHERE id = 11117;
+UPDATE public.profiles SET id_ipec = 214963658 WHERE id = 11118;
+UPDATE public.profiles SET id_ipec = 214963906 WHERE id = 11119;
+UPDATE public.profiles SET id_ipec = 214963907 WHERE id = 11120;
+UPDATE public.profiles SET id_ipec = 214963943 WHERE id = 11121;
+UPDATE public.profiles SET id_ipec = 214963944 WHERE id = 11122;
+UPDATE public.profiles SET id_ipec = 214963945 WHERE id = 11123;
+UPDATE public.profiles SET id_ipec = 214963946 WHERE id = 11124;
+UPDATE public.profiles SET id_ipec = 214964065 WHERE id = 11125;
+UPDATE public.profiles SET id_ipec = 214964094 WHERE id = 11126;
+UPDATE public.profiles SET id_ipec = 214964156 WHERE id = 11127;
+UPDATE public.profiles SET id_ipec = 214964735 WHERE id = 11128;
+UPDATE public.profiles SET id_ipec = 214964765 WHERE id = 11129;
+UPDATE public.profiles SET id_ipec = 214964766 WHERE id = 11130;
+UPDATE public.profiles SET id_ipec = 214964767 WHERE id = 11131;
+UPDATE public.profiles SET id_ipec = 214964768 WHERE id = 11132;
+UPDATE public.profiles SET id_ipec = 214964769 WHERE id = 11133;
+UPDATE public.profiles SET id_ipec = 214964770 WHERE id = 11134;
+UPDATE public.profiles SET id_ipec = 214964887 WHERE id = 11135;
+UPDATE public.profiles SET id_ipec = 214964920 WHERE id = 11136;
+UPDATE public.profiles SET id_ipec = 214964927 WHERE id = 11137;
+UPDATE public.profiles SET id_ipec = 214965051 WHERE id = 11138;
+UPDATE public.profiles SET id_ipec = 214965175 WHERE id = 11139;
+UPDATE public.profiles SET id_ipec = 214965306 WHERE id = 11140;
+UPDATE public.profiles SET id_ipec = 214965307 WHERE id = 11141;
+UPDATE public.profiles SET id_ipec = 214965828 WHERE id = 11142;
+UPDATE public.profiles SET id_ipec = 214965829 WHERE id = 11143;
+UPDATE public.profiles SET id_ipec = 214966045 WHERE id = 11144;
+UPDATE public.profiles SET id_ipec = 214966046 WHERE id = 11145;
+UPDATE public.profiles SET id_ipec = 214966047 WHERE id = 11146;
+UPDATE public.profiles SET id_ipec = 214966223 WHERE id = 11147;
+UPDATE public.profiles SET id_ipec = 214966224 WHERE id = 11148;
+UPDATE public.profiles SET id_ipec = 214966225 WHERE id = 11149;
+UPDATE public.profiles SET id_ipec = 214966226 WHERE id = 11150;
+UPDATE public.profiles SET id_ipec = 214966227 WHERE id = 11151;
+UPDATE public.profiles SET id_ipec = 214966228 WHERE id = 11152;
+UPDATE public.profiles SET id_ipec = 214966734 WHERE id = 11153;
+UPDATE public.profiles SET id_ipec = 214966735 WHERE id = 11154;
+UPDATE public.profiles SET id_ipec = 214966736 WHERE id = 11155;
+UPDATE public.profiles SET id_ipec = 214967130 WHERE id = 11156;
+UPDATE public.profiles SET id_ipec = 214967131 WHERE id = 11157;
+UPDATE public.profiles SET id_ipec = 214967132 WHERE id = 11158;
+UPDATE public.profiles SET id_ipec = 214967139 WHERE id = 11159;
+UPDATE public.profiles SET id_ipec = 214967293 WHERE id = 11160;
+UPDATE public.profiles SET id_ipec = 214967296 WHERE id = 11161;
+UPDATE public.profiles SET id_ipec = 214967311 WHERE id = 11162;
+UPDATE public.profiles SET id_ipec = 214967386 WHERE id = 11163;
+UPDATE public.profiles SET id_ipec = 214967521 WHERE id = 11164;
+UPDATE public.profiles SET id_ipec = 214967779 WHERE id = 11165;
+UPDATE public.profiles SET id_ipec = 214967780 WHERE id = 11166;
+UPDATE public.profiles SET id_ipec = 214967781 WHERE id = 11167;
+UPDATE public.profiles SET id_ipec = 214968103 WHERE id = 11168;
+UPDATE public.profiles SET id_ipec = 214968169 WHERE id = 11169;
+UPDATE public.profiles SET id_ipec = 214968170 WHERE id = 11170;
+UPDATE public.profiles SET id_ipec = 214968171 WHERE id = 11171;
+UPDATE public.profiles SET id_ipec = 214968262 WHERE id = 11172;
+UPDATE public.profiles SET id_ipec = 214968263 WHERE id = 11173;
+UPDATE public.profiles SET id_ipec = 214968264 WHERE id = 11174;
+UPDATE public.profiles SET id_ipec = 214968303 WHERE id = 11175;
+UPDATE public.profiles SET id_ipec = 214968606 WHERE id = 11176;
+UPDATE public.profiles SET id_ipec = 214968607 WHERE id = 11177;
+UPDATE public.profiles SET id_ipec = 214968608 WHERE id = 11178;
+UPDATE public.profiles SET id_ipec = 214968609 WHERE id = 11179;
+UPDATE public.profiles SET id_ipec = 214968958 WHERE id = 11180;
+UPDATE public.profiles SET id_ipec = 214968959 WHERE id = 11181;
+UPDATE public.profiles SET id_ipec = 214968960 WHERE id = 11182;
+UPDATE public.profiles SET id_ipec = 214968961 WHERE id = 11183;
+UPDATE public.profiles SET id_ipec = 214968998 WHERE id = 11184;
+UPDATE public.profiles SET id_ipec = 214968999 WHERE id = 11185;
+UPDATE public.profiles SET id_ipec = 214969000 WHERE id = 11186;
+UPDATE public.profiles SET id_ipec = 214969001 WHERE id = 11187;
+UPDATE public.profiles SET id_ipec = 214970696 WHERE id = 11188;
+UPDATE public.profiles SET id_ipec = 214970697 WHERE id = 11189;
+UPDATE public.profiles SET id_ipec = 214970716 WHERE id = 11190;
+UPDATE public.profiles SET id_ipec = 214970723 WHERE id = 11191;
+UPDATE public.profiles SET id_ipec = 214970731 WHERE id = 11192;
+UPDATE public.profiles SET id_ipec = 214970732 WHERE id = 11193;
+UPDATE public.profiles SET id_ipec = 214981369 WHERE id = 11194;
+UPDATE public.profiles SET id_ipec = 214983929 WHERE id = 11195;
+UPDATE public.profiles SET id_ipec = 214983930 WHERE id = 11196;
+UPDATE public.profiles SET id_ipec = 214984594 WHERE id = 11197;
+UPDATE public.profiles SET id_ipec = 214985144 WHERE id = 11198;
+UPDATE public.profiles SET id_ipec = 214985358 WHERE id = 11199;
+UPDATE public.profiles SET id_ipec = 214985532 WHERE id = 11200;
+UPDATE public.profiles SET id_ipec = 214986651 WHERE id = 11201;
+UPDATE public.profiles SET id_ipec = 214986652 WHERE id = 11202;
+UPDATE public.profiles SET id_ipec = 214986934 WHERE id = 11203;
+UPDATE public.profiles SET id_ipec = 214987211 WHERE id = 11204;
+UPDATE public.profiles SET id_ipec = 214987387 WHERE id = 11205;
+UPDATE public.profiles SET id_ipec = 214987441 WHERE id = 11206;
+UPDATE public.profiles SET id_ipec = 214988008 WHERE id = 11207;
+UPDATE public.profiles SET id_ipec = 214988051 WHERE id = 11208;
+UPDATE public.profiles SET id_ipec = 214988252 WHERE id = 11209;
+UPDATE public.profiles SET id_ipec = 214988616 WHERE id = 11210;
+UPDATE public.profiles SET id_ipec = 214988617 WHERE id = 11211;
+UPDATE public.profiles SET id_ipec = 214988618 WHERE id = 11212;
+UPDATE public.profiles SET id_ipec = 214988712 WHERE id = 11213;
+UPDATE public.profiles SET id_ipec = 214988832 WHERE id = 11214;
+UPDATE public.profiles SET id_ipec = 214989034 WHERE id = 11215;
+UPDATE public.profiles SET id_ipec = 214989581 WHERE id = 11216;
+UPDATE public.profiles SET id_ipec = 214989731 WHERE id = 11217;
+UPDATE public.profiles SET id_ipec = 214989784 WHERE id = 11218;
+UPDATE public.profiles SET id_ipec = 214989976 WHERE id = 11219;
+UPDATE public.profiles SET id_ipec = 214990187 WHERE id = 11220;
+UPDATE public.profiles SET id_ipec = 214990219 WHERE id = 11221;
+UPDATE public.profiles SET id_ipec = 214990706 WHERE id = 11222;
+UPDATE public.profiles SET id_ipec = 214991170 WHERE id = 11223;
+UPDATE public.profiles SET id_ipec = 214991312 WHERE id = 11224;
+UPDATE public.profiles SET id_ipec = 214991827 WHERE id = 11225;
+UPDATE public.profiles SET id_ipec = 214991928 WHERE id = 11226;
+UPDATE public.profiles SET id_ipec = 214991929 WHERE id = 11227;
+UPDATE public.profiles SET id_ipec = 214992245 WHERE id = 11228;
+UPDATE public.profiles SET id_ipec = 214992246 WHERE id = 11229;
+UPDATE public.profiles SET id_ipec = 214992247 WHERE id = 11230;
+UPDATE public.profiles SET id_ipec = 214992248 WHERE id = 11231;
+UPDATE public.profiles SET id_ipec = 214992280 WHERE id = 11232;
+UPDATE public.profiles SET id_ipec = 214992542 WHERE id = 11233;
+UPDATE public.profiles SET id_ipec = 214992577 WHERE id = 11234;
+UPDATE public.profiles SET id_ipec = 214992578 WHERE id = 11235;
+UPDATE public.profiles SET id_ipec = 214992579 WHERE id = 11236;
+UPDATE public.profiles SET id_ipec = 214992580 WHERE id = 11237;
+UPDATE public.profiles SET id_ipec = 214992649 WHERE id = 11238;
+UPDATE public.profiles SET id_ipec = 214992665 WHERE id = 11239;
+UPDATE public.profiles SET id_ipec = 214992666 WHERE id = 11240;
+UPDATE public.profiles SET id_ipec = 214992670 WHERE id = 11241;
+UPDATE public.profiles SET id_ipec = 214992671 WHERE id = 11242;
+UPDATE public.profiles SET id_ipec = 214992672 WHERE id = 11243;
+UPDATE public.profiles SET id_ipec = 214992673 WHERE id = 11244;
+UPDATE public.profiles SET id_ipec = 214992674 WHERE id = 11245;
+UPDATE public.profiles SET id_ipec = 214992830 WHERE id = 11246;
+UPDATE public.profiles SET id_ipec = 214992938 WHERE id = 11247;
+UPDATE public.profiles SET id_ipec = 214992944 WHERE id = 11248;
+UPDATE public.profiles SET id_ipec = 214992945 WHERE id = 11249;
+UPDATE public.profiles SET id_ipec = 214992946 WHERE id = 11250;
+UPDATE public.profiles SET id_ipec = 214993216 WHERE id = 11251;
+UPDATE public.profiles SET id_ipec = 214993844 WHERE id = 11252;
+UPDATE public.profiles SET id_ipec = 214993958 WHERE id = 11253;
+UPDATE public.profiles SET id_ipec = 214994109 WHERE id = 11254;
+UPDATE public.profiles SET id_ipec = 214994779 WHERE id = 11255;
+UPDATE public.profiles SET id_ipec = 214994780 WHERE id = 11256;
+UPDATE public.profiles SET id_ipec = 214994781 WHERE id = 11257;
+UPDATE public.profiles SET id_ipec = 214994782 WHERE id = 11258;
+UPDATE public.profiles SET id_ipec = 214994783 WHERE id = 11259;
+UPDATE public.profiles SET id_ipec = 214994875 WHERE id = 11260;
+UPDATE public.profiles SET id_ipec = 214994886 WHERE id = 11261;
+UPDATE public.profiles SET id_ipec = 214995056 WHERE id = 11262;
+UPDATE public.profiles SET id_ipec = 214995201 WHERE id = 11263;
+UPDATE public.profiles SET id_ipec = 214995202 WHERE id = 11264;
+UPDATE public.profiles SET id_ipec = 214995616 WHERE id = 11265;
+UPDATE public.profiles SET id_ipec = 214995859 WHERE id = 11266;
+UPDATE public.profiles SET id_ipec = 214996251 WHERE id = 11267;
+UPDATE public.profiles SET id_ipec = 214996344 WHERE id = 11268;
+UPDATE public.profiles SET id_ipec = 214996553 WHERE id = 11269;
+UPDATE public.profiles SET id_ipec = 214996554 WHERE id = 11270;
+UPDATE public.profiles SET id_ipec = 214996648 WHERE id = 11271;
+UPDATE public.profiles SET id_ipec = 214996781 WHERE id = 11272;
+UPDATE public.profiles SET id_ipec = 214996822 WHERE id = 11273;
+UPDATE public.profiles SET id_ipec = 214996823 WHERE id = 11274;
+UPDATE public.profiles SET id_ipec = 214997014 WHERE id = 11275;
+UPDATE public.profiles SET id_ipec = 214997062 WHERE id = 11276;
+UPDATE public.profiles SET id_ipec = 214997257 WHERE id = 11277;
+UPDATE public.profiles SET id_ipec = 214997456 WHERE id = 11278;
+UPDATE public.profiles SET id_ipec = 214997511 WHERE id = 11279;
+UPDATE public.profiles SET id_ipec = 214997512 WHERE id = 11280;
+UPDATE public.profiles SET id_ipec = 214997513 WHERE id = 11281;
+UPDATE public.profiles SET id_ipec = 214997800 WHERE id = 11282;
+UPDATE public.profiles SET id_ipec = 214997801 WHERE id = 11283;
+UPDATE public.profiles SET id_ipec = 214997802 WHERE id = 11284;
+UPDATE public.profiles SET id_ipec = 214997806 WHERE id = 11285;
+UPDATE public.profiles SET id_ipec = 214997918 WHERE id = 11286;
+UPDATE public.profiles SET id_ipec = 214998152 WHERE id = 11287;
+UPDATE public.profiles SET id_ipec = 214998437 WHERE id = 11288;
+UPDATE public.profiles SET id_ipec = 214998513 WHERE id = 11289;
+UPDATE public.profiles SET id_ipec = 214998835 WHERE id = 11290;
+UPDATE public.profiles SET id_ipec = 214998922 WHERE id = 11291;
+UPDATE public.profiles SET id_ipec = 214998956 WHERE id = 11292;
+UPDATE public.profiles SET id_ipec = 214998968 WHERE id = 11293;
+UPDATE public.profiles SET id_ipec = 214999255 WHERE id = 11294;
+UPDATE public.profiles SET id_ipec = 214999256 WHERE id = 11295;
+UPDATE public.profiles SET id_ipec = 214999392 WHERE id = 11296;
+UPDATE public.profiles SET id_ipec = 214999835 WHERE id = 11297;
+UPDATE public.profiles SET id_ipec = 215000073 WHERE id = 11298;
+UPDATE public.profiles SET id_ipec = 215000239 WHERE id = 11299;
+UPDATE public.profiles SET id_ipec = 215000275 WHERE id = 11300;
+UPDATE public.profiles SET id_ipec = 215000330 WHERE id = 11301;
+UPDATE public.profiles SET id_ipec = 215000331 WHERE id = 11302;
+UPDATE public.profiles SET id_ipec = 215000332 WHERE id = 11303;
+UPDATE public.profiles SET id_ipec = 215000333 WHERE id = 11304;
+UPDATE public.profiles SET id_ipec = 215000334 WHERE id = 11305;
+UPDATE public.profiles SET id_ipec = 215000335 WHERE id = 11306;
+UPDATE public.profiles SET id_ipec = 215000336 WHERE id = 11307;
+UPDATE public.profiles SET id_ipec = 215000337 WHERE id = 11308;
+UPDATE public.profiles SET id_ipec = 215000338 WHERE id = 11309;
+UPDATE public.profiles SET id_ipec = 215000339 WHERE id = 11310;
+UPDATE public.profiles SET id_ipec = 215000340 WHERE id = 11311;
+UPDATE public.profiles SET id_ipec = 215000594 WHERE id = 11312;
+UPDATE public.profiles SET id_ipec = 215000595 WHERE id = 11313;
+UPDATE public.profiles SET id_ipec = 215000726 WHERE id = 11314;
+UPDATE public.profiles SET id_ipec = 215001053 WHERE id = 11315;
+UPDATE public.profiles SET id_ipec = 215001123 WHERE id = 11316;
+UPDATE public.profiles SET id_ipec = 215001159 WHERE id = 11317;
+UPDATE public.profiles SET id_ipec = 215001174 WHERE id = 11318;
+UPDATE public.profiles SET id_ipec = 215001257 WHERE id = 11319;
+UPDATE public.profiles SET id_ipec = 215001274 WHERE id = 11320;
+UPDATE public.profiles SET id_ipec = 215001318 WHERE id = 11321;
+UPDATE public.profiles SET id_ipec = 215001336 WHERE id = 11322;
+UPDATE public.profiles SET id_ipec = 215001479 WHERE id = 11323;
+UPDATE public.profiles SET id_ipec = 215001490 WHERE id = 11324;
+UPDATE public.profiles SET id_ipec = 215001491 WHERE id = 11325;
+UPDATE public.profiles SET id_ipec = 215001492 WHERE id = 11326;
+UPDATE public.profiles SET id_ipec = 215001493 WHERE id = 11327;
+UPDATE public.profiles SET id_ipec = 215001641 WHERE id = 11328;
+UPDATE public.profiles SET id_ipec = 215001642 WHERE id = 11329;
+UPDATE public.profiles SET id_ipec = 215001643 WHERE id = 11330;
+UPDATE public.profiles SET id_ipec = 215001644 WHERE id = 11331;
+UPDATE public.profiles SET id_ipec = 215001645 WHERE id = 11332;
+UPDATE public.profiles SET id_ipec = 215001646 WHERE id = 11333;
+UPDATE public.profiles SET id_ipec = 215001647 WHERE id = 11334;
+UPDATE public.profiles SET id_ipec = 215001648 WHERE id = 11335;
+UPDATE public.profiles SET id_ipec = 215001721 WHERE id = 11336;
+UPDATE public.profiles SET id_ipec = 215001722 WHERE id = 11337;
+UPDATE public.profiles SET id_ipec = 215001723 WHERE id = 11338;
+UPDATE public.profiles SET id_ipec = 215001724 WHERE id = 11339;
+UPDATE public.profiles SET id_ipec = 215001725 WHERE id = 11340;
+UPDATE public.profiles SET id_ipec = 215001727 WHERE id = 11341;
+UPDATE public.profiles SET id_ipec = 215001904 WHERE id = 11342;
+UPDATE public.profiles SET id_ipec = 215002072 WHERE id = 11343;
+UPDATE public.profiles SET id_ipec = 215002298 WHERE id = 11344;
+UPDATE public.profiles SET id_ipec = 215002299 WHERE id = 11345;
+UPDATE public.profiles SET id_ipec = 215002300 WHERE id = 11346;
+UPDATE public.profiles SET id_ipec = 215002301 WHERE id = 11347;
+UPDATE public.profiles SET id_ipec = 215002302 WHERE id = 11348;
+UPDATE public.profiles SET id_ipec = 215002303 WHERE id = 11349;
+UPDATE public.profiles SET id_ipec = 215002304 WHERE id = 11350;
+UPDATE public.profiles SET id_ipec = 215002305 WHERE id = 11351;
+UPDATE public.profiles SET id_ipec = 215002468 WHERE id = 11352;
+UPDATE public.profiles SET id_ipec = 215002642 WHERE id = 11353;
+UPDATE public.profiles SET id_ipec = 215002838 WHERE id = 11354;
+UPDATE public.profiles SET id_ipec = 215002866 WHERE id = 11355;
+UPDATE public.profiles SET id_ipec = 215002867 WHERE id = 11356;
+UPDATE public.profiles SET id_ipec = 215003187 WHERE id = 11357;
+UPDATE public.profiles SET id_ipec = 215003188 WHERE id = 11358;
+UPDATE public.profiles SET id_ipec = 215003189 WHERE id = 11359;
+UPDATE public.profiles SET id_ipec = 215003190 WHERE id = 11360;
+UPDATE public.profiles SET id_ipec = 215003191 WHERE id = 11361;
+UPDATE public.profiles SET id_ipec = 215003192 WHERE id = 11362;
+UPDATE public.profiles SET id_ipec = 215003414 WHERE id = 11363;
+UPDATE public.profiles SET id_ipec = 215003441 WHERE id = 11364;
+UPDATE public.profiles SET id_ipec = 215003500 WHERE id = 11365;
+UPDATE public.profiles SET id_ipec = 215003501 WHERE id = 11366;
+UPDATE public.profiles SET id_ipec = 215003510 WHERE id = 11367;
+UPDATE public.profiles SET id_ipec = 215003535 WHERE id = 11368;
+UPDATE public.profiles SET id_ipec = 215003611 WHERE id = 11369;
+UPDATE public.profiles SET id_ipec = 215003612 WHERE id = 11370;
+UPDATE public.profiles SET id_ipec = 215003613 WHERE id = 11371;
+UPDATE public.profiles SET id_ipec = 215003614 WHERE id = 11372;
+UPDATE public.profiles SET id_ipec = 215003655 WHERE id = 11373;
+UPDATE public.profiles SET id_ipec = 215003656 WHERE id = 11374;
+UPDATE public.profiles SET id_ipec = 215003657 WHERE id = 11375;
+UPDATE public.profiles SET id_ipec = 215003658 WHERE id = 11376;
+UPDATE public.profiles SET id_ipec = 215003974 WHERE id = 11377;
+UPDATE public.profiles SET id_ipec = 215003983 WHERE id = 11378;
+UPDATE public.profiles SET id_ipec = 215004081 WHERE id = 11379;
+UPDATE public.profiles SET id_ipec = 215004082 WHERE id = 11380;
+UPDATE public.profiles SET id_ipec = 215004083 WHERE id = 11381;
+UPDATE public.profiles SET id_ipec = 215004107 WHERE id = 11382;
+UPDATE public.profiles SET id_ipec = 215004108 WHERE id = 11383;
+UPDATE public.profiles SET id_ipec = 215004109 WHERE id = 11384;
+UPDATE public.profiles SET id_ipec = 215004123 WHERE id = 11385;
+UPDATE public.profiles SET id_ipec = 215004165 WHERE id = 11386;
+UPDATE public.profiles SET id_ipec = 215004337 WHERE id = 11387;
+UPDATE public.profiles SET id_ipec = 215004338 WHERE id = 11388;
+UPDATE public.profiles SET id_ipec = 215004339 WHERE id = 11389;
+UPDATE public.profiles SET id_ipec = 215004340 WHERE id = 11390;
+UPDATE public.profiles SET id_ipec = 215004359 WHERE id = 11391;
+UPDATE public.profiles SET id_ipec = 215004369 WHERE id = 11392;
+UPDATE public.profiles SET id_ipec = 215004370 WHERE id = 11393;
+UPDATE public.profiles SET id_ipec = 215004371 WHERE id = 11394;
+UPDATE public.profiles SET id_ipec = 215004372 WHERE id = 11395;
+UPDATE public.profiles SET id_ipec = 215004373 WHERE id = 11396;
+UPDATE public.profiles SET id_ipec = 215004374 WHERE id = 11397;
+UPDATE public.profiles SET id_ipec = 215004375 WHERE id = 11398;
+UPDATE public.profiles SET id_ipec = 215004395 WHERE id = 11399;
+UPDATE public.profiles SET id_ipec = 215004421 WHERE id = 11400;
+UPDATE public.profiles SET id_ipec = 215004443 WHERE id = 11401;
+UPDATE public.profiles SET id_ipec = 215004695 WHERE id = 11402;
+UPDATE public.profiles SET id_ipec = 215004696 WHERE id = 11403;
+UPDATE public.profiles SET id_ipec = 215004697 WHERE id = 11404;
+UPDATE public.profiles SET id_ipec = 215004698 WHERE id = 11405;
+UPDATE public.profiles SET id_ipec = 215004699 WHERE id = 11406;
+UPDATE public.profiles SET id_ipec = 215004893 WHERE id = 11407;
+UPDATE public.profiles SET id_ipec = 215004900 WHERE id = 11408;
+UPDATE public.profiles SET id_ipec = 215004902 WHERE id = 11409;
+UPDATE public.profiles SET id_ipec = 215004937 WHERE id = 11410;
+UPDATE public.profiles SET id_ipec = 215004949 WHERE id = 11411;
+UPDATE public.profiles SET id_ipec = 215004950 WHERE id = 11412;
+UPDATE public.profiles SET id_ipec = 215004951 WHERE id = 11413;
+UPDATE public.profiles SET id_ipec = 215004952 WHERE id = 11414;
+UPDATE public.profiles SET id_ipec = 215004953 WHERE id = 11415;
+UPDATE public.profiles SET id_ipec = 215004954 WHERE id = 11416;
+UPDATE public.profiles SET id_ipec = 215004955 WHERE id = 11417;
+UPDATE public.profiles SET id_ipec = 215004956 WHERE id = 11418;
+UPDATE public.profiles SET id_ipec = 215004970 WHERE id = 11419;
+UPDATE public.profiles SET id_ipec = 215004971 WHERE id = 11420;
+UPDATE public.profiles SET id_ipec = 215005197 WHERE id = 11421;
+UPDATE public.profiles SET id_ipec = 215005198 WHERE id = 11422;
+UPDATE public.profiles SET id_ipec = 215005199 WHERE id = 11423;
+UPDATE public.profiles SET id_ipec = 215005200 WHERE id = 11424;
+UPDATE public.profiles SET id_ipec = 215005226 WHERE id = 11425;
+UPDATE public.profiles SET id_ipec = 215005292 WHERE id = 11426;
+UPDATE public.profiles SET id_ipec = 215005293 WHERE id = 11427;
+UPDATE public.profiles SET id_ipec = 215005294 WHERE id = 11428;
+UPDATE public.profiles SET id_ipec = 215005295 WHERE id = 11429;
+UPDATE public.profiles SET id_ipec = 215005307 WHERE id = 11430;
+UPDATE public.profiles SET id_ipec = 215005465 WHERE id = 11431;
+UPDATE public.profiles SET id_ipec = 215005466 WHERE id = 11432;
+UPDATE public.profiles SET id_ipec = 215005468 WHERE id = 11433;
+UPDATE public.profiles SET id_ipec = 215005516 WHERE id = 11434;
+UPDATE public.profiles SET id_ipec = 215005541 WHERE id = 11435;
+UPDATE public.profiles SET id_ipec = 215005589 WHERE id = 11436;
+UPDATE public.profiles SET id_ipec = 215005595 WHERE id = 11437;
+UPDATE public.profiles SET id_ipec = 215005654 WHERE id = 11438;
+UPDATE public.profiles SET id_ipec = 215005655 WHERE id = 11439;
+UPDATE public.profiles SET id_ipec = 215005656 WHERE id = 11440;
+UPDATE public.profiles SET id_ipec = 215005657 WHERE id = 11441;
+UPDATE public.profiles SET id_ipec = 215005658 WHERE id = 11442;
+UPDATE public.profiles SET id_ipec = 215005659 WHERE id = 11443;
+UPDATE public.profiles SET id_ipec = 215005678 WHERE id = 11444;
+UPDATE public.profiles SET id_ipec = 215005775 WHERE id = 11445;
+UPDATE public.profiles SET id_ipec = 215005797 WHERE id = 11446;
+UPDATE public.profiles SET id_ipec = 215006024 WHERE id = 11447;
+UPDATE public.profiles SET id_ipec = 215006048 WHERE id = 11448;
+UPDATE public.profiles SET id_ipec = 215006217 WHERE id = 11449;
+UPDATE public.profiles SET id_ipec = 215006378 WHERE id = 11450;
+UPDATE public.profiles SET id_ipec = 215006379 WHERE id = 11451;
+UPDATE public.profiles SET id_ipec = 215006380 WHERE id = 11452;
+UPDATE public.profiles SET id_ipec = 215006381 WHERE id = 11453;
+UPDATE public.profiles SET id_ipec = 215006828 WHERE id = 11454;
+UPDATE public.profiles SET id_ipec = 215007108 WHERE id = 11455;
+UPDATE public.profiles SET id_ipec = 215007208 WHERE id = 11456;
+UPDATE public.profiles SET id_ipec = 215007209 WHERE id = 11457;
+UPDATE public.profiles SET id_ipec = 215007210 WHERE id = 11458;
+UPDATE public.profiles SET id_ipec = 215007300 WHERE id = 11459;
+UPDATE public.profiles SET id_ipec = 215007386 WHERE id = 11460;
+UPDATE public.profiles SET id_ipec = 215007406 WHERE id = 11461;
+UPDATE public.profiles SET id_ipec = 215007481 WHERE id = 11462;
+UPDATE public.profiles SET id_ipec = 215007482 WHERE id = 11463;
+UPDATE public.profiles SET id_ipec = 215007483 WHERE id = 11464;
+UPDATE public.profiles SET id_ipec = 215007490 WHERE id = 11465;
+UPDATE public.profiles SET id_ipec = 215007569 WHERE id = 11466;
+UPDATE public.profiles SET id_ipec = 215007732 WHERE id = 11467;
+UPDATE public.profiles SET id_ipec = 215007741 WHERE id = 11468;
+UPDATE public.profiles SET id_ipec = 215007742 WHERE id = 11469;
+UPDATE public.profiles SET id_ipec = 215007743 WHERE id = 11470;
+UPDATE public.profiles SET id_ipec = 215007744 WHERE id = 11471;
+UPDATE public.profiles SET id_ipec = 215007745 WHERE id = 11472;
+UPDATE public.profiles SET id_ipec = 215007746 WHERE id = 11473;
+UPDATE public.profiles SET id_ipec = 215007750 WHERE id = 11474;
+UPDATE public.profiles SET id_ipec = 215008119 WHERE id = 11475;
+UPDATE public.profiles SET id_ipec = 215008144 WHERE id = 11476;
+UPDATE public.profiles SET id_ipec = 215008660 WHERE id = 11477;
+UPDATE public.profiles SET id_ipec = 215008726 WHERE id = 11478;
+UPDATE public.profiles SET id_ipec = 215008727 WHERE id = 11479;
+UPDATE public.profiles SET id_ipec = 215008728 WHERE id = 11480;
+UPDATE public.profiles SET id_ipec = 215008729 WHERE id = 11481;
+UPDATE public.profiles SET id_ipec = 215008730 WHERE id = 11482;
+UPDATE public.profiles SET id_ipec = 215008731 WHERE id = 11483;
+UPDATE public.profiles SET id_ipec = 215008747 WHERE id = 11484;
+UPDATE public.profiles SET id_ipec = 215008748 WHERE id = 11485;
+UPDATE public.profiles SET id_ipec = 215008749 WHERE id = 11486;
+UPDATE public.profiles SET id_ipec = 215008750 WHERE id = 11487;
+UPDATE public.profiles SET id_ipec = 215008908 WHERE id = 11488;
+UPDATE public.profiles SET id_ipec = 215009108 WHERE id = 11489;
+UPDATE public.profiles SET id_ipec = 215009137 WHERE id = 11490;
+UPDATE public.profiles SET id_ipec = 215009224 WHERE id = 11491;
+UPDATE public.profiles SET id_ipec = 215009246 WHERE id = 11492;
+UPDATE public.profiles SET id_ipec = 215009247 WHERE id = 11493;
+UPDATE public.profiles SET id_ipec = 215009248 WHERE id = 11494;
+UPDATE public.profiles SET id_ipec = 215009249 WHERE id = 11495;
+UPDATE public.profiles SET id_ipec = 215009250 WHERE id = 11496;
+UPDATE public.profiles SET id_ipec = 215009286 WHERE id = 11497;
+UPDATE public.profiles SET id_ipec = 215009340 WHERE id = 11498;
+UPDATE public.profiles SET id_ipec = 215009341 WHERE id = 11499;
+UPDATE public.profiles SET id_ipec = 215009343 WHERE id = 11500;
+UPDATE public.profiles SET id_ipec = 215009822 WHERE id = 11501;
+UPDATE public.profiles SET id_ipec = 215009881 WHERE id = 11502;
+UPDATE public.profiles SET id_ipec = 215010403 WHERE id = 11503;
+UPDATE public.profiles SET id_ipec = 215010920 WHERE id = 11504;
+UPDATE public.profiles SET id_ipec = 215010948 WHERE id = 11505;
+UPDATE public.profiles SET id_ipec = 215010949 WHERE id = 11506;
+UPDATE public.profiles SET id_ipec = 215010958 WHERE id = 11507;
+UPDATE public.profiles SET id_ipec = 215010989 WHERE id = 11508;
+UPDATE public.profiles SET id_ipec = 215010990 WHERE id = 11509;
+UPDATE public.profiles SET id_ipec = 215010991 WHERE id = 11510;
+UPDATE public.profiles SET id_ipec = 215010992 WHERE id = 11511;
+UPDATE public.profiles SET id_ipec = 215010993 WHERE id = 11512;
+UPDATE public.profiles SET id_ipec = 215010994 WHERE id = 11513;
+UPDATE public.profiles SET id_ipec = 215011365 WHERE id = 11514;
+UPDATE public.profiles SET id_ipec = 215011635 WHERE id = 11515;
+UPDATE public.profiles SET id_ipec = 215011636 WHERE id = 11516;
+UPDATE public.profiles SET id_ipec = 215011637 WHERE id = 11517;
+UPDATE public.profiles SET id_ipec = 215011638 WHERE id = 11518;
+UPDATE public.profiles SET id_ipec = 215011639 WHERE id = 11519;
+UPDATE public.profiles SET id_ipec = 215011640 WHERE id = 11520;
+UPDATE public.profiles SET id_ipec = 215011747 WHERE id = 11521;
+UPDATE public.profiles SET id_ipec = 215011821 WHERE id = 11522;
+UPDATE public.profiles SET id_ipec = 215011822 WHERE id = 11523;
+UPDATE public.profiles SET id_ipec = 215011823 WHERE id = 11524;
+UPDATE public.profiles SET id_ipec = 215012177 WHERE id = 11525;
+UPDATE public.profiles SET id_ipec = 215012238 WHERE id = 11526;
+UPDATE public.profiles SET id_ipec = 215012239 WHERE id = 11527;
+UPDATE public.profiles SET id_ipec = 215012240 WHERE id = 11528;
+UPDATE public.profiles SET id_ipec = 215012241 WHERE id = 11529;
+UPDATE public.profiles SET id_ipec = 215012243 WHERE id = 11530;
+UPDATE public.profiles SET id_ipec = 215012244 WHERE id = 11531;
+UPDATE public.profiles SET id_ipec = 215012245 WHERE id = 11532;
+UPDATE public.profiles SET id_ipec = 215012254 WHERE id = 11533;
+UPDATE public.profiles SET id_ipec = 215012349 WHERE id = 11534;
+UPDATE public.profiles SET id_ipec = 215012728 WHERE id = 11535;
+UPDATE public.profiles SET id_ipec = 215012729 WHERE id = 11536;
+UPDATE public.profiles SET id_ipec = 215012730 WHERE id = 11537;
+UPDATE public.profiles SET id_ipec = 215012868 WHERE id = 11538;
+UPDATE public.profiles SET id_ipec = 215013740 WHERE id = 11539;
+UPDATE public.profiles SET id_ipec = 215013741 WHERE id = 11540;
+UPDATE public.profiles SET id_ipec = 215013742 WHERE id = 11541;
+UPDATE public.profiles SET id_ipec = 215013743 WHERE id = 11542;
+UPDATE public.profiles SET id_ipec = 215013744 WHERE id = 11543;
+UPDATE public.profiles SET id_ipec = 215013850 WHERE id = 11544;
+UPDATE public.profiles SET id_ipec = 215013851 WHERE id = 11545;
+UPDATE public.profiles SET id_ipec = 215013852 WHERE id = 11546;
+UPDATE public.profiles SET id_ipec = 215013914 WHERE id = 11547;
+UPDATE public.profiles SET id_ipec = 215013915 WHERE id = 11548;
+UPDATE public.profiles SET id_ipec = 215013916 WHERE id = 11549;
+UPDATE public.profiles SET id_ipec = 215015246 WHERE id = 11550;
+UPDATE public.profiles SET id_ipec = 215015247 WHERE id = 11551;
+UPDATE public.profiles SET id_ipec = 215015248 WHERE id = 11552;
+UPDATE public.profiles SET id_ipec = 215015249 WHERE id = 11553;
+UPDATE public.profiles SET id_ipec = 215016817 WHERE id = 11554;
+UPDATE public.profiles SET id_ipec = 215016818 WHERE id = 11555;
+UPDATE public.profiles SET id_ipec = 215022393 WHERE id = 11556;
+UPDATE public.profiles SET id_ipec = 215022394 WHERE id = 11557;
+UPDATE public.profiles SET id_ipec = 215022395 WHERE id = 11558;
+UPDATE public.profiles SET id_ipec = 215022396 WHERE id = 11559;
+UPDATE public.profiles SET id_ipec = 215022397 WHERE id = 11560;
+UPDATE public.profiles SET id_ipec = 215022935 WHERE id = 11561;
+UPDATE public.profiles SET id_ipec = 215022936 WHERE id = 11562;
+UPDATE public.profiles SET id_ipec = 215022937 WHERE id = 11563;
+UPDATE public.profiles SET id_ipec = 215022938 WHERE id = 11564;
+UPDATE public.profiles SET id_ipec = 215022939 WHERE id = 11565;
+UPDATE public.profiles SET id_ipec = 215024943 WHERE id = 11566;
+UPDATE public.profiles SET id_ipec = 215024944 WHERE id = 11567;
+UPDATE public.profiles SET id_ipec = 215024945 WHERE id = 11568;
+UPDATE public.profiles SET id_ipec = 215024946 WHERE id = 11569;
+UPDATE public.profiles SET id_ipec = 215025949 WHERE id = 11570;
+UPDATE public.profiles SET id_ipec = 215026015 WHERE id = 11571;
+UPDATE public.profiles SET id_ipec = 215026302 WHERE id = 11572;
+UPDATE public.profiles SET id_ipec = 215026712 WHERE id = 11573;
+UPDATE public.profiles SET id_ipec = 215026937 WHERE id = 11574;
+UPDATE public.profiles SET id_ipec = 215027983 WHERE id = 11575;
+UPDATE public.profiles SET id_ipec = 215028646 WHERE id = 11576;
+UPDATE public.profiles SET id_ipec = 215028700 WHERE id = 11577;
+UPDATE public.profiles SET id_ipec = 215029141 WHERE id = 11578;
+UPDATE public.profiles SET id_ipec = 215029286 WHERE id = 11579;
+UPDATE public.profiles SET id_ipec = 215029706 WHERE id = 11580;
+UPDATE public.profiles SET id_ipec = 215029956 WHERE id = 11581;
+UPDATE public.profiles SET id_ipec = 215029957 WHERE id = 11582;
+UPDATE public.profiles SET id_ipec = 215029958 WHERE id = 11583;
+UPDATE public.profiles SET id_ipec = 215029959 WHERE id = 11584;
+UPDATE public.profiles SET id_ipec = 215029960 WHERE id = 11585;
+UPDATE public.profiles SET id_ipec = 215030050 WHERE id = 11586;
+UPDATE public.profiles SET id_ipec = 215030452 WHERE id = 11587;
+UPDATE public.profiles SET id_ipec = 215030895 WHERE id = 11588;
+UPDATE public.profiles SET id_ipec = 215031236 WHERE id = 11589;
+UPDATE public.profiles SET id_ipec = 215031444 WHERE id = 11590;
+UPDATE public.profiles SET id_ipec = 215031641 WHERE id = 11591;
+UPDATE public.profiles SET id_ipec = 215031844 WHERE id = 11592;
+UPDATE public.profiles SET id_ipec = 215032482 WHERE id = 11593;
+UPDATE public.profiles SET id_ipec = 215032767 WHERE id = 11594;
+UPDATE public.profiles SET id_ipec = 215033045 WHERE id = 11595;
+UPDATE public.profiles SET id_ipec = 215033131 WHERE id = 11596;
+UPDATE public.profiles SET id_ipec = 215034447 WHERE id = 11597;
+UPDATE public.profiles SET id_ipec = 215034743 WHERE id = 11598;
+UPDATE public.profiles SET id_ipec = 215034744 WHERE id = 11599;
+UPDATE public.profiles SET id_ipec = 215034989 WHERE id = 11600;
+UPDATE public.profiles SET id_ipec = 215035007 WHERE id = 11601;
+UPDATE public.profiles SET id_ipec = 215035124 WHERE id = 11602;
+UPDATE public.profiles SET id_ipec = 215035125 WHERE id = 11603;
+UPDATE public.profiles SET id_ipec = 215035126 WHERE id = 11604;
+UPDATE public.profiles SET id_ipec = 215035472 WHERE id = 11605;
+UPDATE public.profiles SET id_ipec = 215035475 WHERE id = 11606;
+UPDATE public.profiles SET id_ipec = 215035571 WHERE id = 11607;
+UPDATE public.profiles SET id_ipec = 215035573 WHERE id = 11608;
+UPDATE public.profiles SET id_ipec = 215035978 WHERE id = 11609;
+UPDATE public.profiles SET id_ipec = 215035979 WHERE id = 11610;
+UPDATE public.profiles SET id_ipec = 215035980 WHERE id = 11611;
+UPDATE public.profiles SET id_ipec = 215035981 WHERE id = 11612;
+UPDATE public.profiles SET id_ipec = 215036010 WHERE id = 11613;
+UPDATE public.profiles SET id_ipec = 215036011 WHERE id = 11614;
+UPDATE public.profiles SET id_ipec = 215036012 WHERE id = 11615;
+UPDATE public.profiles SET id_ipec = 215036013 WHERE id = 11616;
+UPDATE public.profiles SET id_ipec = 215036014 WHERE id = 11617;
+UPDATE public.profiles SET id_ipec = 215036969 WHERE id = 11618;
+UPDATE public.profiles SET id_ipec = 215036970 WHERE id = 11619;
+UPDATE public.profiles SET id_ipec = 215037644 WHERE id = 11620;
+UPDATE public.profiles SET id_ipec = 215037646 WHERE id = 11621;
+UPDATE public.profiles SET id_ipec = 215037922 WHERE id = 11622;
+UPDATE public.profiles SET id_ipec = 215037923 WHERE id = 11623;
+UPDATE public.profiles SET id_ipec = 215037924 WHERE id = 11624;
+UPDATE public.profiles SET id_ipec = 215037925 WHERE id = 11625;
+UPDATE public.profiles SET id_ipec = 215037926 WHERE id = 11626;
+UPDATE public.profiles SET id_ipec = 215038006 WHERE id = 11627;
+UPDATE public.profiles SET id_ipec = 215038051 WHERE id = 11628;
+UPDATE public.profiles SET id_ipec = 215038052 WHERE id = 11629;
+UPDATE public.profiles SET id_ipec = 215038626 WHERE id = 11630;
+UPDATE public.profiles SET id_ipec = 215038974 WHERE id = 11631;
+UPDATE public.profiles SET id_ipec = 215038975 WHERE id = 11632;
+UPDATE public.profiles SET id_ipec = 215039023 WHERE id = 11633;
+UPDATE public.profiles SET id_ipec = 215039024 WHERE id = 11634;
+UPDATE public.profiles SET id_ipec = 215039025 WHERE id = 11635;
+UPDATE public.profiles SET id_ipec = 215039147 WHERE id = 11636;
+UPDATE public.profiles SET id_ipec = 215039491 WHERE id = 11637;
+UPDATE public.profiles SET id_ipec = 215039492 WHERE id = 11638;
+UPDATE public.profiles SET id_ipec = 215039668 WHERE id = 11639;
+UPDATE public.profiles SET id_ipec = 215040115 WHERE id = 11640;
+UPDATE public.profiles SET id_ipec = 215040116 WHERE id = 11641;
+UPDATE public.profiles SET id_ipec = 215040369 WHERE id = 11642;
+UPDATE public.profiles SET id_ipec = 215040528 WHERE id = 11643;
+UPDATE public.profiles SET id_ipec = 215040529 WHERE id = 11644;
+UPDATE public.profiles SET id_ipec = 215040530 WHERE id = 11645;
+UPDATE public.profiles SET id_ipec = 215040531 WHERE id = 11646;
+UPDATE public.profiles SET id_ipec = 215040543 WHERE id = 11647;
+UPDATE public.profiles SET id_ipec = 215040577 WHERE id = 11648;
+UPDATE public.profiles SET id_ipec = 215040967 WHERE id = 11649;
+UPDATE public.profiles SET id_ipec = 215041027 WHERE id = 11650;
+UPDATE public.profiles SET id_ipec = 215041028 WHERE id = 11651;
+UPDATE public.profiles SET id_ipec = 215041039 WHERE id = 11652;
+UPDATE public.profiles SET id_ipec = 215041040 WHERE id = 11653;
+UPDATE public.profiles SET id_ipec = 215041041 WHERE id = 11654;
+UPDATE public.profiles SET id_ipec = 215041042 WHERE id = 11655;
+UPDATE public.profiles SET id_ipec = 215041137 WHERE id = 11656;
+UPDATE public.profiles SET id_ipec = 215041138 WHERE id = 11657;
+UPDATE public.profiles SET id_ipec = 215041139 WHERE id = 11658;
+UPDATE public.profiles SET id_ipec = 215041160 WHERE id = 11659;
+UPDATE public.profiles SET id_ipec = 215041161 WHERE id = 11660;
+UPDATE public.profiles SET id_ipec = 215041162 WHERE id = 11661;
+UPDATE public.profiles SET id_ipec = 215041163 WHERE id = 11662;
+UPDATE public.profiles SET id_ipec = 215041368 WHERE id = 11663;
+UPDATE public.profiles SET id_ipec = 215041879 WHERE id = 11664;
+UPDATE public.profiles SET id_ipec = 215041888 WHERE id = 11665;
+UPDATE public.profiles SET id_ipec = 215042378 WHERE id = 11666;
+UPDATE public.profiles SET id_ipec = 215042471 WHERE id = 11667;
+UPDATE public.profiles SET id_ipec = 215042472 WHERE id = 11668;
+UPDATE public.profiles SET id_ipec = 215043086 WHERE id = 11669;
+UPDATE public.profiles SET id_ipec = 215043087 WHERE id = 11670;
+UPDATE public.profiles SET id_ipec = 215043088 WHERE id = 11671;
+UPDATE public.profiles SET id_ipec = 215043089 WHERE id = 11672;
+UPDATE public.profiles SET id_ipec = 215043090 WHERE id = 11673;
+UPDATE public.profiles SET id_ipec = 215043119 WHERE id = 11674;
+UPDATE public.profiles SET id_ipec = 215043190 WHERE id = 11675;
+UPDATE public.profiles SET id_ipec = 215043271 WHERE id = 11676;
+UPDATE public.profiles SET id_ipec = 215043902 WHERE id = 11677;
+UPDATE public.profiles SET id_ipec = 215044290 WHERE id = 11678;
+UPDATE public.profiles SET id_ipec = 215044410 WHERE id = 11679;
+UPDATE public.profiles SET id_ipec = 215044411 WHERE id = 11680;
+UPDATE public.profiles SET id_ipec = 215044549 WHERE id = 11681;
+UPDATE public.profiles SET id_ipec = 215044759 WHERE id = 11682;
+UPDATE public.profiles SET id_ipec = 215044760 WHERE id = 11683;
+UPDATE public.profiles SET id_ipec = 215044761 WHERE id = 11684;
+UPDATE public.profiles SET id_ipec = 215044762 WHERE id = 11685;
+UPDATE public.profiles SET id_ipec = 215045135 WHERE id = 11686;
+UPDATE public.profiles SET id_ipec = 215045136 WHERE id = 11687;
+UPDATE public.profiles SET id_ipec = 215045137 WHERE id = 11688;
+UPDATE public.profiles SET id_ipec = 215045234 WHERE id = 11689;
+UPDATE public.profiles SET id_ipec = 215045941 WHERE id = 11690;
+UPDATE public.profiles SET id_ipec = 215045942 WHERE id = 11691;
+UPDATE public.profiles SET id_ipec = 215045943 WHERE id = 11692;
+UPDATE public.profiles SET id_ipec = 215045944 WHERE id = 11693;
+UPDATE public.profiles SET id_ipec = 215045962 WHERE id = 11694;
+UPDATE public.profiles SET id_ipec = 215046175 WHERE id = 11695;
+UPDATE public.profiles SET id_ipec = 215046176 WHERE id = 11696;
+UPDATE public.profiles SET id_ipec = 215046186 WHERE id = 11697;
+UPDATE public.profiles SET id_ipec = 215046187 WHERE id = 11698;
+UPDATE public.profiles SET id_ipec = 215046221 WHERE id = 11699;
+UPDATE public.profiles SET id_ipec = 215046318 WHERE id = 11700;
+UPDATE public.profiles SET id_ipec = 215046355 WHERE id = 11701;
+UPDATE public.profiles SET id_ipec = 215046698 WHERE id = 11702;
+UPDATE public.profiles SET id_ipec = 215046699 WHERE id = 11703;
+UPDATE public.profiles SET id_ipec = 215046700 WHERE id = 11704;
+UPDATE public.profiles SET id_ipec = 215046738 WHERE id = 11705;
+UPDATE public.profiles SET id_ipec = 215047711 WHERE id = 11706;
+UPDATE public.profiles SET id_ipec = 215047712 WHERE id = 11707;
+UPDATE public.profiles SET id_ipec = 215047713 WHERE id = 11708;
+UPDATE public.profiles SET id_ipec = 215047730 WHERE id = 11709;
+UPDATE public.profiles SET id_ipec = 215048189 WHERE id = 11710;
+UPDATE public.profiles SET id_ipec = 215048190 WHERE id = 11711;
+UPDATE public.profiles SET id_ipec = 215048191 WHERE id = 11712;
+UPDATE public.profiles SET id_ipec = 215048473 WHERE id = 11713;
+UPDATE public.profiles SET id_ipec = 215049280 WHERE id = 11714;
+UPDATE public.profiles SET id_ipec = 215049281 WHERE id = 11715;
+UPDATE public.profiles SET id_ipec = 215049353 WHERE id = 11716;
+UPDATE public.profiles SET id_ipec = 215049467 WHERE id = 11717;
+UPDATE public.profiles SET id_ipec = 215049468 WHERE id = 11718;
+UPDATE public.profiles SET id_ipec = 215049584 WHERE id = 11719;
+UPDATE public.profiles SET id_ipec = 215049763 WHERE id = 11720;
+UPDATE public.profiles SET id_ipec = 215049834 WHERE id = 11721;
+UPDATE public.profiles SET id_ipec = 215050145 WHERE id = 11722;
+UPDATE public.profiles SET id_ipec = 215050166 WHERE id = 11723;
+UPDATE public.profiles SET id_ipec = 215050167 WHERE id = 11724;
+UPDATE public.profiles SET id_ipec = 215050197 WHERE id = 11725;
+UPDATE public.profiles SET id_ipec = 215050466 WHERE id = 11726;
+UPDATE public.profiles SET id_ipec = 215050491 WHERE id = 11727;
+UPDATE public.profiles SET id_ipec = 215050740 WHERE id = 11728;
+UPDATE public.profiles SET id_ipec = 215050956 WHERE id = 11729;
+UPDATE public.profiles SET id_ipec = 215050957 WHERE id = 11730;
+UPDATE public.profiles SET id_ipec = 215050958 WHERE id = 11731;
+UPDATE public.profiles SET id_ipec = 215050959 WHERE id = 11732;
+UPDATE public.profiles SET id_ipec = 215051473 WHERE id = 11733;
+UPDATE public.profiles SET id_ipec = 215051513 WHERE id = 11734;
+UPDATE public.profiles SET id_ipec = 215051707 WHERE id = 11735;
+UPDATE public.profiles SET id_ipec = 215053153 WHERE id = 11736;
+UPDATE public.profiles SET id_ipec = 215053154 WHERE id = 11737;
+UPDATE public.profiles SET id_ipec = 215053155 WHERE id = 11738;
+UPDATE public.profiles SET id_ipec = 215053189 WHERE id = 11739;
+UPDATE public.profiles SET id_ipec = 215053286 WHERE id = 11740;
+UPDATE public.profiles SET id_ipec = 215053287 WHERE id = 11741;
+UPDATE public.profiles SET id_ipec = 215053724 WHERE id = 11742;
+UPDATE public.profiles SET id_ipec = 215053994 WHERE id = 11743;
+UPDATE public.profiles SET id_ipec = 215054082 WHERE id = 11744;
+UPDATE public.profiles SET id_ipec = 215054219 WHERE id = 11745;
+UPDATE public.profiles SET id_ipec = 215054883 WHERE id = 11746;
+UPDATE public.profiles SET id_ipec = 215055114 WHERE id = 11747;
+UPDATE public.profiles SET id_ipec = 215055115 WHERE id = 11748;
+UPDATE public.profiles SET id_ipec = 215055497 WHERE id = 11749;
+UPDATE public.profiles SET id_ipec = 215055740 WHERE id = 11750;
+UPDATE public.profiles SET id_ipec = 215055741 WHERE id = 11751;
+UPDATE public.profiles SET id_ipec = 215055806 WHERE id = 11752;
+UPDATE public.profiles SET id_ipec = 215056125 WHERE id = 11753;
+UPDATE public.profiles SET id_ipec = 215056126 WHERE id = 11754;
+UPDATE public.profiles SET id_ipec = 215056127 WHERE id = 11755;
+UPDATE public.profiles SET id_ipec = 215056128 WHERE id = 11756;
+UPDATE public.profiles SET id_ipec = 215056129 WHERE id = 11757;
+UPDATE public.profiles SET id_ipec = 215056696 WHERE id = 11758;
+UPDATE public.profiles SET id_ipec = 215056697 WHERE id = 11759;
+UPDATE public.profiles SET id_ipec = 215056698 WHERE id = 11760;
+UPDATE public.profiles SET id_ipec = 215056699 WHERE id = 11761;
+UPDATE public.profiles SET id_ipec = 215056700 WHERE id = 11762;
+UPDATE public.profiles SET id_ipec = 215056701 WHERE id = 11763;
+UPDATE public.profiles SET id_ipec = 215056702 WHERE id = 11764;
+UPDATE public.profiles SET id_ipec = 215056703 WHERE id = 11765;
+UPDATE public.profiles SET id_ipec = 215057524 WHERE id = 11766;
+UPDATE public.profiles SET id_ipec = 215057591 WHERE id = 11767;
+UPDATE public.profiles SET id_ipec = 215057734 WHERE id = 11768;
+UPDATE public.profiles SET id_ipec = 215057735 WHERE id = 11769;
+UPDATE public.profiles SET id_ipec = 215057736 WHERE id = 11770;
+UPDATE public.profiles SET id_ipec = 215057737 WHERE id = 11771;
+UPDATE public.profiles SET id_ipec = 215057738 WHERE id = 11772;
+UPDATE public.profiles SET id_ipec = 215057739 WHERE id = 11773;
+UPDATE public.profiles SET id_ipec = 215057740 WHERE id = 11774;
+UPDATE public.profiles SET id_ipec = 215057741 WHERE id = 11775;
+UPDATE public.profiles SET id_ipec = 215058159 WHERE id = 11776;
+UPDATE public.profiles SET id_ipec = 215058160 WHERE id = 11777;
+UPDATE public.profiles SET id_ipec = 215058234 WHERE id = 11778;
+UPDATE public.profiles SET id_ipec = 215058235 WHERE id = 11779;
+UPDATE public.profiles SET id_ipec = 215058236 WHERE id = 11780;
+UPDATE public.profiles SET id_ipec = 215058237 WHERE id = 11781;
+UPDATE public.profiles SET id_ipec = 215058238 WHERE id = 11782;
+UPDATE public.profiles SET id_ipec = 215058239 WHERE id = 11783;
+UPDATE public.profiles SET id_ipec = 215058426 WHERE id = 11784;
+UPDATE public.profiles SET id_ipec = 215058427 WHERE id = 11785;
+UPDATE public.profiles SET id_ipec = 215058428 WHERE id = 11786;
+UPDATE public.profiles SET id_ipec = 215058429 WHERE id = 11787;
+UPDATE public.profiles SET id_ipec = 215058430 WHERE id = 11788;
+UPDATE public.profiles SET id_ipec = 215058431 WHERE id = 11789;
+UPDATE public.profiles SET id_ipec = 215058695 WHERE id = 11790;
+UPDATE public.profiles SET id_ipec = 215058832 WHERE id = 11791;
+UPDATE public.profiles SET id_ipec = 215058912 WHERE id = 11792;
+UPDATE public.profiles SET id_ipec = 215059514 WHERE id = 11793;
+UPDATE public.profiles SET id_ipec = 215059515 WHERE id = 11794;
+UPDATE public.profiles SET id_ipec = 215059516 WHERE id = 11795;
+UPDATE public.profiles SET id_ipec = 215059517 WHERE id = 11796;
+UPDATE public.profiles SET id_ipec = 215059518 WHERE id = 11797;
+UPDATE public.profiles SET id_ipec = 215059566 WHERE id = 11798;
+UPDATE public.profiles SET id_ipec = 215060449 WHERE id = 11799;
+UPDATE public.profiles SET id_ipec = 215060450 WHERE id = 11800;
+UPDATE public.profiles SET id_ipec = 215060628 WHERE id = 11801;
+UPDATE public.profiles SET id_ipec = 215061800 WHERE id = 11802;
+UPDATE public.profiles SET id_ipec = 215062073 WHERE id = 11803;
+UPDATE public.profiles SET id_ipec = 215068181 WHERE id = 11804;
+UPDATE public.profiles SET id_ipec = 215068182 WHERE id = 11805;
+UPDATE public.profiles SET id_ipec = 215068183 WHERE id = 11806;
+UPDATE public.profiles SET id_ipec = 215068184 WHERE id = 11807;
+UPDATE public.profiles SET id_ipec = 215076953 WHERE id = 11808;
+UPDATE public.profiles SET id_ipec = 215076954 WHERE id = 11809;
+UPDATE public.profiles SET id_ipec = 215076955 WHERE id = 11810;
+UPDATE public.profiles SET id_ipec = 215076956 WHERE id = 11811;
+UPDATE public.profiles SET id_ipec = 215078548 WHERE id = 11812;
+UPDATE public.profiles SET id_ipec = 215078836 WHERE id = 11813;
+UPDATE public.profiles SET id_ipec = 215081796 WHERE id = 11814;
+UPDATE public.profiles SET id_ipec = 215082142 WHERE id = 11815;
+UPDATE public.profiles SET id_ipec = 215082143 WHERE id = 11816;
+UPDATE public.profiles SET id_ipec = 215082335 WHERE id = 11817;
+UPDATE public.profiles SET id_ipec = 215082344 WHERE id = 11818;
+UPDATE public.profiles SET id_ipec = 215082383 WHERE id = 11819;
+UPDATE public.profiles SET id_ipec = 215083328 WHERE id = 11820;
+UPDATE public.profiles SET id_ipec = 215083524 WHERE id = 11821;
+UPDATE public.profiles SET id_ipec = 215083767 WHERE id = 11822;
+UPDATE public.profiles SET id_ipec = 215086774 WHERE id = 11823;
+UPDATE public.profiles SET id_ipec = 215087008 WHERE id = 11824;
+UPDATE public.profiles SET id_ipec = 215087206 WHERE id = 11825;
+UPDATE public.profiles SET id_ipec = 215087207 WHERE id = 11826;
+UPDATE public.profiles SET id_ipec = 215087208 WHERE id = 11827;
+UPDATE public.profiles SET id_ipec = 215087502 WHERE id = 11828;
+UPDATE public.profiles SET id_ipec = 215088186 WHERE id = 11829;
+UPDATE public.profiles SET id_ipec = 215088645 WHERE id = 11830;
+UPDATE public.profiles SET id_ipec = 215089211 WHERE id = 11831;
+UPDATE public.profiles SET id_ipec = 215089635 WHERE id = 11832;
+UPDATE public.profiles SET id_ipec = 215090041 WHERE id = 11833;
+UPDATE public.profiles SET id_ipec = 215090708 WHERE id = 11834;
+UPDATE public.profiles SET id_ipec = 215091435 WHERE id = 11835;
+UPDATE public.profiles SET id_ipec = 215091686 WHERE id = 11836;
+UPDATE public.profiles SET id_ipec = 215091885 WHERE id = 11837;
+UPDATE public.profiles SET id_ipec = 215092391 WHERE id = 11838;
+UPDATE public.profiles SET id_ipec = 215093352 WHERE id = 11839;
+UPDATE public.profiles SET id_ipec = 215093353 WHERE id = 11840;
+UPDATE public.profiles SET id_ipec = 215093516 WHERE id = 11841;
+UPDATE public.profiles SET id_ipec = 215093517 WHERE id = 11842;
+UPDATE public.profiles SET id_ipec = 215093518 WHERE id = 11843;
+UPDATE public.profiles SET id_ipec = 215093519 WHERE id = 11844;
+UPDATE public.profiles SET id_ipec = 215093520 WHERE id = 11845;
+UPDATE public.profiles SET id_ipec = 215093601 WHERE id = 11846;
+UPDATE public.profiles SET id_ipec = 215093613 WHERE id = 11847;
+UPDATE public.profiles SET id_ipec = 215093614 WHERE id = 11848;
+UPDATE public.profiles SET id_ipec = 215094007 WHERE id = 11849;
+UPDATE public.profiles SET id_ipec = 215094531 WHERE id = 11850;
+UPDATE public.profiles SET id_ipec = 215094532 WHERE id = 11851;
+UPDATE public.profiles SET id_ipec = 215094533 WHERE id = 11852;
+UPDATE public.profiles SET id_ipec = 215094534 WHERE id = 11853;
+UPDATE public.profiles SET id_ipec = 215095080 WHERE id = 11854;
+UPDATE public.profiles SET id_ipec = 215095349 WHERE id = 11855;
+UPDATE public.profiles SET id_ipec = 215095350 WHERE id = 11856;
+UPDATE public.profiles SET id_ipec = 215095351 WHERE id = 11857;
+UPDATE public.profiles SET id_ipec = 215095352 WHERE id = 11858;
+UPDATE public.profiles SET id_ipec = 215095368 WHERE id = 11859;
+UPDATE public.profiles SET id_ipec = 215095428 WHERE id = 11860;
+UPDATE public.profiles SET id_ipec = 215095534 WHERE id = 11861;
+UPDATE public.profiles SET id_ipec = 215096230 WHERE id = 11862;
+UPDATE public.profiles SET id_ipec = 215096238 WHERE id = 11863;
+UPDATE public.profiles SET id_ipec = 215096326 WHERE id = 11864;
+UPDATE public.profiles SET id_ipec = 215096338 WHERE id = 11865;
+UPDATE public.profiles SET id_ipec = 215096339 WHERE id = 11866;
+UPDATE public.profiles SET id_ipec = 215096340 WHERE id = 11867;
+UPDATE public.profiles SET id_ipec = 215096377 WHERE id = 11868;
+UPDATE public.profiles SET id_ipec = 215096906 WHERE id = 11869;
+UPDATE public.profiles SET id_ipec = 215096907 WHERE id = 11870;
+UPDATE public.profiles SET id_ipec = 215097425 WHERE id = 11871;
+UPDATE public.profiles SET id_ipec = 215098501 WHERE id = 11872;
+UPDATE public.profiles SET id_ipec = 215098690 WHERE id = 11873;
+UPDATE public.profiles SET id_ipec = 215099162 WHERE id = 11874;
+UPDATE public.profiles SET id_ipec = 215099163 WHERE id = 11875;
+UPDATE public.profiles SET id_ipec = 215099164 WHERE id = 11876;
+UPDATE public.profiles SET id_ipec = 215099165 WHERE id = 11877;
+UPDATE public.profiles SET id_ipec = 215099226 WHERE id = 11878;
+UPDATE public.profiles SET id_ipec = 215099227 WHERE id = 11879;
+UPDATE public.profiles SET id_ipec = 215099228 WHERE id = 11880;
+UPDATE public.profiles SET id_ipec = 215099459 WHERE id = 11881;
+UPDATE public.profiles SET id_ipec = 215099460 WHERE id = 11882;
+UPDATE public.profiles SET id_ipec = 215099461 WHERE id = 11883;
+UPDATE public.profiles SET id_ipec = 215099462 WHERE id = 11884;
+UPDATE public.profiles SET id_ipec = 215099463 WHERE id = 11885;
+UPDATE public.profiles SET id_ipec = 215100076 WHERE id = 11886;
+UPDATE public.profiles SET id_ipec = 215100585 WHERE id = 11887;
+UPDATE public.profiles SET id_ipec = 215100817 WHERE id = 11888;
+UPDATE public.profiles SET id_ipec = 215101008 WHERE id = 11889;
+UPDATE public.profiles SET id_ipec = 215101009 WHERE id = 11890;
+UPDATE public.profiles SET id_ipec = 215101010 WHERE id = 11891;
+UPDATE public.profiles SET id_ipec = 215101011 WHERE id = 11892;
+UPDATE public.profiles SET id_ipec = 215101331 WHERE id = 11893;
+UPDATE public.profiles SET id_ipec = 215101578 WHERE id = 11894;
+UPDATE public.profiles SET id_ipec = 215102477 WHERE id = 11895;
+UPDATE public.profiles SET id_ipec = 215102478 WHERE id = 11896;
+UPDATE public.profiles SET id_ipec = 215103192 WHERE id = 11897;
+UPDATE public.profiles SET id_ipec = 215103193 WHERE id = 11898;
+UPDATE public.profiles SET id_ipec = 215103194 WHERE id = 11899;
+UPDATE public.profiles SET id_ipec = 215103195 WHERE id = 11900;
+UPDATE public.profiles SET id_ipec = 215103392 WHERE id = 11901;
+UPDATE public.profiles SET id_ipec = 215106753 WHERE id = 11902;
+UPDATE public.profiles SET id_ipec = 215106754 WHERE id = 11903;
+UPDATE public.profiles SET id_ipec = 215106755 WHERE id = 11904;
+UPDATE public.profiles SET id_ipec = 215106756 WHERE id = 11905;
+UPDATE public.profiles SET id_ipec = 215106757 WHERE id = 11906;
+UPDATE public.profiles SET id_ipec = 215107722 WHERE id = 11907;
+UPDATE public.profiles SET id_ipec = 215118552 WHERE id = 11908;
+UPDATE public.profiles SET id_ipec = 215119119 WHERE id = 11909;
+UPDATE public.profiles SET id_ipec = 215119388 WHERE id = 11910;
+UPDATE public.profiles SET id_ipec = 215119729 WHERE id = 11911;
+UPDATE public.profiles SET id_ipec = 215119989 WHERE id = 11912;
+UPDATE public.profiles SET id_ipec = 215120714 WHERE id = 11913;
+UPDATE public.profiles SET id_ipec = 215120932 WHERE id = 11914;
+UPDATE public.profiles SET id_ipec = 215121066 WHERE id = 11915;
+UPDATE public.profiles SET id_ipec = 215121310 WHERE id = 11916;
+UPDATE public.profiles SET id_ipec = 215122775 WHERE id = 11917;
+UPDATE public.profiles SET id_ipec = 215123288 WHERE id = 11918;
+UPDATE public.profiles SET id_ipec = 215123386 WHERE id = 11919;
+UPDATE public.profiles SET id_ipec = 215124351 WHERE id = 11920;
+UPDATE public.profiles SET id_ipec = 215124984 WHERE id = 11921;
+UPDATE public.profiles SET id_ipec = 215124985 WHERE id = 11922;
+UPDATE public.profiles SET id_ipec = 215126090 WHERE id = 11923;
+UPDATE public.profiles SET id_ipec = 215126517 WHERE id = 11924;
+UPDATE public.profiles SET id_ipec = 215126767 WHERE id = 11925;
+UPDATE public.profiles SET id_ipec = 215127383 WHERE id = 11926;
+UPDATE public.profiles SET id_ipec = 215129810 WHERE id = 11927;
+UPDATE public.profiles SET id_ipec = 215129986 WHERE id = 11928;
+UPDATE public.profiles SET id_ipec = 215130808 WHERE id = 11929;
+UPDATE public.profiles SET id_ipec = 215130975 WHERE id = 11930;
+UPDATE public.profiles SET id_ipec = 215130976 WHERE id = 11931;
+UPDATE public.profiles SET id_ipec = 215133446 WHERE id = 11932;
+UPDATE public.profiles SET id_ipec = 215133611 WHERE id = 11933;
+UPDATE public.profiles SET id_ipec = 215134035 WHERE id = 11934;
+UPDATE public.profiles SET id_ipec = 215134175 WHERE id = 11935;
+UPDATE public.profiles SET id_ipec = 215135850 WHERE id = 11936;
+UPDATE public.profiles SET id_ipec = 215136032 WHERE id = 11937;
+UPDATE public.profiles SET id_ipec = 215137669 WHERE id = 11938;
+UPDATE public.profiles SET id_ipec = 215137750 WHERE id = 11939;
+UPDATE public.profiles SET id_ipec = 215137751 WHERE id = 11940;
+UPDATE public.profiles SET id_ipec = 215137752 WHERE id = 11941;
+UPDATE public.profiles SET id_ipec = 215137753 WHERE id = 11942;
+UPDATE public.profiles SET id_ipec = 215138862 WHERE id = 11943;
+UPDATE public.profiles SET id_ipec = 215138863 WHERE id = 11944;
+UPDATE public.profiles SET id_ipec = 215138864 WHERE id = 11945;
+UPDATE public.profiles SET id_ipec = 215138865 WHERE id = 11946;
+UPDATE public.profiles SET id_ipec = 215138963 WHERE id = 11947;
+UPDATE public.profiles SET id_ipec = 215138964 WHERE id = 11948;
+UPDATE public.profiles SET id_ipec = 215138965 WHERE id = 11949;
+UPDATE public.profiles SET id_ipec = 215138966 WHERE id = 11950;
+UPDATE public.profiles SET id_ipec = 215138984 WHERE id = 11951;
+UPDATE public.profiles SET id_ipec = 215139060 WHERE id = 11952;
+UPDATE public.profiles SET id_ipec = 215139061 WHERE id = 11953;
+UPDATE public.profiles SET id_ipec = 215139062 WHERE id = 11954;
+UPDATE public.profiles SET id_ipec = 215139828 WHERE id = 11955;
+UPDATE public.profiles SET id_ipec = 215139829 WHERE id = 11956;
+UPDATE public.profiles SET id_ipec = 215139830 WHERE id = 11957;
+UPDATE public.profiles SET id_ipec = 215139831 WHERE id = 11958;
+UPDATE public.profiles SET id_ipec = 215139964 WHERE id = 11959;
+UPDATE public.profiles SET id_ipec = 215139966 WHERE id = 11960;
+UPDATE public.profiles SET id_ipec = 215139978 WHERE id = 11961;
+UPDATE public.profiles SET id_ipec = 215139979 WHERE id = 11962;
+UPDATE public.profiles SET id_ipec = 215139980 WHERE id = 11963;
+UPDATE public.profiles SET id_ipec = 215139981 WHERE id = 11964;
+UPDATE public.profiles SET id_ipec = 215140128 WHERE id = 11965;
+UPDATE public.profiles SET id_ipec = 215141057 WHERE id = 11966;
+UPDATE public.profiles SET id_ipec = 215141235 WHERE id = 11967;
+UPDATE public.profiles SET id_ipec = 215143044 WHERE id = 11968;
+UPDATE public.profiles SET id_ipec = 215143045 WHERE id = 11969;
+UPDATE public.profiles SET id_ipec = 215143046 WHERE id = 11970;
+UPDATE public.profiles SET id_ipec = 215144251 WHERE id = 11971;
+UPDATE public.profiles SET id_ipec = 215144406 WHERE id = 11972;
+UPDATE public.profiles SET id_ipec = 215145055 WHERE id = 11973;
+UPDATE public.profiles SET id_ipec = 215145408 WHERE id = 11974;
+UPDATE public.profiles SET id_ipec = 215145589 WHERE id = 11975;
+UPDATE public.profiles SET id_ipec = 215155710 WHERE id = 11976;
+UPDATE public.profiles SET id_ipec = 215157807 WHERE id = 11977;
+UPDATE public.profiles SET id_ipec = 215158437 WHERE id = 11978;
+UPDATE public.profiles SET id_ipec = 215159993 WHERE id = 11979;
+UPDATE public.profiles SET id_ipec = 215160945 WHERE id = 11980;
+UPDATE public.profiles SET id_ipec = 215161540 WHERE id = 11981;
+UPDATE public.profiles SET id_ipec = 215162751 WHERE id = 11982;
+UPDATE public.profiles SET id_ipec = 215164722 WHERE id = 11983;
+UPDATE public.profiles SET id_ipec = 215164723 WHERE id = 11984;
+UPDATE public.profiles SET id_ipec = 215165387 WHERE id = 11985;
+UPDATE public.profiles SET id_ipec = 215168505 WHERE id = 11986;
+UPDATE public.profiles SET id_ipec = 215171773 WHERE id = 11987;
+UPDATE public.profiles SET id_ipec = 215173490 WHERE id = 11988;
+UPDATE public.profiles SET id_ipec = 215176040 WHERE id = 11989;
+UPDATE public.profiles SET id_ipec = 215179224 WHERE id = 11990;
+UPDATE public.profiles SET id_ipec = 215180388 WHERE id = 11991;
+UPDATE public.profiles SET id_ipec = 215180975 WHERE id = 11992;
+UPDATE public.profiles SET id_ipec = 215188658 WHERE id = 11993;
+UPDATE public.profiles SET id_ipec = 215190492 WHERE id = 11994;
+UPDATE public.profiles SET id_ipec = 215191699 WHERE id = 11995;
+UPDATE public.profiles SET id_ipec = 215192730 WHERE id = 11996;
+UPDATE public.profiles SET id_ipec = 215196112 WHERE id = 11997;
+UPDATE public.profiles SET id_ipec = 215196113 WHERE id = 11998;
+UPDATE public.profiles SET id_ipec = 215196114 WHERE id = 11999;
+UPDATE public.profiles SET id_ipec = 215196115 WHERE id = 12000;
+UPDATE public.profiles SET id_ipec = 215200591 WHERE id = 12001;
+UPDATE public.profiles SET id_ipec = 215200592 WHERE id = 12002;
+UPDATE public.profiles SET id_ipec = 215200593 WHERE id = 12003;
+UPDATE public.profiles SET id_ipec = 215201459 WHERE id = 12004;
+UPDATE public.profiles SET id_ipec = 215202628 WHERE id = 12005;
+UPDATE public.profiles SET id_ipec = 215221649 WHERE id = 12006;
+UPDATE public.profiles SET id_ipec = 215223406 WHERE id = 12007;
+UPDATE public.profiles SET id_ipec = 215223407 WHERE id = 12008;
+UPDATE public.profiles SET id_ipec = 215234830 WHERE id = 12009;
+UPDATE public.profiles SET id_ipec = 215268476 WHERE id = 12010;
+UPDATE public.profiles SET id_ipec = 215268477 WHERE id = 12011;
+UPDATE public.profiles SET id_ipec = 215287893 WHERE id = 12012;
+UPDATE public.profiles SET id_ipec = 215287894 WHERE id = 12013;
+UPDATE public.profiles SET id_ipec = 215287895 WHERE id = 12014;
+UPDATE public.profiles SET id_ipec = 215287896 WHERE id = 12015;
+UPDATE public.profiles SET id_ipec = 215289591 WHERE id = 12016;
+UPDATE public.profiles SET id_ipec = 215289592 WHERE id = 12017;
+UPDATE public.profiles SET id_ipec = 215289593 WHERE id = 12018;
+UPDATE public.profiles SET id_ipec = 215289594 WHERE id = 12019;
+UPDATE public.profiles SET id_ipec = 215289595 WHERE id = 12020;
+UPDATE public.profiles SET id_ipec = 215325776 WHERE id = 12021;
+UPDATE public.profiles SET id_ipec = 215325777 WHERE id = 12022;
+UPDATE public.profiles SET id_ipec = 215325778 WHERE id = 12023;
+UPDATE public.profiles SET id_ipec = 215325779 WHERE id = 12024;
+UPDATE public.profiles SET id_ipec = 215326410 WHERE id = 12025;
+UPDATE public.profiles SET id_ipec = 215326411 WHERE id = 12026;
+UPDATE public.profiles SET id_ipec = 215326433 WHERE id = 12027;
+UPDATE public.profiles SET id_ipec = 215326434 WHERE id = 12028;
+UPDATE public.profiles SET id_ipec = 215326435 WHERE id = 12029;
+UPDATE public.profiles SET id_ipec = 215326436 WHERE id = 12030;
+UPDATE public.profiles SET id_ipec = 215328247 WHERE id = 12031;
+UPDATE public.profiles SET id_ipec = 215328248 WHERE id = 12032;
+
+-- Verificar resultado
+SELECT MIN(id_ipec) as min_id_ipec, MAX(id_ipec) as max_id_ipec, COUNT(DISTINCT id_ipec) as unique_count FROM public.profiles;
+-- Script para deixar ativas apenas as perguntas especificadas
+
+-- Primeiro, desativar todas as perguntas
+UPDATE public.questions SET is_active = false;
+
+-- Depois, ativar apenas as perguntas especificadas
+UPDATE public.questions SET is_active = true WHERE code IN (
+    'P01', 'P02A', 'P03', 'P04', 'P05', 'P06', 'P07', 'P08', 'P09', 'P10',
+    'P11', 'P12', 'P13', 'P14', 'P15', 'P16', 'P17', 'P18', 'P19', 'P20',
+    'P21', 'P22', 'P23', 'P24', 'P25', 'P26', 'P27', 'P28', 'P29', 'P30',
+    'P31', 'P32', 'P33', 'P34', 'P35', 'P36', 'P37', 'P38', 'P39', 'P40',
+    'P41', 'P42', 'P43', 'P44', 'P45', 'P46', 'P47', 'P48', 'P49', 'P50',
+    'P51', 'P52', 'P53', 'P115', 'P116', 'P117', 'P118', 'P119', 'P120',
+    'P124', 'P125', 'P126', 'P127', 'P128', 'P129', 'P130', 'P131', 'P132',
+    'P133', 'P134', 'P135', 'P136'
+);
+
+-- Verificar resultado
+SELECT 
+    'Perguntas ativas' as status,
+    COUNT(*) as total
+FROM public.questions 
+WHERE is_active = true;
+
+SELECT 
+    'Perguntas inativas' as status,
+    COUNT(*) as total
+FROM public.questions 
+WHERE is_active = false;
+
+-- Listar perguntas ativas por codigo
+SELECT code, text 
+FROM public.questions 
+WHERE is_active = true 
+ORDER BY code;

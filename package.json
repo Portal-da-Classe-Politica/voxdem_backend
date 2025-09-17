@@ -13,6 +13,7 @@
     "db:seed": "ts-node src/scripts/seed.ts",
     "db:import": "ts-node src/scripts/import-real-data.ts",
     "db:reset": "npm run db:setup && npm run db:test && npm run db:import",
+    "db:migrate-profile": "ts-node src/scripts/migrate-profile-attributes.ts",
     "process-questions": "npm run build && node dist/scripts/process-questions.js",
     "import-data": "npm run build && node dist/scripts/import-data.js",
     "import-direct": "npm run build && node dist/scripts/import-direct.js",
