@@ -15,7 +15,7 @@ export class AnalysisService {
         FROM response_analysis
         WHERE question_code IS NOT NULL 
           AND question_text IS NOT NULL
-          AND is_active = 'true'
+          AND is_active = true
         GROUP BY question_code, question_text, question_order
         ORDER BY question_order
       `);

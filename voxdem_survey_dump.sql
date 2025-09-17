@@ -321312,28 +321312,55 @@ WHERE code IN (
     'P11', 'P12', 'P13', 'P14', 'P15', 'P16', 'P17', 'P18', 'P19', 'P20',
     'P21', 'P22', 'P23', 'P24', 'P25', 'P26', 'P27', 'P28', 'P29', 'P30',
     'P31', 'P32', 'P33', 'P34', 'P35', 'P36', 'P37', 'P38', 'P39', 'P40',
+-- Script direto para ativar apenas perguntas específicas
+-- Execute este script diretamente no banco
+
+BEGIN;
+
+-- 1. Desativar todas as perguntas
+UPDATE questions SET is_active = false;
+
+-- 2. Ativar apenas as perguntas específicas
+UPDATE questions SET is_active = true 
+WHERE code IN (
+    'P01', 'P02A', 'P03', 'P04', 'P05', 'P06', 'P07', 'P08', 'P09', 'P10',
+    'P11', 'P12', 'P13', 'P14', 'P15', 'P16', 'P17', 'P18', 'P19', 'P20',
+    'P21', 'P22', 'P23', 'P24', 'P25', 'P26', 'P27', 'P28', 'P29', 'P30',
+    'P31', 'P32', 'P33', 'P34', 'P35', 'P36', 'P37', 'P38', 'P39', 'P40',
     'P41', 'P42', 'P43', 'P44', 'P45', 'P46', 'P47', 'P48', 'P49', 'P50',
     'P51', 'P52', 'P53', 'P115', 'P116', 'P117', 'P118', 'P119', 'P120',
     'P124', 'P125', 'P126', 'P127', 'P128', 'P129', 'P130', 'P131', 'P132',
     'P133', 'P134', 'P135', 'P136'
 );
 
--- 3. Verificar resultado
+-- 3. Verificar o resultado
 SELECT 
-    COUNT(*) as total_questions,
-    SUM(CASE WHEN is_active THEN 1 ELSE 0 END) as active_questions,
-    SUM(CASE WHEN NOT is_active THEN 1 ELSE 0 END) as inactive_questions
-FROM questions;
+    'Total de perguntas' as tipo,
+    COUNT(*) as quantidade
+FROM questions
+UNION ALL
+SELECT 
+    'Perguntas ativas' as tipo,
+    COUNT(*) as quantidade
+FROM questions 
+WHERE is_active = true
+UNION ALL
+SELECT 
+    'Perguntas inativas' as tipo,
+    COUNT(*) as quantidade
+FROM questions 
+WHERE is_active = false;
 
--- 4. Mostrar as perguntas ativadas
-SELECT code, text, is_active 
+-- 4. Mostrar as perguntas ativas (deve ser 69)
+SELECT 'Perguntas ativadas:' as info;
+SELECT code, LEFT(text, 50) || '...' as text_preview, is_active 
 FROM questions 
 WHERE is_active = true 
-ORDER BY code;
+ORDER BY 
+    CASE 
+        WHEN code ~ '^P[0-9]+$' THEN LPAD(SUBSTRING(code FROM 2), 10, '0')
+        WHEN code ~ '^P[0-9]+[A-Z]$' THEN LPAD(SUBSTRING(code FROM 2 FOR LENGTH(code)-2), 10, '0') || SUBSTRING(code FROM LENGTH(code))
+        ELSE code
+    END;
 
--- 5. Mostrar algumas perguntas desativadas (exemplo)
-SELECT code, text, is_active 
-FROM questions 
-WHERE is_active = false 
-ORDER BY code 
-LIMIT 10;
+COMMIT;
