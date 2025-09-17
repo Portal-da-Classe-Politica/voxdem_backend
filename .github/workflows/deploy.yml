@@ -1,0 +1,104 @@
+name: Deploy VoxDem to UFPR Server
+
+# Trigger deployment only on push to main branch
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔄 Checkout do Código
+        uses: actions/checkout@v3
+
+      - name: 🔑 Configurar SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: 🐳 Build Docker Image
+        run: |
+          # Build da aplicação VoxDem
+          docker build -t voxdem-app:latest .
+          
+          # Salvar imagem como arquivo tar
+          docker save voxdem-app:latest > voxdem-app.tar
+
+      - name: 📦 Transfer files to server
+        run: |
+          # Criar diretório no servidor se não existir
+          ssh root@${{ secrets.SSH_HOST }} "mkdir -p /opt/voxdem"
+          
+          # Transferir arquivos necessários
+          scp voxdem-app.tar root@${{ secrets.SSH_HOST }}:/opt/voxdem/
+          scp docker-compose.prod.yml root@${{ secrets.SSH_HOST }}:/opt/voxdem/
+          scp voxdem_survey_dump.sql root@${{ secrets.SSH_HOST }}:/opt/voxdem/
+          scp .env.production root@${{ secrets.SSH_HOST }}:/opt/voxdem/
+
+      - name: 🚀 Deploy VoxDem no servidor
+        run: |
+          ssh root@${{ secrets.SSH_HOST }} << 'EOF'
+            cd /opt/voxdem
+            
+            # Parar containers existentes se estiverem rodando
+            docker compose -f docker-compose.prod.yml down --volumes 2>/dev/null || true
+            
+            # Remover imagem antiga
+            docker rmi voxdem-app:latest 2>/dev/null || true
+            
+            # Carregar nova imagem
+            docker load < voxdem-app.tar
+            
+            # Criar .env se não existir
+            if [ ! -f .env ]; then
+              cp .env.production .env
+              echo "✅ Arquivo .env criado"
+            fi
+            
+            # Iniciar serviços
+            docker compose -f docker-compose.prod.yml up -d
+            
+            # Aguardar PostgreSQL ficar pronto
+            echo "⏳ Aguardando PostgreSQL..."
+            sleep 30
+            
+            # Verificar se containers estão rodando
+            echo "📊 Status dos containers:"
+            docker compose -f docker-compose.prod.yml ps
+            
+            # Limpar arquivo temporário
+            rm -f voxdem-app.tar
+            
+            echo "✅ Deploy do VoxDem concluído!"
+            echo "📍 VoxDem API disponível em: http://$(hostname -I | awk '{print $1}'):3001"
+            echo "🩺 Health check: curl http://$(hostname -I | awk '{print $1}'):3001/api/health"
+          EOF
+
+      - name: 🔍 Health Check
+        run: |
+          ssh root@${{ secrets.SSH_HOST }} << 'EOF'
+            # Aguardar aplicação subir
+            sleep 20
+            
+            # Verificar se API está respondendo
+            if curl -f http://localhost:3000/api/health 2>/dev/null; then
+              echo "✅ VoxDem API está funcionando!"
+            else
+              echo "❌ VoxDem API não está respondendo"
+              echo "📋 Logs da aplicação:"
+              docker compose -f /opt/voxdem/docker-compose.prod.yml logs --tail=20 app
+              exit 1
+            fi
+          EOF
+
+      - name: 🧹 Cleanup
+        run: |
+          # Limpar arquivos locais
+          docker rmi voxdem-app:latest || true
+          rm -f voxdem-app.tar

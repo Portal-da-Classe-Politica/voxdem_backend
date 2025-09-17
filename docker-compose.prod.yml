@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: voxdem_postgres_prod
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-voxdem_survey}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres123}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./voxdem_survey_dump.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5433:5432"  # PostgreSQL do VoxDem na porta 5433 externamente
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    image: voxdem-app:latest
+    container_name: voxdem_app_prod
+    environment:
+      NODE_ENV: production
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: ${POSTGRES_DB:-voxdem_survey}
+      DB_USER: ${POSTGRES_USER:-postgres}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-postgres123}
+      PORT: ${APP_PORT:-3000}
+    ports:
+      - "3001:3000"  # VoxDem API na porta 3001 externamente
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  postgres_data:
+    driver: local
