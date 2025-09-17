@@ -51,10 +51,10 @@ export class AnalysisService {
           column: 'age_range'
         },
         {
-          key: 'education_level',
+          key: 'education',
           name: 'Escolaridade',
           description: 'Nível de escolaridade',
-          column: 'education_level'
+          column: 'education'
         },
         {
           key: 'race',
@@ -63,10 +63,10 @@ export class AnalysisService {
           column: 'race'
         },
         {
-          key: 'region_name',
+          key: 'region',
           name: 'Região',
           description: 'Região geográfica',
-          column: 'region_name'
+          column: 'region'
         },
         {
           key: 'state',
