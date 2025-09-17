@@ -321314,13 +321314,14 @@ WHERE code IN (
     'P31', 'P32', 'P33', 'P34', 'P35', 'P36', 'P37', 'P38', 'P39', 'P40',
 -- Script direto para ativar apenas perguntas específicas
 -- Execute este script diretamente no banco
-
-BEGIN;
+-- ============================================
+-- ATIVAÇÃO SELETIVA DE PERGUNTAS ESPECÍFICAS
+-- ============================================
 
 -- 1. Desativar todas as perguntas
 UPDATE questions SET is_active = false;
 
--- 2. Ativar apenas as perguntas específicas
+-- 2. Ativar apenas as perguntas especificadas
 UPDATE questions SET is_active = true 
 WHERE code IN (
     'P01', 'P02A', 'P03', 'P04', 'P05', 'P06', 'P07', 'P08', 'P09', 'P10',
@@ -321332,35 +321333,3 @@ WHERE code IN (
     'P124', 'P125', 'P126', 'P127', 'P128', 'P129', 'P130', 'P131', 'P132',
     'P133', 'P134', 'P135', 'P136'
 );
-
--- 3. Verificar o resultado
-SELECT 
-    'Total de perguntas' as tipo,
-    COUNT(*) as quantidade
-FROM questions
-UNION ALL
-SELECT 
-    'Perguntas ativas' as tipo,
-    COUNT(*) as quantidade
-FROM questions 
-WHERE is_active = true
-UNION ALL
-SELECT 
-    'Perguntas inativas' as tipo,
-    COUNT(*) as quantidade
-FROM questions 
-WHERE is_active = false;
-
--- 4. Mostrar as perguntas ativas (deve ser 69)
-SELECT 'Perguntas ativadas:' as info;
-SELECT code, LEFT(text, 50) || '...' as text_preview, is_active 
-FROM questions 
-WHERE is_active = true 
-ORDER BY 
-    CASE 
-        WHEN code ~ '^P[0-9]+$' THEN LPAD(SUBSTRING(code FROM 2), 10, '0')
-        WHEN code ~ '^P[0-9]+[A-Z]$' THEN LPAD(SUBSTRING(code FROM 2 FOR LENGTH(code)-2), 10, '0') || SUBSTRING(code FROM LENGTH(code))
-        ELSE code
-    END;
-
-COMMIT;
