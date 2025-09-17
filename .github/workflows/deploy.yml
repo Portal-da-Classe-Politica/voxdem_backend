@@ -39,7 +39,6 @@ jobs:
           scp voxdem-app.tar root@${{ secrets.SSH_HOST }}:/opt/voxdem/
           scp docker-compose.prod.yml root@${{ secrets.SSH_HOST }}:/opt/voxdem/
           scp voxdem_survey_dump.sql root@${{ secrets.SSH_HOST }}:/opt/voxdem/
-          scp .env.production root@${{ secrets.SSH_HOST }}:/opt/voxdem/
 
       - name: 🚀 Deploy VoxDem no servidor
         run: |
@@ -57,7 +56,15 @@ jobs:
             
             # Criar .env se não existir
             if [ ! -f .env ]; then
-              cp .env.production .env
+              cat > .env << 'ENVEOF'
+POSTGRES_DB=voxdem_survey
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=voxdem_secure_2024
+POSTGRES_HOST=db
+POSTGRES_PORT=5432
+APP_PORT=3000
+NODE_ENV=production
+ENVEOF
               echo "✅ Arquivo .env criado"
             fi
             
