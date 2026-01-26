@@ -139,12 +139,12 @@ export class AnalysisService {
 
   async getChartData(questionCode: string, surveyId?: number) {
     try {
-      // Buscar pergunta usando SQL direto para evitar problemas com ORM
+      // Buscar pergunta usando SQL direto - construindo query dinamicamente para evitar problema de tipo
       const whereClause = surveyId
-        ? 'WHERE code = $1 AND is_active = true AND survey_id = $2'
+        ? `WHERE code = $1 AND is_active = true AND survey_id = ${parseInt(String(surveyId))}`
         : 'WHERE code = $1 AND is_active = true';
       
-      const params = surveyId ? [questionCode, surveyId] : [questionCode];
+      const params = [questionCode];
 
       const questionData = await AppDataSource.query(`
         SELECT id, code, text, answer_group_id, survey_id
@@ -160,10 +160,10 @@ export class AnalysisService {
 
       // Análise de frequência usando response_analysis
       const freqWhereClause = surveyId
-        ? 'WHERE ra.question_code = $1 AND ra.survey_id = $2 AND ra.answer_code NOT IN (\'97\', \'98\', \'99\')'
+        ? `WHERE ra.question_code = $1 AND ra.survey_id = ${parseInt(String(surveyId))} AND ra.answer_code NOT IN ('97', '98', '99')`
         : 'WHERE ra.question_code = $1 AND ra.answer_code NOT IN (\'97\', \'98\', \'99\')';
       
-      const freqParams = surveyId ? [questionCode, surveyId] : [questionCode];
+      const freqParams = [questionCode];
 
       const frequencies = await AppDataSource.query(`
         SELECT 
@@ -217,12 +217,22 @@ export class AnalysisService {
 
   async getChartDataWithProfile(questionCode: string, profileAttribute: string, surveyId?: number) {
     try {
-      // Buscar pergunta usando SQL direto
-      const whereClause = surveyId
-        ? 'WHERE code = $1 AND is_active = true AND survey_id = $2'
-        : 'WHERE code = $1 AND is_active = true';
+      // Buscar pergunta usando SQL direto  
+      let whereClause: string;
+      let params: any[];
       
-      const params = surveyId ? [questionCode, surveyId] : [questionCode];
+      if (surveyId) {
+        // Validar surveyId é número
+        const surveyIdInt = parseInt(String(surveyId));
+        if (isNaN(surveyIdInt)) {
+          throw new Error('surveyId deve ser um número válido');
+        }
+        whereClause = `WHERE code = $1 AND is_active = true AND survey_id = ${surveyIdInt}`;
+        params = [questionCode];
+      } else {
+        whereClause = 'WHERE code = $1 AND is_active = true';
+        params = [questionCode];
+      }
 
       const questionData = await AppDataSource.query(`
         SELECT id, code, text, answer_group_id, survey_id
@@ -260,16 +270,22 @@ export class AnalysisService {
       }
 
       // Query de cruzamento usando response_analysis
-      const crosstabWhereClause = surveyId
-        ? `WHERE ra.question_code = $1
-           AND ra.survey_id = $${params.length + 1}
-           AND ra.answer_code NOT IN ('97', '98', '99')
-           AND ra.${profileField} IS NOT NULL`
-        : `WHERE ra.question_code = $1
+      let crosstabWhereClause: string;
+      let crosstabParams: any[];
+      
+      if (surveyId) {
+        const surveyIdInt = parseInt(String(surveyId));
+        crosstabWhereClause = `WHERE ra.question_code = $1
+           AND ra.survey_id = ${surveyIdInt}
            AND ra.answer_code NOT IN ('97', '98', '99')
            AND ra.${profileField} IS NOT NULL`;
-
-      const crosstabParams = surveyId ? [questionCode, surveyId] : [questionCode];
+        crosstabParams = [questionCode];
+      } else {
+        crosstabWhereClause = `WHERE ra.question_code = $1
+           AND ra.answer_code NOT IN ('97', '98', '99')
+           AND ra.${profileField} IS NOT NULL`;
+        crosstabParams = [questionCode];
+      }
 
       const crosstabData = await AppDataSource.query(`
         SELECT 

@@ -1,9 +1,9 @@
-﻿-- Survey responses for Deputados survey
+-- Survey responses for Deputados survey
 -- Generated from deputados_processado_completo.csv
 -- Note: Includes responses for perguntas_consideradas.txt
 -- Note: Uses direct IDs for profile_id (20000-20169) and question_id (2000-2024)
 -- Note: answer_option_id is mapped from answer_options table based on answer_group_id
--- Note: NA values are recorded as "Não respondeu" (code 999)
+-- Note: NA values are recorded as "N�o respondeu" (code 999)
 -- Note: raw_value contains the original numeric response for reference
 -- Note: This assumes profiles, questions, and answer_options are already inserted
 
@@ -81,8 +81,8 @@ INSERT INTO survey_responses (profile_id, question_id, answer_option_id, raw_val
   (20002, 2020, 1511, NULL),
   (20002, 2021, 1511, NULL),
   (20002, 2022, 1899, '5.0'),
-  (20002, 2023, 1958, NULL),
-  (20002, 2024, 1958, NULL),
+  (20002, 2023, 1780, NULL),
+  (20002, 2024, 1780, NULL),
   (20003, 2000, 1497, '1.0'),
   (20003, 2001, 1505, '10.0'),
   (20003, 2002, 1505, '10.0'),
@@ -206,8 +206,8 @@ INSERT INTO survey_responses (profile_id, question_id, answer_option_id, raw_val
   (20007, 2020, 1511, NULL),
   (20007, 2021, 1511, NULL),
   (20007, 2022, 1899, '5.0'),
-  (20007, 2023, 1958, NULL),
-  (20007, 2024, 1958, NULL),
+  (20007, 2023, 1780, NULL),
+  (20007, 2024, 1780, NULL),
   (20008, 2000, 1501, '5.0'),
   (20008, 2001, 1505, '10.0'),
   (20008, 2002, 1505, '10.0'),
@@ -432,7 +432,7 @@ INSERT INTO survey_responses (profile_id, question_id, answer_option_id, raw_val
   (20016, 2021, 1508, '0.0'),
   (20016, 2022, 1509, '10.0'),
   (20016, 2023, 1775, '1.0'),
-  (20016, 2024, 1958, NULL),
+  (20016, 2024, 1780, NULL),
   (20017, 2000, 1501, '5.0'),
   (20017, 2001, 1505, '10.0'),
   (20017, 2002, 1505, '10.0'),
@@ -1432,7 +1432,7 @@ INSERT INTO survey_responses (profile_id, question_id, answer_option_id, raw_val
   (20056, 2021, 1509, '10.0'),
   (20056, 2022, 1509, '10.0'),
   (20056, 2023, 1778, '4.0'),
-  (20056, 2024, 1958, NULL),
+  (20056, 2024, 1780, NULL),
   (20057, 2000, 1500, '4.0'),
   (20057, 2001, 1505, '10.0'),
   (20057, 2002, 1892, '7.0'),
@@ -2831,8 +2831,8 @@ INSERT INTO survey_responses (profile_id, question_id, answer_option_id, raw_val
   (20112, 2020, 1511, NULL),
   (20112, 2021, 1508, '0.0'),
   (20112, 2022, 1902, '8.0'),
-  (20112, 2023, 1958, NULL),
-  (20112, 2024, 1958, NULL),
+  (20112, 2023, 1780, NULL),
+  (20112, 2024, 1780, NULL),
   (20113, 2000, 1500, '4.0'),
   (20113, 2001, 1890, '5.0'),
   (20113, 2002, 1890, '5.0'),

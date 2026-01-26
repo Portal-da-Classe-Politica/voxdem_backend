@@ -86,9 +86,12 @@ router.get('/chart/:questionCode', async (req: Request, res: Response) => {
 
 // 4. Dados para gráfico com cruzamento por perfil
 router.get('/chart/:questionCode/:profileAttribute', async (req: Request, res: Response) => {
-  try {
-    const { questionCode, profileAttribute } = req.params;
+  const { questionCode, profileAttribute } = req.params;
     const surveyId = req.query.surveyId ? parseInt(req.query.surveyId as string) : undefined;
+  try {
+    
+
+    
     
     // Validação do código da pergunta
     if (!questionCode || !/^P[0-9]+[A-Z]*$/i.test(questionCode)) {
@@ -134,6 +137,7 @@ router.get('/chart/:questionCode/:profileAttribute', async (req: Request, res: R
     res.status(500).json({
       success: false,
       error: 'Erro ao gerar dados do gráfico com perfil',
+      aa: surveyId,
       message: error.message
     });
   }

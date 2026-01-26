@@ -35,47 +35,56 @@ SET standard_conforming_strings = on;
 -- STEP 2: Load Common/Lookup Tables
 -- =====================================================
 \echo ''
-\echo '[2/6] Loading common and lookup tables...'
+\echo '[2/7] Loading common and lookup tables...'
 \i /docker-entrypoint-initdb.d/sqlinserts/voxdem_data_common_tables_insert.sql
 
 -- =====================================================
--- STEP 3: Load Answer Options (BEFORE Questions - FK dependency)
+-- STEP 3: Load Answer Groups (BEFORE Answer Options - FK dependency)
 -- =====================================================
 \echo ''
-\echo '[3/9] Loading answer options...'
+\echo '[3/7] Loading answer groups...'
+\i /docker-entrypoint-initdb.d/sqlinserts/answer_groups_insert.sql
+
+
+
+-- =====================================================
+-- STEP 4: Load Answer Options (ALL - shared between surveys)
+-- =====================================================
+\echo ''
+\echo '[4/10] Loading answer options...'
 \i /docker-entrypoint-initdb.d/sqlinserts/voxdem_answer_options_insert.sql
 
 -- =====================================================
--- STEP 4: Load Questions
+-- STEP 5: Load Questions
 -- =====================================================
 \echo ''
-\echo '[4/9] Loading general population questions...'
+\echo '[5/10] Loading general population questions...'
 \i /docker-entrypoint-initdb.d/sqlinserts/voxdem_questions_insert.sql
 
 \echo ''
-\echo '[5/9] Loading deputados questions...'
+\echo '[6/10] Loading deputados questions...'
 \i /docker-entrypoint-initdb.d/sqlinserts/deputados_questions_insert.sql
 
 -- =====================================================
--- STEP 5: Load Profiles
+-- STEP 6: Load Profiles
 -- =====================================================
 \echo ''
-\echo '[6/9] Loading general population profiles...'
+\echo '[7/10] Loading general population profiles...'
 \i /docker-entrypoint-initdb.d/sqlinserts/voxde_data_profiles_insert.sql
 
 \echo ''
-\echo '[7/9] Loading deputados profiles...'
+\echo '[8/10] Loading deputados profiles...'
 \i /docker-entrypoint-initdb.d/sqlinserts/deputados_profiles_insert.sql
 
 -- =====================================================
--- STEP 6: Load Survey Responses
+-- STEP 7: Load Survey Responses
 -- =====================================================
 \echo ''
-\echo '[8/9] Loading general population responses (~310k rows - may take 1-2 minutes)...'
+\echo '[9/10] Loading general population responses (~310k rows - may take 1-2 minutes)...'
 \i /docker-entrypoint-initdb.d/sqlinserts/voxdem_data_responses_insert.sql
 
 \echo ''
-\echo '[9/9] Loading deputados responses (~4k rows)...'
+\echo '[10/10] Loading deputados responses (~4k rows)...'
 \i /docker-entrypoint-initdb.d/sqlinserts/deputados_responses_insert.sql
 
 -- =====================================================
@@ -119,8 +128,6 @@ UNION ALL
 SELECT 'Responses (Survey 2)', COUNT(*) FROM public.survey_responses sr JOIN public.profiles p ON sr.profile_id = p.id WHERE p.survey_id = 2
 UNION ALL
 SELECT 'States', COUNT(*) FROM public.states
-UNION ALL
-SELECT 'Cities', COUNT(*) FROM public.cities
 UNION ALL
 SELECT 'Regions', COUNT(*) FROM public.regions
 UNION ALL

@@ -682,7 +682,7 @@ CREATE TABLE survey_responses (
     profile_id integer NOT NULL,
     question_id integer NOT NULL,
     answer_option_id integer,
-    raw_value character varying(50)
+    raw_value character varying(200)
 );
 --
 -- TOC entry 5162 (class 0 OID 0)
@@ -705,6 +705,7 @@ CREATE VIEW public.response_analysis AS
     p.id_ipec,
     q.code AS question_code,
     q.text AS question_text,
+    q.survey_id,
     q.question_order,
     q.is_active,
     ao.code AS answer_code,
