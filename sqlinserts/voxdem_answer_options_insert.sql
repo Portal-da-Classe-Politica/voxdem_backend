@@ -1,4 +1,4 @@
-INSERT INTO public.answer_options (id, answer_group_id, code, label, option_order) VALUES
+﻿INSERT INTO public.answer_options (id, answer_group_id, code, label, option_order) VALUES
     (1886, 101, 1, 'Pouco importante para a democracia', 1),
     (1887, 101, 2, 'Pouco importante para a democracia', 2),
     (1888, 101, 3, 'Pouco importante para a democracia', 3),

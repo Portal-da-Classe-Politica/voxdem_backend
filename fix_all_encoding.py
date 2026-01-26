@@ -1,7 +1,7 @@
 import re
 
 # Ler o arquivo
-with open('sqlinserts/voxdem_answer_options_insert.sql', 'r', encoding='utf-8') as f:
+with open('sqlinserts/voxdem_data_common_tables_insert.sql', 'r', encoding='utf-8') as f:
     content = f.read()
 
 # Mapa completo de correções
@@ -31,7 +31,7 @@ for wrong, correct in replacements.items():
     content = content.replace(wrong, correct)
 
 # Salvar com codificação UTF-8
-with open('sqlinserts/voxdem_answer_options_insert.sql', 'w', encoding='utf-8') as f:
+with open('sqlinserts/voxdem_data_common_tables_insert.sql', 'w', encoding='utf-8') as f:
     f.write(content)
 
 # Verificar se ainda há problemas
