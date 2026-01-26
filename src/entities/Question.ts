@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity('questions')
 export class Question {
@@ -14,12 +14,12 @@ export class Question {
   @Column({ type: 'int' })
   answer_group_id!: number; // ID do grupo de respostas
 
+  @Column({ type: 'int', nullable: true })
+  survey_id!: number; // Tipo de pesquisa (Visões ou Deputados)
+
   @Column({ type: 'int', default: 0 })
   question_order!: number;
 
   @Column({ type: 'boolean', default: true })
   is_active!: boolean;
-
-  @CreateDateColumn()
-  created_at!: Date;
 }

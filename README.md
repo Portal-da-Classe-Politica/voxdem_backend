@@ -1,529 +1,308 @@
-# VoxDem Chart API v2.1.0 - Dados Otimizados para Gráficos
+# VoxDem Survey API
 
-API REST simplificada para geração de gráficos com dados da pesquisa VoxDem. Focada em fornecer dados prontos para Chart.js com 4 endpoints essenciais.
+API TypeScript para análise de dados de pesquisas eleitorais com tabulação cruzada de variáveis categóricas.
 
-## 🆕 Novidades v2.1.0
+## Visão Geral
 
-### Labels Detalhadas com Códigos
-- **`labelsDetailed`**: Novo campo com objetos `{code, label, display}`
-- **Compatibilidade mantida**: Campo `labels` tradicional preservado
-- **Ordenação automática**: Resultados ordenados por `answer_code` crescente
-- **Frontend flexível**: Escolha entre labels simples ou detalhadas
+Esta API fornece endpoints para análise de dados de survey da base VoxDem, incluindo:
 
-### Exemplo das Novas Labels
-```json
-{
-  "labels": ["Muito satisfeito", "Satisfeito"],           // Compatível Chart.js
-  "labelsDetailed": [                                     // Novo!
-    {
-      "code": "1",
-      "label": "Muito satisfeito", 
-      "display": "1 - Muito satisfeito"
-    },
-    {
-      "code": "2",
-      "label": "Satisfeito",
-      "display": "2 - Satisfeito"
-    }
-  ]
-}
+- Análise de perguntas por perfil demográfico
+- Tabulação cruzada de variáveis categóricas
+- Estatísticas descritivas e agregações
+- Visualização de dados através de gráficos
+
+## Stack Tecnológico
+
+- **Runtime**: Node.js 18+
+- **Linguagem**: TypeScript
+- **Framework**: Express.js
+- **ORM**: TypeORM
+- **Banco de Dados**: PostgreSQL 15
+- **Container**: Docker & Docker Compose
+
+## Estrutura do Projeto
+
+```
+.
+├── src/
+│   ├── entities/          # Entidades TypeORM (Profile, Question, Answer, etc.)
+│   ├── services/          # Lógica de negócio (AnalysisService)
+│   ├── controllers/       # Controllers Express
+│   ├── routes/            # Definição de rotas
+│   ├── data/              # Dados estáticos (perguntas, rótulos)
+│   ├── data-source.ts     # Configuração TypeORM
+│   └── index.ts           # Entry point da aplicação
+├── sqlinserts/            # Scripts SQL para carga de dados
+│   ├── voxdem_schema.sql              # Schema do banco
+│   ├── voxdem_data_common_tables.sql  # Tabelas de lookup
+│   ├── voxdem_questions.sql           # Perguntas
+│   ├── voxdem_answer_options.sql      # Opções de resposta
+│   ├── voxde_data_profiles.sql        # Perfis
+│   └── voxdem_data_responses.sql      # Respostas (~310k linhas)
+├── database/              # Scripts de manutenção e diagnóstico
+├── docker-compose.yml     # Configuração Docker
+├── Dockerfile             # Imagem da aplicação
+├── init-database.sql      # Script de inicialização do banco
+├── init-database.ps1      # Inicialização local (PowerShell)
+└── api-documentation.yaml # Documentação OpenAPI
 ```
 
-## 🚀 Funcionalidades
+## Quick Start
 
-### API Simplificada para Gráficos
-- **4 endpoints essenciais**: Foco na geração de gráficos
-- **Chart.js Ready**: Dados formatados para uso direto no Chart.js
-- **Labels detalhadas**: Códigos + textos das respostas incluídos
-- **Ordenação automática**: Por answer_code crescente
-- **Performance otimizada**: Queries diretas na tabela response_analysis
-- **Zero configuração**: Estruturas de dados prontas para uso
+### Com Docker (Recomendado)
 
-### Recursos Técnicos
-- **Base de dados otimizada**: 309.064 respostas processadas
-- **Answer_groups otimizados**: 54 grupos com descrições atualizadas (100% otimização)
-- **Sem duplicatas**: Nomes únicos e descrições categorizadas
-- **Queries diretas**: Uso da view response_analysis para máxima performance
-- **Labels com código**: Suporte a `labelsDetailed` com answer_code
-- **Ordenação garantida**: Resultados ordenados por código crescente
-
-## 📊 Endpoints da API (4 Essenciais)
-
-### 🏥 Status
-- `GET /` - Informações da API Chart v2.0.0
-- `GET /api/health` - Status de saúde e conectividade
-
-### 📋 Lista de Perguntas
-- `GET /api/questions` - Lista todas as perguntas ativas com metadados
-
-### 👥 Atributos de Perfil  
-- `GET /api/profile-attributes` - Lista atributos disponíveis para cruzamento
-
-### 📈 Gráficos Simples
-- `GET /api/chart/{questionCode}` - Dados para gráfico de barras/pizza de uma pergunta
-
-### 📊 Gráficos com Perfil
-- `GET /api/chart/{questionCode}/{profileAttribute}` - Dados para gráfico de barras agrupadas (pergunta x perfil)
-
-## 🔧 Instalação e Configuração
-
-### Pré-requisitos
-- Node.js 18+
-- PostgreSQL 13+ **OU** Docker 20.10+
-- npm ou yarn
-
-### Opção 1: 🐳 Docker (Recomendado)
 ```bash
-# Início rápido com Docker Compose
+# 1. Clone o repositório
+git clone <repo-url>
+cd codigo
+
+# 2. Inicie os containers (primeira vez pode levar ~3-5 minutos)
 docker-compose up -d
 
-# Verificar funcionamento
-curl http://localhost:3000/api/health
+# 3. Acompanhe os logs da inicialização
+docker-compose logs -f postgres
 
-# Ver logs
-docker-compose logs -f
+# 4. A API estará disponível em http://localhost:3000
 ```
 
-**Vantagens do Docker:**
-- ✅ PostgreSQL incluído e pré-configurado
-- ✅ Banco de dados restaurado automaticamente
-- ✅ Zero configuração necessária
-- ✅ Ambiente isolado e reproduzível
+**Nota:** Na primeira inicialização, o PostgreSQL executará automaticamente:
+- Criação do schema (voxdem_schema.sql)
+- Carga de tabelas de lookup e referência
+- Inserção de ~100 perguntas
+- Inserção de ~1.5k perfis
+- Inserção de ~310k respostas de survey
 
-📖 **Guia completo**: [DOCKER_GUIDE.md](./DOCKER_GUIDE.md)
+### Reiniciar do Zero
 
-### Opção 2: Instalação Manual
+Se precisar recriar o banco de dados completamente:
 
-#### Configuração do Banco
 ```bash
-# Configurar variáveis de ambiente
-DB_HOST=localhost
-DB_PORT=5432
-DB_USERNAME=postgres
-DB_PASSWORD=postgres
-DB_NAME=voxdem_survey
+# Windows PowerShell
+.\reset-docker.ps1
+
+# Linux/Mac
+./reset-docker.sh
+
+# Ou manualmente
+docker-compose down -v
+docker-compose up -d --build
 ```
 
-#### Instalação
+### Local (Desenvolvimento)
+
+#### Pré-requisitos
+
+- Node.js 18+
+- PostgreSQL 15+
+- npm ou yarn
+
+#### Passos
+
 ```bash
-# Instalar dependências
+# 1. Instalar dependências
 npm install
 
-# Compilar TypeScript
+# 2. Configurar banco de dados
+# Edite as variáveis no .env se necessário
+
+# 3. Inicializar banco de dados
+.\init-database.ps1
+
+# 4. Compilar TypeScript
 npm run build
 
-# Executar em desenvolvimento
+# 5. Iniciar servidor de desenvolvimento
 npm run dev
-
-# Executar em produção
-npm start
 ```
 
-## 📊 Estrutura dos Dados para Chart.js
+## Inicialização do Banco de Dados
 
-### Endpoint: /api/chart/{questionCode}
-Retorna dados prontos para Chart.js (gráfico de pizza ou barras) com **labels detalhadas**:
+O banco de dados é inicializado automaticamente usando o script [init-database.sql](init-database.sql), que executa os seguintes passos em ordem:
 
-```json
-{
-  "success": true,
-  "data": {
-    "question": {
-      "code": "P01", 
-      "text": "Pergunta sobre satisfação"
-    },
-    "chartData": {
-      "labels": ["Muito satisfeito", "Satisfeito", "Insatisfeito"],
-      "labelsDetailed": [
-        {
-          "code": "1",
-          "label": "Muito satisfeito",
-          "display": "1 - Muito satisfeito"
-        },
-        {
-          "code": "2", 
-          "label": "Satisfeito",
-          "display": "2 - Satisfeito"
-        },
-        {
-          "code": "3",
-          "label": "Insatisfeito", 
-          "display": "3 - Insatisfeito"
-        }
-      ],
-      "datasets": [{
-        "data": [1250, 2100, 890],
-        "backgroundColor": ["#FF6384", "#36A2EB", "#FFCE56"],
-        "borderColor": ["#FF6384", "#36A2EB", "#FFCE56"],
-        "borderWidth": 1
-      }]
-    },
-    "totalResponses": 4240
-  }
-}
+### Ordem de Execução
+
+1. **Schema** (`voxdem_schema.sql`) - Criação de todas as tabelas, índices e constraints
+2. **Tabelas Comuns** (`voxdem_data_common_tables_insert.sql`) - Dados de lookup (estados, regiões, etc.)
+3. **Perguntas** - Carga das perguntas de ambas as pesquisas:
+   - `voxdem_questions_insert.sql` - Perguntas da população geral
+   - `deputados_questions_insert.sql` - Perguntas dos deputados
+4. **Opções de Resposta** (`voxdem_answer_options_insert.sql`) - Todas as opções de resposta
+5. **Perfis** - Perfis demográficos dos respondentes:
+   - `voxde_data_profiles_insert.sql` - Perfis da população geral (~1.5k)
+   - `deputados_profiles_insert.sql` - Perfis dos deputados
+6. **Respostas** - Dados de survey:
+   - `voxdem_data_responses_insert.sql` - Respostas da população geral (~310k - pode levar 1-2 min)
+   - `deputados_responses_insert.sql` - Respostas dos deputados (~4k)
+
+### Docker (Automático)
+
+Na primeira vez que você executar `docker-compose up`, o PostgreSQL automaticamente:
+- Executa o script `init-database.sql` localizado em `/docker-entrypoint-initdb.d/`
+- Todos os arquivos SQL da pasta `sqlinserts/` são montados e executados na ordem correta
+- O processo completo leva aproximadamente 3-5 minutos
+- Após a conclusão, exibe estatísticas de quantas linhas foram carregadas em cada tabela
+
+### Local (Manual)
+
+Consulte [DATABASE_INIT.md](DATABASE_INIT.md) para instruções detalhadas sobre inicialização local.
+
+```powershell
+# Inicialização simples
+.\init-database.ps1
+
+# Recriar banco existente
+.\init-database.ps1 -DropExisting -Force
 ```
 
-### Endpoint: /api/chart/{questionCode}/{profile}
-Retorna dados para gráfico de barras agrupadas:
+## Endpoints Principais
 
-```json
-{
-  "success": true,
-  "data": {
-    "question": {
-      "code": "P01",
-      "text": "Pergunta sobre satisfação"
-    },
-    "profileAttribute": "gender",
-    "chartData": {
-      "labels": ["Muito satisfeito", "Satisfeito", "Insatisfeito"],
-      "labelsDetailed": [
-        {
-          "code": "1",
-          "label": "Muito satisfeito",
-          "display": "1 - Muito satisfeito"
-        },
-        {
-          "code": "2",
-          "label": "Satisfeito", 
-          "display": "2 - Satisfeito"
-        },
-        {
-          "code": "3",
-          "label": "Insatisfeito",
-          "display": "3 - Insatisfeito"
-        }
-      ],
-      "datasets": [
-        {
-          "label": "Masculino",
-          "data": [620, 1050, 440],
-          "backgroundColor": "#36A2EB"
-        },
-        {
-          "label": "Feminino", 
-          "data": [630, 1050, 450],
-          "backgroundColor": "#FF6384"
-        }
-      ]
-    },
-    "totalResponses": 4240
-  }
-}
-```
-
-## 📖 Documentação da API
-
-### Documentação OpenAPI/Swagger
-A documentação completa da API Chart v2.1.0 está disponível em:
-- **Arquivo**: `api-documentation.yaml`
-- **Versão**: OpenAPI 3.0 com exemplos Chart.js e labels detalhadas
-- **Conteúdo**: 4 endpoints essenciais com schemas otimizados
-
-### Visualização da Documentação
-Para visualizar a documentação interativa:
-
-1. **Swagger Editor Online**:
-   - Acesse: https://editor.swagger.io/
-   - Cole o conteúdo de `api-documentation.yaml`
-
-2. **VS Code com extensão**:
-   - Instale: "OpenAPI (Swagger) Editor"
-   - Abra o arquivo `api-documentation.yaml`
-
-## 💡 Exemplos de Uso com Chart.js
-
-### Gráfico de Pizza Simples
-```javascript
-// 1. Buscar dados da API
-const response = await fetch('/api/chart/P01');
-const apiData = await response.json();
-
-// 2. Usar diretamente no Chart.js
-new Chart(ctx, {
-  type: 'pie',
-  data: apiData.data.chartData,
-  options: {
-    responsive: true,
-    plugins: {
-      title: {
-        display: true,
-        text: apiData.data.question.text
-      }
-    }
-  }
-});
-```
-
-### Gráfico de Barras com Perfil
-```javascript
-// 1. Buscar dados cruzados
-const response = await fetch('/api/chart/P01/gender');
-const apiData = await response.json();
-
-// 2. Criar gráfico de barras agrupadas
-new Chart(ctx, {
-  type: 'bar',
-  data: apiData.data.chartData,
-  options: {
-    responsive: true,
-    scales: {
-      x: { stacked: false },
-      y: { stacked: false }
-    },
-    plugins: {
-      title: {
-        display: true,
-        text: `${apiData.data.question.text} por ${apiData.data.profileAttribute}`
-      }
-    }
-  }
-});
-```
-
-### Listar Perguntas Disponíveis
-```javascript
-// Buscar todas as perguntas
-const questions = await fetch('/api/questions');
-const data = await questions.json();
-
-console.log(`${data.data.length} perguntas disponíveis`);
-data.data.forEach(q => {
-  console.log(`${q.code}: ${q.text}`);
-});
-```
-
-### Atributos de Perfil
-```javascript
-// Buscar atributos para cruzamento
-const profiles = await fetch('/api/profile-attributes');
-const data = await profiles.json();
-
-// Resultados: gender, age_range, education, race, region, state
-console.log('Perfis disponíveis:', data.data);
-```
-
-### 🆕 Labels Detalhadas (v2.1.0)
-```javascript
-// Buscar dados com labels detalhadas
-const response = await fetch('/api/chart/P01');
-const apiData = await response.json();
-
-// Usar labels simples (compatível com Chart.js)
-const simpleLabels = apiData.data.chartData.labels;
-console.log(simpleLabels); // ["Muito satisfeito", "Satisfeito", ...]
-
-// Usar labels detalhadas (novo!)
-const detailedLabels = apiData.data.chartData.labelsDetailed;
-detailedLabels.forEach(item => {
-  console.log(`Código: ${item.code}`);      // "1"
-  console.log(`Label: ${item.label}`);      // "Muito satisfeito"
-  console.log(`Display: ${item.display}`);  // "1 - Muito satisfeito"
-});
-
-// Personalizar tooltips no Chart.js
-new Chart(ctx, {
-  type: 'pie',
-  data: apiData.data.chartData,
-  options: {
-    plugins: {
-      tooltip: {
-        callbacks: {
-          label: function(context) {
-            const detailLabel = detailedLabels[context.dataIndex];
-            return `${detailLabel.display}: ${context.parsed}`;
-          }
-        }
-      }
-    }
-  }
-});
-```
-
-## 🎯 Casos de Uso Frontend
-
-### 1. Dashboard de Satisfação
-```javascript
-// Gráfico de pizza para uma pergunta
-async function createSatisfactionChart(questionCode) {
-  const response = await fetch(`/api/chart/${questionCode}`);
-  const data = await response.json();
-  
-  return new Chart(canvas, {
-    type: 'pie',
-    data: data.data.chartData
-  });
-}
-```
-
-### 2. Análise Comparativa por Perfil
-```javascript
-// Gráfico de barras agrupadas por gênero
-async function createGenderComparisonChart(questionCode) {
-  const response = await fetch(`/api/chart/${questionCode}/gender`);
-  const data = await response.json();
-  
-  return new Chart(canvas, {
-    type: 'bar',
-    data: data.data.chartData,
-    options: {
-      scales: {
-        x: { stacked: false },
-        y: { stacked: false }
-      }
-    }
-  });
-}
-```
-
-### 3. Múltiplos Gráficos em Dashboard
-```javascript
-// Criar dashboard com vários gráficos
-async function createDashboard() {
-  const questions = await fetch('/api/questions');
-  const questionList = await questions.json();
-  
-  // Criar gráfico para cada pergunta
-  for (const question of questionList.data.slice(0, 6)) {
-    const chartData = await fetch(`/api/chart/${question.code}`);
-    const data = await chartData.json();
-    
-    // Criar canvas dinamicamente
-    const canvas = document.createElement('canvas');
-    document.getElementById('dashboard').appendChild(canvas);
-    
-    // Criar gráfico
-    new Chart(canvas, {
-      type: 'pie',
-      data: data.data.chartData,
-      options: {
-        plugins: {
-          title: {
-            display: true,
-            text: question.text
-          }
-        }
-      }
-    });
-  }
-}
-```
-
-## 🗄️ Estrutura do Banco (Otimizada)
-
-### Tabelas Principais
-- **questions**: 179 perguntas ativas da pesquisa
-- **answer_groups**: 54 grupos otimizados (100% sem duplicatas)
-- **answer_options**: Opções de resposta categorizadas
-- **response_analysis**: View otimizada com 309.064 respostas
-
-### Otimizações Implementadas
-- **Answer_groups**: Descrições atualizadas e categorizadas
-- **Nomes únicos**: Eliminadas todas as duplicatas
-- **Categorização semântica**: Escalas, frequência, importância, etc.
-- **Queries diretas**: Uso da view response_analysis
-- **Labels com código**: answer_code incluído em todas as respostas
-- **Ordenação automática**: Resultados ordenados por answer_code crescente
-
-### Perfis Demográficos Disponíveis
-- **gender**: Masculino, Feminino  
-- **age_range**: 5 faixas etárias (16-24, 25-34, 35-44, 45-54, 55+)
-- **education**: 15 níveis de escolaridade
-- **race**: 5 categorias (Branca, Preta, Parda, Amarela, Indígena)
-- **region**: 5 regiões do Brasil (Norte, Nordeste, Centro-Oeste, Sudeste, Sul)
-- **state**: Estados brasileiros
-
-## ⚡ Performance
-
-### API Simplificada
-- **4 endpoints essenciais**: Foco em gráficos
-- **Chart.js Ready**: Zero processamento no frontend
-- **Labels detalhadas**: Códigos + textos de resposta incluídos
-- **Ordenação garantida**: Por answer_code crescente
-- **Queries otimizadas**: Uso direto da view response_analysis
-- **Estruturas pré-formatadas**: Cores e labels incluídos
-
-### Métricas de Performance
-- **Tempo de resposta**: < 200ms para gráficos simples
-- **Dados prontos**: Formato Chart.js nativo com labels detalhadas
-- **Base otimizada**: 100% de utilização (0% dados órfãos)
-- **Answer_groups**: 100% otimizados e categorizados
-- **Ordenação eficiente**: ORDER BY answer_code::INTEGER nas queries
-
-### Otimizações de Banco
-- **View response_analysis**: Elimina joins complexos
-- **Descrições categorizadas**: Answer_groups semanticamente organizados
-- **Nomes únicos**: Zero conflitos ou duplicatas
-- **Cache eficiente**: Metadados em memória
-
-## 🛠️ Tecnologias
-
-- **Backend**: Node.js + TypeScript + Express
-- **Banco**: PostgreSQL com view response_analysis otimizada
-- **ORM**: TypeORM para type safety
-- **API**: 4 endpoints REST focados em Chart.js
-- **Documentação**: OpenAPI 3.0 com exemplos práticos
-
-## 📚 Estrutura do Projeto
+### Análise de Survey
 
 ```
-src/
-├── entities/          # Entidades TypeORM otimizadas
-├── services/          # AnalysisService simplificado
-├── routes/           # chartRoutes.ts (4 endpoints)
-└── data-source.ts    # Configuração do banco
-
-voxdem_survey_dump.sql    # Dump do banco de dados (65MB, 309k respostas)
-
-docker/               # Configuração Docker
-├── Dockerfile        # Multi-stage build
-├── docker-compose.yml # Orquestração de serviços
-├── docker-entrypoint.sh # Script de inicialização
-├── deploy.sh         # Script de deploy (Linux/macOS)
-├── deploy.bat        # Script de deploy (Windows)
-└── DOCKER_GUIDE.md   # Guia completo Docker
-
-api-documentation.yaml # Swagger Chart API v2.0.0
-OPTIMIZATION_REPORT.md # Relatório de otimizações
-.gitignore            # Scripts e dados sensíveis excluídos
+GET /api/charts/question/:questionId/profile/:profileAttribute
 ```
 
-## 🔧 Scripts de Otimização
+Retorna análise cruzada de uma pergunta por atributo de perfil.
 
-Foram criados scripts para manutenção e otimização:
+**Parâmetros:**
+- `questionId`: ID da pergunta
+- `profileAttribute`: Atributo para cruzamento (ex: `gender`, `age_range`, `state`)
+
+**Exemplo:**
+```bash
+curl http://localhost:3000/api/charts/question/1/profile/gender
+```
+
+### Documentação Completa
+
+- Swagger/OpenAPI: [api-documentation.yaml](api-documentation.yaml)
+- Detalhes da API: (adicionar link quando disponível)
+
+## Scripts Disponíveis
 
 ```bash
-# Verificar schema do banco
-node check-schema.js
+# Desenvolvimento
+npm run dev          # Inicia servidor com hot-reload
 
-# Gerar dump do banco (já executado)
-node generate-dump.js
+# Produção
+npm run build        # Compila TypeScript
+npm start            # Inicia servidor compilado
 
-# Otimizar answer_groups (já executado)
-node optimize-answer-groups.js
-
-# Corrigir nomes duplicados (já executado) 
-node fix-duplicate-names.js
+# Banco de Dados
+.\init-database.ps1  # Inicializa banco local
 ```
 
-### Resultados das Otimizações
-- ✅ **54 grupos** de respostas otimizados (100%)
-- ✅ **0 duplicatas** remanescentes  
-- ✅ **100% categorização** semântica implementada
-- ✅ **API simplificada** para Chart.js pronta
-- ✅ **Labels detalhadas** com answer_code implementadas (v2.1.0)
-- ✅ **Ordenação automática** por answer_code crescente (v2.1.0)
-- ✅ **Dump completo** gerado (65MB com 309k respostas)
-- ✅ **Docker containerizado** com PostgreSQL integrado
+## Variáveis de Ambiente
 
-## 🤝 Contribuição
+Crie um arquivo `.env` na raiz do projeto:
+
+```env
+# Servidor
+NODE_ENV=development
+PORT=3000
+
+# Banco de Dados
+DATABASE_HOST=localhost
+DATABASE_PORT=5433
+DATABASE_NAME=voxdem_survey
+DATABASE_USER=postgres
+DATABASE_PASSWORD=postgres
+```
+
+### Docker
+
+As variáveis são configuradas automaticamente no `docker-compose.yml`.
+
+## Desenvolvimento
+
+### Adicionar Nova Entidade
+
+1. Crie a entidade em `src/entities/`
+2. Adicione ao `data-source.ts`
+3. Execute migrations se necessário
+
+### Adicionar Novo Endpoint
+
+1. Crie o controller em `src/controllers/`
+2. Adicione a rota em `src/routes/`
+3. Registre a rota no `src/index.ts`
+
+## Banco de Dados
+
+### Schema
+
+O banco possui as seguintes tabelas principais:
+
+- `profiles` - Perfis demográficos dos respondentes (~1.5k)
+- `questions` - Perguntas do survey (~100-200)
+- `answer_options` - Opções de resposta (~1.5-2k)
+- `survey_responses` - Respostas individuais (~310k)
+
+Além de ~30-40 tabelas de lookup (estados, regiões, faixas etárias, etc.)
+
+### Relacionamentos
+
+```
+profiles (1) ----< (N) survey_responses (N) >---- (1) questions
+                         |
+                         |
+                         v
+                  answer_options (1)
+```
+
+## Performance
+
+- **Respostas**: ~310.000 registros
+- **Tempo de query típico**: 50-200ms (com índices)
+- **Inicialização completa**: ~2-3 minutos (primeira vez)
+
+## Troubleshooting
+
+### Porta 5433 já em uso
+
+Edite `docker-compose.yml` e altere a porta:
+```yaml
+ports:
+  - "5434:5432"  # Mude 5433 para outra porta
+```
+
+### Banco não inicializa
+
+```bash
+# Remova o volume e recrie
+docker-compose down
+docker volume rm codigo_postgres_data
+docker-compose up -d
+```
+
+### Erros de conexão
+
+Verifique se o PostgreSQL está rodando:
+```bash
+docker-compose ps
+# ou
+pg_isready -h localhost -p 5433 -U postgres
+```
+
+## Contribuindo
 
 1. Fork o projeto
-2. Crie uma feature branch
-3. Commit suas mudanças
-4. Push para a branch
+2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`)
+3. Commit suas mudanças (`git commit -m 'Adiciona nova feature'`)
+4. Push para a branch (`git push origin feature/nova-feature`)
 5. Abra um Pull Request
 
-## 📄 Licença
+## Licença
 
+[Adicionar informações de licença]
 
+## Contato
+
+[Adicionar informações de contato]
+
+## Links Úteis
+
+- [Documentação TypeORM](https://typeorm.io/)
+- [Express.js](https://expressjs.com/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Docker](https://www.docker.com/)
