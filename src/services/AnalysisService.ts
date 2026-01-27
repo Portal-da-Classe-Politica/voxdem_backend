@@ -3,27 +3,38 @@ import { Question } from '../entities/Question';
 
 export class AnalysisService {
   
-  async getAvailableQuestions() {
+  async getAvailableQuestions(surveyId?: number) {
     try {
       // Buscar perguntas distintas da view response_analysis
+      const whereClause = surveyId 
+        ? `WHERE question_code IS NOT NULL 
+           AND question_text IS NOT NULL
+           AND is_active = true
+           AND survey_id = $1`
+        : `WHERE question_code IS NOT NULL 
+           AND question_text IS NOT NULL
+           AND is_active = true`;
+
+      const params = surveyId ? [surveyId] : [];
+
       const questionsRaw = await AppDataSource.query(`
         SELECT DISTINCT 
           question_code as code,
           question_text as text,
+          survey_id,
           question_order as question_order,
           COUNT(*) as "totalResponses"
         FROM response_analysis
-        WHERE question_code IS NOT NULL 
-          AND question_text IS NOT NULL
-          AND is_active = true
-        GROUP BY question_code, question_text, question_order
+        ${whereClause}
+        GROUP BY question_code, question_text, survey_id, question_order
         ORDER BY question_order
-      `);
+      `, params);
 
       // Mapear para o formato esperado
       const questionsWithCounts = questionsRaw.map((question: any) => ({
         code: question.code,
         text: question.text,
+        surveyId: question.survey_id,
         totalResponses: parseInt(question.totalResponses || '0')
       }));
 
@@ -110,6 +121,12 @@ export class AnalysisService {
           name: 'Faixa de Renda',
           description: 'Faixa de renda familiar',
           column: 'income_range'
+        },
+        {
+          key: 'political_party',
+          name: 'Partido Político',
+          description: 'Partido político (Deputados)',
+          column: 'political_party'
         }
       ];
 
@@ -120,14 +137,20 @@ export class AnalysisService {
     }
   }
 
-  async getChartData(questionCode: string) {
+  async getChartData(questionCode: string, surveyId?: number) {
     try {
-      // Buscar pergunta usando SQL direto para evitar problemas com ORM
+      // Buscar pergunta usando SQL direto - construindo query dinamicamente para evitar problema de tipo
+      const whereClause = surveyId
+        ? `WHERE code = $1 AND is_active = true AND survey_id = ${parseInt(String(surveyId))}`
+        : 'WHERE code = $1 AND is_active = true';
+      
+      const params = [questionCode];
+
       const questionData = await AppDataSource.query(`
-        SELECT id, code, text, answer_group_id
+        SELECT id, code, text, answer_group_id, survey_id
         FROM questions 
-        WHERE code = $1 AND is_active = true
-      `, [questionCode]);
+        ${whereClause}
+      `, params);
 
       if (!questionData || questionData.length === 0) {
         throw new Error(`Pergunta com código ${questionCode} não encontrada`);
@@ -136,17 +159,22 @@ export class AnalysisService {
       const question = questionData[0];
 
       // Análise de frequência usando response_analysis
+      const freqWhereClause = surveyId
+        ? `WHERE ra.question_code = $1 AND ra.survey_id = ${parseInt(String(surveyId))} AND ra.answer_code NOT IN ('97', '98', '99')`
+        : 'WHERE ra.question_code = $1 AND ra.answer_code NOT IN (\'97\', \'98\', \'99\')';
+      
+      const freqParams = [questionCode];
+
       const frequencies = await AppDataSource.query(`
         SELECT 
           ra.answer_code as code,
           ra.answer_label as label,
           COUNT(*) as count
         FROM response_analysis ra
-        WHERE ra.question_code = $1
-          AND ra.answer_code NOT IN ('97', '98', '99')  -- Excluir não-respostas
+        ${freqWhereClause}
         GROUP BY ra.answer_code, ra.answer_label
         ORDER BY ra.answer_code::INTEGER
-      `, [questionCode]);
+      `, freqParams);
 
       // Estruturar labels como objetos com código e texto
       const labels = frequencies.map((f: any) => f.label);
@@ -187,14 +215,30 @@ export class AnalysisService {
     }
   }
 
-  async getChartDataWithProfile(questionCode: string, profileAttribute: string) {
+  async getChartDataWithProfile(questionCode: string, profileAttribute: string, surveyId?: number) {
     try {
-      // Buscar pergunta usando SQL direto
+      // Buscar pergunta usando SQL direto  
+      let whereClause: string;
+      let params: any[];
+      
+      if (surveyId) {
+        // Validar surveyId é número
+        const surveyIdInt = parseInt(String(surveyId));
+        if (isNaN(surveyIdInt)) {
+          throw new Error('surveyId deve ser um número válido');
+        }
+        whereClause = `WHERE code = $1 AND is_active = true AND survey_id = ${surveyIdInt}`;
+        params = [questionCode];
+      } else {
+        whereClause = 'WHERE code = $1 AND is_active = true';
+        params = [questionCode];
+      }
+
       const questionData = await AppDataSource.query(`
-        SELECT id, code, text, answer_group_id
+        SELECT id, code, text, answer_group_id, survey_id
         FROM questions 
-        WHERE code = $1 AND is_active = true
-      `, [questionCode]);
+        ${whereClause}
+      `, params);
 
       if (!questionData || questionData.length === 0) {
         throw new Error(`Pergunta com código ${questionCode} não encontrada`);
@@ -216,7 +260,8 @@ export class AnalysisService {
         'vote_second_round': 'vote_second_round',  // P159
         'activity_status': 'activity_status',     // ATIVIDADE_SITUACAO
         'activity_sector': 'activity_sector',     // ATIVIDADE_RAMO
-        'income_range': 'income_range'            // RENDA_1
+        'income_range': 'income_range',            // RENDA_1
+        'political_party': 'political_party'      // PARTIDO (Deputados)
       };
 
       const profileField = profileMapping[profileAttribute];
@@ -225,6 +270,23 @@ export class AnalysisService {
       }
 
       // Query de cruzamento usando response_analysis
+      let crosstabWhereClause: string;
+      let crosstabParams: any[];
+      
+      if (surveyId) {
+        const surveyIdInt = parseInt(String(surveyId));
+        crosstabWhereClause = `WHERE ra.question_code = $1
+           AND ra.survey_id = ${surveyIdInt}
+           AND ra.answer_code NOT IN ('97', '98', '99')
+           AND ra.${profileField} IS NOT NULL`;
+        crosstabParams = [questionCode];
+      } else {
+        crosstabWhereClause = `WHERE ra.question_code = $1
+           AND ra.answer_code NOT IN ('97', '98', '99')
+           AND ra.${profileField} IS NOT NULL`;
+        crosstabParams = [questionCode];
+      }
+
       const crosstabData = await AppDataSource.query(`
         SELECT 
           ra.answer_code as question_code,
@@ -232,12 +294,10 @@ export class AnalysisService {
           ra.${profileField} as profile_answer,
           COUNT(*) as count
         FROM response_analysis ra
-        WHERE ra.question_code = $1
-          AND ra.answer_code NOT IN ('97', '98', '99')
-          AND ra.${profileField} IS NOT NULL
+        ${crosstabWhereClause}
         GROUP BY ra.answer_code, ra.answer_label, ra.${profileField}
         ORDER BY ra.answer_code::INTEGER, ra.${profileField}
-      `, [questionCode]);
+      `, crosstabParams);
 
       // Organizar dados para Chart.js (gráfico de barras agrupadas)
       // Manter a ordem dos dados conforme retornado pela query (já ordenado por answer_code)

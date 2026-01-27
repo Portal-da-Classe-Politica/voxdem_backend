@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity('profiles')
 export class Profile {
@@ -7,6 +7,9 @@ export class Profile {
 
   @Column({ type: 'bigint' })
   id_ipec!: number;
+
+  @Column({ type: 'int', nullable: true })
+  survey_id!: number;
 
   @Column({ type: 'int', nullable: true })
   setor!: number;
@@ -61,13 +64,12 @@ export class Profile {
   income_range_id!: number;
 
   @Column({ type: 'int', nullable: true })
+  political_party_id!: number; // Partido político (survey Deputados)
+
+  @Column({ type: 'int', nullable: true })
   bathrooms!: number;
 
-  @CreateDateColumn()
-  created_at!: Date;
 
-  @UpdateDateColumn()
-  updated_at!: Date;
 }
 
 // Entidades para as tabelas de lookup dos novos atributos
@@ -82,9 +84,6 @@ export class Religion {
 
   @Column({ type: 'varchar', length: 100 })
   description!: string;
-
-  @CreateDateColumn()
-  created_at!: Date;
 }
 
 @Entity('first_round_candidates')
@@ -97,9 +96,6 @@ export class FirstRoundCandidate {
 
   @Column({ type: 'varchar', length: 100 })
   description!: string;
-
-  @CreateDateColumn()
-  created_at!: Date;
 }
 
 @Entity('second_round_candidates')
@@ -112,12 +108,9 @@ export class SecondRoundCandidate {
 
   @Column({ type: 'varchar', length: 100 })
   description!: string;
-
-  @CreateDateColumn()
-  created_at!: Date;
 }
 
-@Entity('activity_sectors_extended')
+@Entity('activity_sectors')
 export class ActivitySectorExtended {
   @PrimaryGeneratedColumn()
   id!: number;
@@ -127,12 +120,9 @@ export class ActivitySectorExtended {
 
   @Column({ type: 'varchar', length: 100 })
   description!: string;
-
-  @CreateDateColumn()
-  created_at!: Date;
 }
 
-@Entity('activity_statuses_extended')
+@Entity('activity_statuses')
 export class ActivityStatusExtended {
   @PrimaryGeneratedColumn()
   id!: number;
@@ -142,9 +132,6 @@ export class ActivityStatusExtended {
 
   @Column({ type: 'varchar', length: 100 })
   description!: string;
-
-  @CreateDateColumn()
-  created_at!: Date;
 }
 
 @Entity('income_ranges')
@@ -157,9 +144,6 @@ export class IncomeRange {
 
   @Column({ type: 'varchar', length: 100 })
   description!: string;
-
-  @CreateDateColumn()
-  created_at!: Date;
 }
 
 // View para análise de perfil com os novos atributos
@@ -228,7 +212,4 @@ export class ProfileAnalysis {
 
   @Column({ type: 'int', nullable: true })
   bathrooms!: number;
-
-  @CreateDateColumn()
-  created_at!: Date;
 }

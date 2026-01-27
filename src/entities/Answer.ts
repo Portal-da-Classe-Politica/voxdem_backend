@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity('answer_groups')
 export class AnswerGroup {
@@ -10,9 +10,6 @@ export class AnswerGroup {
 
   @Column({ type: 'text', nullable: true })
   description!: string;
-
-  @CreateDateColumn()
-  created_at!: Date;
 }
 
 @Entity('answer_options')
@@ -31,7 +28,4 @@ export class AnswerOption {
 
   @Column({ type: 'int', default: 0 })
   option_order!: number;
-
-  @CreateDateColumn()
-  created_at!: Date;
 }

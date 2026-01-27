@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity('survey_responses')
 export class SurveyResponse {
@@ -13,7 +13,4 @@ export class SurveyResponse {
 
   @Column({ type: 'text', nullable: true })
   answer_text!: string; // Para respostas de texto livre
-
-  @CreateDateColumn()
-  created_at!: Date;
 }

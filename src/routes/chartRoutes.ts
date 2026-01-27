@@ -7,7 +7,8 @@ const analysisService = new AnalysisService();
 // 1. Listar todas as perguntas
 router.get('/questions', async (req: Request, res: Response) => {
   try {
-    const questions = await analysisService.getAvailableQuestions();
+    const surveyId = req.query.surveyId ? parseInt(req.query.surveyId as string) : undefined;
+    const questions = await analysisService.getAvailableQuestions(surveyId);
     
     res.json({
       success: true,
@@ -48,6 +49,7 @@ router.get('/profile-attributes', async (req: Request, res: Response) => {
 router.get('/chart/:questionCode', async (req: Request, res: Response) => {
   try {
     const { questionCode } = req.params;
+    const surveyId = req.query.surveyId ? parseInt(req.query.surveyId as string) : undefined;
     
     // Validação básica do código da pergunta
     if (!questionCode || !/^P[0-9]+[A-Z]*$/i.test(questionCode)) {
@@ -58,7 +60,7 @@ router.get('/chart/:questionCode', async (req: Request, res: Response) => {
       });
     }
 
-    const chartData = await analysisService.getChartData(questionCode.toUpperCase());
+    const chartData = await analysisService.getChartData(questionCode.toUpperCase(), surveyId);
     
     res.json({
       success: true,
@@ -84,8 +86,12 @@ router.get('/chart/:questionCode', async (req: Request, res: Response) => {
 
 // 4. Dados para gráfico com cruzamento por perfil
 router.get('/chart/:questionCode/:profileAttribute', async (req: Request, res: Response) => {
+  const { questionCode, profileAttribute } = req.params;
+    const surveyId = req.query.surveyId ? parseInt(req.query.surveyId as string) : undefined;
   try {
-    const { questionCode, profileAttribute } = req.params;
+    
+
+    
     
     // Validação do código da pergunta
     if (!questionCode || !/^P[0-9]+[A-Z]*$/i.test(questionCode)) {
@@ -99,7 +105,7 @@ router.get('/chart/:questionCode/:profileAttribute', async (req: Request, res: R
     // Validação do atributo de perfil
     const validAttributes = ['gender', 'age_range', 'education', 'race', 'region', 
       'state', 'religion', 'vote_first_round', 'vote_second_round', 
-      'activity_status', 'activity_sector', 'income_range'];
+      'activity_status', 'activity_sector', 'income_range', 'political_party'];
     if (!validAttributes.includes(profileAttribute)) {
       return res.status(400).json({
         success: false,
@@ -110,7 +116,8 @@ router.get('/chart/:questionCode/:profileAttribute', async (req: Request, res: R
 
     const chartData = await analysisService.getChartDataWithProfile(
       questionCode.toUpperCase(), 
-      profileAttribute
+      profileAttribute,
+      surveyId
     );
     
     res.json({
@@ -130,6 +137,7 @@ router.get('/chart/:questionCode/:profileAttribute', async (req: Request, res: R
     res.status(500).json({
       success: false,
       error: 'Erro ao gerar dados do gráfico com perfil',
+      aa: surveyId,
       message: error.message
     });
   }
