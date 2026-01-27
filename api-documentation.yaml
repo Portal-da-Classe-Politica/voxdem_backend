@@ -84,6 +84,47 @@ paths:
                     type: string
                     example: "2.1.0"
 
+  /api/surveys:
+    get:
+      summary: "Lista todas as surveys disponíveis"
+      tags: 
+        - "Questions"
+      responses:
+        '200':
+          description: "Lista de surveys retornada com sucesso"
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/ApiResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 1
+                            code:
+                              type: integer
+                              example: 2018
+                            description:
+                              type: string
+                              example: "Pesquisa VoxDem 2018"
+              example:
+                success: true
+                data:
+                  - id: 1
+                    code: 2018
+                    description: "Pesquisa VoxDem 2018"
+                  - id: 2
+                    code: 2022
+                    description: "Pesquisa Deputados 2022"
+                count: 2
+                generatedAt: "2025-09-08T10:30:00.000Z"
+
   /api/questions:
     get:
       summary: "Lista todas as perguntas disponíveis"

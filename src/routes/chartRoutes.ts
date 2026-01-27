@@ -4,7 +4,27 @@ import { AnalysisService } from '../services/AnalysisService';
 const router = Router();
 const analysisService = new AnalysisService();
 
-// 1. Listar todas as perguntas
+// 1. Listar todas as surveys disponíveis
+router.get('/surveys', async (req: Request, res: Response) => {
+  try {
+    const surveys = await analysisService.getSurveys();
+    
+    res.json({
+      success: true,
+      data: surveys,
+      count: surveys.length,
+      generatedAt: new Date().toISOString()
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      error: 'Erro ao buscar surveys',
+      message: error.message
+    });
+  }
+});
+
+// 2. Listar todas as perguntas
 router.get('/questions', async (req: Request, res: Response) => {
   try {
     const surveyId = req.query.surveyId ? parseInt(req.query.surveyId as string) : undefined;
@@ -25,7 +45,7 @@ router.get('/questions', async (req: Request, res: Response) => {
   }
 });
 
-// 2. Listar atributos de perfil
+// 3. Listar atributos de perfil
 router.get('/profile-attributes', async (req: Request, res: Response) => {
   try {
     const attributes = await analysisService.getProfileAttributes();
@@ -45,7 +65,7 @@ router.get('/profile-attributes', async (req: Request, res: Response) => {
   }
 });
 
-// 3. Dados para gráfico simples (sem cruzamento)
+// 4. Dados para gráfico simples (sem cruzamento)
 router.get('/chart/:questionCode', async (req: Request, res: Response) => {
   try {
     const { questionCode } = req.params;
@@ -84,7 +104,7 @@ router.get('/chart/:questionCode', async (req: Request, res: Response) => {
   }
 });
 
-// 4. Dados para gráfico com cruzamento por perfil
+// 5. Dados para gráfico com cruzamento por perfil
 router.get('/chart/:questionCode/:profileAttribute', async (req: Request, res: Response) => {
   const { questionCode, profileAttribute } = req.params;
     const surveyId = req.query.surveyId ? parseInt(req.query.surveyId as string) : undefined;
