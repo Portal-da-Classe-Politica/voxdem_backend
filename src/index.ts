@@ -26,6 +26,7 @@ app.get('/', (req, res) => {
     message: 'VoxDem API - Análise Simplificada para Gráficos',
     version: '2.0.0',
     endpoints: {
+      surveys: 'GET /api/surveys - Lista todas as surveys disponíveis',
       questions: 'GET /api/questions - Lista todas as perguntas',
       profiles: 'GET /api/profile-attributes - Lista atributos de perfil', 
       simpleChart: 'GET /api/chart/:questionCode - Dados para gráfico simples',
@@ -70,6 +71,7 @@ app.use('*', (req, res) => {
     error: 'Endpoint não encontrado',
     message: `Rota ${req.method} ${req.originalUrl} não existe`,
     availableEndpoints: [
+      'GET /api/surveys',
       'GET /api/questions',
       'GET /api/profile-attributes',
       'GET /api/chart/:questionCode',
@@ -100,7 +102,8 @@ async function startServer() {
       console.log('📊 API Simplificada para Gráficos - Chart.js Ready');
       console.log('🌐 Acesse: http://localhost:' + PORT);
       console.log('🏥 Health check: http://localhost:' + PORT + '/api/health');
-      console.log('📋 Lista de perguntas: http://localhost:' + PORT + '/api/questions');
+      console.log('� Lista de surveys: http://localhost:' + PORT + '/api/surveys');
+      console.log('�📋 Lista de perguntas: http://localhost:' + PORT + '/api/questions');
       console.log('👥 Atributos de perfil: http://localhost:' + PORT + '/api/profile-attributes');
       console.log('📈 Exemplo gráfico simples: http://localhost:' + PORT + '/api/chart/P01');
       console.log('📊 Exemplo gráfico com perfil: http://localhost:' + PORT + '/api/chart/P01/gender');

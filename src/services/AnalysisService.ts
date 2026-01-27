@@ -3,6 +3,24 @@ import { Question } from '../entities/Question';
 
 export class AnalysisService {
   
+  async getSurveys() {
+    try {
+      const surveys = await AppDataSource.query(`
+        SELECT 
+          id,
+          code,
+          description
+        FROM surveys
+        ORDER BY code
+      `);
+
+      return surveys;
+    } catch (error) {
+      console.error('❌ Erro em getSurveys:', error);
+      throw error;
+    }
+  }
+
   async getAvailableQuestions(surveyId?: number) {
     try {
       // Buscar perguntas distintas da view response_analysis
