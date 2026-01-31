@@ -32,15 +32,15 @@ jobs:
 
       - name: 📦 Transfer files to server
         run: |
-          # Criar diretórios no servidor se não existirem
-          ssh root@${{ secrets.SSH_HOST }} "mkdir -p /opt/voxdem/sqlinserts /opt/voxdem/database"
+          # Criar diretório no servidor se não existir
+          ssh root@${{ secrets.SSH_HOST }} "mkdir -p /opt/voxdem"
           
           # Transferir arquivos necessários
           scp voxdem-app.tar root@${{ secrets.SSH_HOST }}:/opt/voxdem/
           scp docker-compose.prod.yml root@${{ secrets.SSH_HOST }}:/opt/voxdem/
           scp init-database.sql root@${{ secrets.SSH_HOST }}:/opt/voxdem/
-          scp -r sqlinserts/* root@${{ secrets.SSH_HOST }}:/opt/voxdem/sqlinserts/
-          scp -r database/* root@${{ secrets.SSH_HOST }}:/opt/voxdem/database/
+          scp -r sqlinserts root@${{ secrets.SSH_HOST }}:/opt/voxdem/
+          scp -r database root@${{ secrets.SSH_HOST }}:/opt/voxdem/
 
       - name: 🚀 Deploy VoxDem no servidor
         run: |
