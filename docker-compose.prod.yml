@@ -10,7 +10,9 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres123}
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./voxdem_survey_dump.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./init-database.sql:/docker-entrypoint-initdb.d/01-init.sql
+      - ./sqlinserts:/docker-entrypoint-initdb.d/sqlinserts:ro
+      - ./database:/docker-entrypoint-initdb.d/database:ro
     ports:
       - "5433:5432"  # PostgreSQL do VoxDem na porta 5433 externamente
     restart: unless-stopped
