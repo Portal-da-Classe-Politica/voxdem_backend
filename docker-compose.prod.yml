@@ -1,8 +1,6 @@
-version: '3.8'
-
 services:
   db:
-    image: postgres:15
+    image: postgres:15-alpine
     container_name: voxdem_postgres_prod
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-voxdem_survey}
@@ -17,21 +15,22 @@ services:
       - "5433:5432"  # PostgreSQL do VoxDem na porta 5433 externamente
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-voxdem_survey}"]
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 30s
 
   app:
     image: voxdem-app:latest
     container_name: voxdem_app_prod
     environment:
       NODE_ENV: production
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_NAME: ${POSTGRES_DB:-voxdem_survey}
-      DB_USER: ${POSTGRES_USER:-postgres}
-      DB_PASSWORD: ${POSTGRES_PASSWORD:-postgres123}
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ${POSTGRES_DB:-voxdem_survey}
+      DATABASE_USER: ${POSTGRES_USER:-postgres}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-postgres123}
       PORT: ${APP_PORT:-3000}
     ports:
       - "3001:3000"  # VoxDem API na porta 3001 externamente
