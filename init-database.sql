@@ -88,6 +88,33 @@ SET standard_conforming_strings = on;
 \i /docker-entrypoint-initdb.d/sqlinserts/deputados_responses_insert.sql
 
 -- =====================================================
+-- STEP 8: Load Clivagens Survey (Survey 3)
+-- =====================================================
+\echo ''
+\echo '[11/15] Loading clivagens common tables (municipalities, professions)...'
+\i /docker-entrypoint-initdb.d/sqlinserts/clivagens_data_common_tables_insert.sql
+
+\echo ''
+\echo '[12/15] Loading clivagens answer groups...'
+\i /docker-entrypoint-initdb.d/sqlinserts/clivagens_answer_groups_insert.sql
+
+\echo ''
+\echo '[13/15] Loading clivagens answer options...'
+\i /docker-entrypoint-initdb.d/sqlinserts/clivagens_answer_options_insert.sql
+
+\echo ''
+\echo '[14/15] Loading clivagens questions...'
+\i /docker-entrypoint-initdb.d/sqlinserts/clivagens_questions_insert.sql
+
+\echo ''
+\echo '[15/15] Loading clivagens profiles (1500 rows)...'
+\i /docker-entrypoint-initdb.d/sqlinserts/clivagens_profiles_insert.sql
+
+\echo ''
+\echo '[16/15] Loading clivagens responses (~76k rows)...'
+\i /docker-entrypoint-initdb.d/sqlinserts/clivagens_responses_insert.sql
+
+-- =====================================================
 -- Finalization
 -- =====================================================
 \echo ''
@@ -113,11 +140,15 @@ SELECT 'Profiles (Survey 1 - General)', COUNT(*) FROM public.profiles WHERE surv
 UNION ALL
 SELECT 'Profiles (Survey 2 - Deputados)', COUNT(*) FROM public.profiles WHERE survey_id = 2
 UNION ALL
+SELECT 'Profiles (Survey 3 - Clivagens)', COUNT(*) FROM public.profiles WHERE survey_id = 3
+UNION ALL
 SELECT 'Questions (Total)', COUNT(*) FROM public.questions
 UNION ALL
 SELECT 'Questions (Survey 1)', COUNT(*) FROM public.questions WHERE survey_id = 1
 UNION ALL
 SELECT 'Questions (Survey 2)', COUNT(*) FROM public.questions WHERE survey_id = 2
+UNION ALL
+SELECT 'Questions (Survey 3 - Clivagens)', COUNT(*) FROM public.questions WHERE survey_id = 3
 UNION ALL
 SELECT 'Answer Options', COUNT(*) FROM public.answer_options
 UNION ALL
@@ -126,6 +157,8 @@ UNION ALL
 SELECT 'Responses (Survey 1)', COUNT(*) FROM public.survey_responses sr JOIN public.profiles p ON sr.profile_id = p.id WHERE p.survey_id = 1
 UNION ALL
 SELECT 'Responses (Survey 2)', COUNT(*) FROM public.survey_responses sr JOIN public.profiles p ON sr.profile_id = p.id WHERE p.survey_id = 2
+UNION ALL
+SELECT 'Responses (Survey 3 - Clivagens)', COUNT(*) FROM public.survey_responses sr JOIN public.profiles p ON sr.profile_id = p.id WHERE p.survey_id = 3
 UNION ALL
 SELECT 'States', COUNT(*) FROM public.states
 UNION ALL

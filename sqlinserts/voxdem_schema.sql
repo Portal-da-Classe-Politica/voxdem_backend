@@ -420,7 +420,9 @@ CREATE TABLE profiles (
     vote_first_round_id integer,
     vote_second_round_id integer,
     income_range_id integer,
-    political_party_id integer
+    political_party_id integer,
+    municipality_id integer,
+    profession_id integer
 );
 --
 -- TOC entry 5146 (class 0 OID 0)
@@ -528,6 +530,23 @@ CREATE TABLE states (
     code character varying(10) NOT NULL,
     name character varying(100) NOT NULL,
     region_id integer
+);
+--
+-- Name: municipalities; Type: TABLE; Schema: public; Owner: postgres
+--
+CREATE TABLE public.municipalities (
+    id SERIAL PRIMARY KEY,
+    code INTEGER UNIQUE NOT NULL,
+    name VARCHAR(200) NOT NULL,
+    state_id INTEGER
+);
+--
+-- Name: professions; Type: TABLE; Schema: public; Owner: postgres
+--
+CREATE TABLE public.professions (
+    id SERIAL PRIMARY KEY,
+    code INTEGER UNIQUE NOT NULL,
+    description VARCHAR(200) NOT NULL
 );
 --
 -- TOC entry 245 (class 1259 OID 2784666)
@@ -1281,6 +1300,11 @@ ALTER TABLE ONLY states
 --
 ALTER TABLE ONLY states
     ADD CONSTRAINT states_pkey PRIMARY KEY (id);
+--
+-- Name: municipalities municipalities_state_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+ALTER TABLE ONLY public.municipalities
+    ADD CONSTRAINT municipalities_state_id_fkey FOREIGN KEY (state_id) REFERENCES public.states(id);
 --
 -- TOC entry 4914 (class 2606 OID 2784792)
 -- Name: survey_responses survey_responses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres

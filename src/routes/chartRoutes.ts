@@ -71,12 +71,12 @@ router.get('/chart/:questionCode', async (req: Request, res: Response) => {
     const { questionCode } = req.params;
     const surveyId = req.query.surveyId ? parseInt(req.query.surveyId as string) : undefined;
     
-    // Validação básica do código da pergunta (aceita P1, P3_1, P23A, etc.)
-    if (!questionCode || !/^P[0-9]+(_[0-9]+)?[A-Z]*$/i.test(questionCode)) {
+    // Validação básica do código da pergunta (aceita P1, P3_1, P23A, CL_P14, CL_P58_A1, etc.)
+    if (!questionCode || !/^(CL_)?P[0-9]+(_[0-9A-Z]+)*[A-Z]*$/i.test(questionCode)) {
       return res.status(400).json({
         success: false,
         error: 'Código de pergunta inválido',
-        message: 'O código deve seguir o padrão P01, P3_1, P23A, etc.'
+        message: 'O código deve seguir o padrão P01, P3_1, P23A, CL_P14, etc.'
       });
     }
 
@@ -113,12 +113,12 @@ router.get('/chart/:questionCode/:profileAttribute', async (req: Request, res: R
 
     
     
-    // Validação do código da pergunta (aceita P1, P3_1, P23A, etc.)
-    if (!questionCode || !/^P[0-9]+(_[0-9]+)?[A-Z]*$/i.test(questionCode)) {
+    // Validação do código da pergunta (aceita P1, P3_1, P23A, CL_P14, CL_P58_A1, etc.)
+    if (!questionCode || !/^(CL_)?P[0-9]+(_[0-9A-Z]+)*[A-Z]*$/i.test(questionCode)) {
       return res.status(400).json({
         success: false,
         error: 'Código de pergunta inválido',
-        message: 'O código deve seguir o padrão P01, P3_1, P23A, etc.'
+        message: 'O código deve seguir o padrão P01, P3_1, P23A, CL_P14, etc.'
       });
     }
 
