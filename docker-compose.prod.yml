@@ -33,7 +33,7 @@ services:
       DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-postgres123}
       PORT: ${APP_PORT:-3000}
     ports:
-      - "3001:3000"  # VoxDem API na porta 3001 externamente
+      - "3008:3000"  # VoxDem API na porta 3008 externamente
     depends_on:
       db:
         condition: service_healthy
