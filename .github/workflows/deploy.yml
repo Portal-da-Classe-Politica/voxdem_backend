@@ -100,16 +100,26 @@ jobs:
       - name: 🔍 Health Check
         run: |
           ssh root@${{ secrets.SSH_HOST }} << 'EOF'
-            # Aguardar aplicação subir
-            sleep 20
-            
-            # Verificar se API está respondendo
-            if curl -f http://localhost:3008/api/health 2>/dev/null; then
-              echo "✅ VoxDem API está funcionando!"
-            else
+            # Faz polling em vez de um único curl após sleep fixo: no primeiro
+            # deploy (ou sempre que o volume do Postgres for recriado), o
+            # carregamento dos sqlinserts pode levar bem mais que 20-30s.
+            echo "⏳ Aguardando VoxDem API responder (até 3 minutos)..."
+            success=false
+            for i in $(seq 1 36); do
+              if curl -f http://localhost:3008/api/health 2>/dev/null; then
+                echo "✅ VoxDem API está funcionando!"
+                success=true
+                break
+              fi
+              sleep 5
+            done
+
+            if [ "$success" != "true" ]; then
               echo "❌ VoxDem API não está respondendo"
               echo "📋 Logs da aplicação:"
-              docker compose -f /opt/voxdem/docker-compose.prod.yml logs --tail=20 app
+              docker compose -f /opt/voxdem/docker-compose.prod.yml logs --tail=50 app
+              echo "📋 Logs do banco:"
+              docker compose -f /opt/voxdem/docker-compose.prod.yml logs --tail=50 db
               exit 1
             fi
           EOF

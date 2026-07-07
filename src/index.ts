@@ -91,12 +91,29 @@ app.use((error: any, req: express.Request, res: express.Response, next: express.
   });
 });
 
+// Inicializar conexão com banco, com retry (o container do Postgres pode
+// responder "healthy" no healthcheck antes de aceitar conexões de fato,
+// especialmente no primeiro deploy, quando os sqlinserts ainda estão
+// carregando — isso causava ECONNREFUSED e derrubava o processo de vez).
+async function connectWithRetry(maxRetries = 10, delayMs = 3000) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      await AppDataSource.initialize();
+      console.log('✅ Conexão com PostgreSQL estabelecida');
+      return;
+    } catch (error) {
+      console.error(`❌ Tentativa ${attempt}/${maxRetries} de conectar ao banco falhou:`, (error as Error).message);
+      if (attempt === maxRetries) throw error;
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+    }
+  }
+}
+
 // Inicializar conexão com banco e servidor
 async function startServer() {
   try {
-    await AppDataSource.initialize();
-    console.log('✅ Conexão com PostgreSQL estabelecida');
-    
+    await connectWithRetry();
+
     app.listen(PORT, () => {
       console.log('🚀 Servidor VoxDem Chart API rodando na porta', PORT);
       console.log('📊 API Simplificada para Gráficos - Chart.js Ready');
